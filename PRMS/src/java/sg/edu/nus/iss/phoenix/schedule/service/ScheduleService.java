@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
-import sg.edu.nus.iss.phoenix.radioprogram.dao.ProgramDAO;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.radioprogram.service.ReviewSelectProgramService;
+import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
+import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 
 /**
  *
@@ -20,19 +21,24 @@ import sg.edu.nus.iss.phoenix.radioprogram.service.ReviewSelectProgramService;
  */
 public class ScheduleService {
 	DAOFactoryImpl factory;
-	ProgramDAO rpdao;
+	   ScheduleDAO schdao;
 
 	public ScheduleService() {
 		super();
 		// TODO Auto-generated constructor stub
 		factory = new DAOFactoryImpl();
-		rpdao = factory.getProgramDAO();
+		schdao = factory.getScheduleDAO();
 	}
 
-	public List<RadioProgram> getAnnualScheduleList() {
-            List<RadioProgram> data = null;
+	public AnnualScheduleList getAnnualScheduleList() {
+            AnnualScheduleList data = null;
+            List<AnnualSchedule> aschList = null;
             try {
-                data = rpdao.loadAll();
+                aschList = schdao.getAllAnnualSchedules();
+                data = new AnnualScheduleList();
+                for(AnnualSchedule asch : aschList){
+                    data.addAnnualSchedule(asch);
+                }
             } catch (SQLException ex) {
                 Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
             }

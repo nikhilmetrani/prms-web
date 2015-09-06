@@ -5,9 +5,7 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.delegate;
 
-import java.util.List;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
-import sg.edu.nus.iss.phoenix.radioprogram.service.ReviewSelectProgramService;
+import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
 
 /**
@@ -21,7 +19,7 @@ public class ScheduleDelegate {
 		service = new ScheduleService();
 	}
 	
-	public List<RadioProgram> reviewSelectAnnualSchedule() {
+	public AnnualScheduleList reviewSelectAnnualSchedule() {
 		return service.getAnnualScheduleList(); 
 	}
 }

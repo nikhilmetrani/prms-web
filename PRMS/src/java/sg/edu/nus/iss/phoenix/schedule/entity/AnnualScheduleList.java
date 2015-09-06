@@ -6,7 +6,6 @@
 package sg.edu.nus.iss.phoenix.schedule.entity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,9 +26,9 @@ public class AnnualScheduleList {
     }
 
     public AnnualSchedule findAnnualSchedule(int year){
-        int idx = scheduleList.indexOf(new AnnualSchedule(year, null);
+        int idx = scheduleList.indexOf(new AnnualSchedule(year, null));
         if(idx>=0)
-            return scheduleList.get(idx));
+            return scheduleList.get(idx);
         return null;
     }
     
