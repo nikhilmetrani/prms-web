@@ -135,6 +135,11 @@ CREATE INDEX `name_program_slot` ON `phoenix`.`program-slot` (`program-name` ASC
 
 CREATE UNIQUE INDEX `dateOfProgram_UNIQUE` ON `phoenix`.`program-slot` (`dateOfProgram` ASC) ;
 
+-- -----------------------------------------------------
+-- Insert Data For Table `phoenix`.`program-slot`
+-- -----------------------------------------------------
+
+
 
 -- -----------------------------------------------------
 -- Table `phoenix`.`weekly-schedule`
