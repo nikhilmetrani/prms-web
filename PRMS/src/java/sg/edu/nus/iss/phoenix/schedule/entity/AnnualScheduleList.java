@@ -32,4 +32,8 @@ public class AnnualScheduleList {
         return null;
     }
     
+    public List<AnnualSchedule> getAllAnnualSchedules(){
+        return scheduleList;
+    }
+    
 }

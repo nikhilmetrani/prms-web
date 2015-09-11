@@ -24,4 +24,7 @@
 	<definition name="setuprpPage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/setuprp.jsp" />
 	</definition>
+        <definition name="setupSchedulePage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/setupSchedule.jsp" />
+	</definition>
 </tiles-definitions>

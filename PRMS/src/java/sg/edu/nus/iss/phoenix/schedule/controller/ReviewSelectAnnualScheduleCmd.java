@@ -11,15 +11,19 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
+import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 
 /**
  *
  * @author jayavignesh
  */
-@Action("selectAnnualSchedule")
+@Action("viewSchedule")
 public class ReviewSelectAnnualScheduleCmd implements Perform{
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        ScheduleDelegate delegate = new ScheduleDelegate();
+        req.getSession().setAttribute("annualScheduleList", delegate.reviewSelectAnnualSchedule());
         return "/pages/maintainSchedule/setupSchedule.jsp";
     }
 }

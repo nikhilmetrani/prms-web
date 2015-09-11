@@ -31,11 +31,10 @@ public class ScheduleService {
 	}
 
 	public AnnualScheduleList getAnnualScheduleList() {
-            AnnualScheduleList data = null;
+            AnnualScheduleList data = new AnnualScheduleList();
             List<AnnualSchedule> aschList = null;
             try {
                 aschList = schdao.getAllAnnualSchedules();
-                data = new AnnualScheduleList();
                 for(AnnualSchedule asch : aschList){
                     data.addAnnualSchedule(asch);
                 }

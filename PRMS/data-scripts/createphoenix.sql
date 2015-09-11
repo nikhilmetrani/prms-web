@@ -96,16 +96,16 @@ DROP TABLE IF EXISTS `phoenix`.`annual-schedule` ;
 
 CREATE  TABLE IF NOT EXISTS `phoenix`.`annual-schedule` (
   `year` INT NOT NULL ,
-  `assingedBy` VARCHAR(45) NULL ,
+  `assignedBy` VARCHAR(45) NULL ,
   PRIMARY KEY (`year`) ,
   CONSTRAINT `id_as`
-    FOREIGN KEY (`assingedBy` )
+    FOREIGN KEY (`assignedBy` )
     REFERENCES `phoenix`.`user` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE INDEX `id_annual_schedule` ON `phoenix`.`annual-schedule` (`assingedBy` ASC) ;
+CREATE INDEX `id_annual_schedule` ON `phoenix`.`annual-schedule` (`assignedBy` ASC) ;
 
 -- -----------------------------------------------------
 -- Insert Data For Table `phoenix`.`annual-schedule`
