@@ -7,13 +7,21 @@
 <head>
 <fmt:setBundle basename="ApplicationResources" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><fmt:message key="title.searchrp" /></title>
+<title><fmt:message key="title.setupSchedule" /></title>
+<script type="text/javascript">
+function selectAnnualSchedule(){
+    if(document.forms[0].annualSch.value!=""){
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectAnnualSchedule";
+    }
+    document.forms[0].submit();
+}
+</script>
 </head>
 <body>
 	<h2>
 		<fmt:message key="title.setupSchedule" />
 	</h2>
-	<form action="${pageContext.request.contextPath}/nocturne/setupSchedule"
+	<form action="${pageContext.request.contextPath}/nocturne/viewSchedule"
 		method=post>
 		<center>
 			<table class="framed">
@@ -26,22 +34,30 @@
 				<tr>
 					<th width="25%"><fmt:message key="label.setupsch.annualSchedule" /></th>
 					<th width="25%">
-                                            <select name="annualSch">
-                                                <option>--Select--</option>
+                                            <select name="annualSch" onchange="selectAnnualSchedule()">
+                                                <option value="">--Select--</option>
                                                 <c:forEach var="asch" items="${annualScheduleList.getAllAnnualSchedules()}">
-                                                    <option>${asch.year}</option>
+                                                    <c:if test="${annualSchedule != null && annualSchedule.year eq asch.year}">
+                                                        <option value="${asch.year}" selected>${asch.year}</option>
+                                                    </c:if>
+                                                    <c:if test="${annualSchedule == null}">
+                                                        <option value="${asch.year}">${asch.year}</option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </select>
                                         </th>
 					<th width="25%"><fmt:message key="label.setupsch.weeklySchedule" /></th>
 					<th width="25%">
                                             <select name="weeklySch">
-                                                <option>--Select--</option>
+                                                <option value="">--Select--</option>
+                                                <c:forEach var="wsch" items="${annualSchedule.getWeeklySchedules()}">
+                                                    <option value="${wsch.startDate}">${wsch.startDate}</option>
+                                                </c:forEach>
                                             </select>
                                         </th>
                                 </tr>
 				<tr>
-					<td colspan="2" align="center"><input type="submit" value="Submit"> <input
+					<td colspan="4" align="center" ><input type="submit" value="Submit"> <input
 						type="reset" value="Reset"></td>
 				</tr>
 			</table>
