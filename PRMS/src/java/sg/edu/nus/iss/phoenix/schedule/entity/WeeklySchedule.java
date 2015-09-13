@@ -5,6 +5,9 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author jayavignesh
@@ -12,10 +15,12 @@ package sg.edu.nus.iss.phoenix.schedule.entity;
 public class WeeklySchedule {
     private String startDate;
     private String assignedBy;
+    private List<ProgramSlot> programSlots = null;
 
     public WeeklySchedule(String startDate, String assignedBy){
         this.startDate = startDate;
         this.assignedBy = assignedBy;
+        programSlots = new ArrayList<ProgramSlot>();
     }
 
     /**
@@ -30,6 +35,18 @@ public class WeeklySchedule {
      */
     public String getAssignedBy() {
         return assignedBy;
+    }
+    
+    public void addProgramSlot(ProgramSlot slot){
+        programSlots.add(slot);
+    }
+    
+    public List<ProgramSlot> getProgramSlots(){
+        List<ProgramSlot> data = new ArrayList<ProgramSlot>();
+        for(ProgramSlot ps : programSlots){
+            data.add(ps);
+        }
+        return data;
     }
     
     @Override 

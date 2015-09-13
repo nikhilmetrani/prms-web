@@ -92,22 +92,24 @@ function copyWeeklySchedule(){
 		</center>
 
 	</form>
-	<!--<c:if test="${! empty  searchrplist}">
+	<c:if test="${! empty  weeklySchedule.getProgramSlots()}">
 		<table class="borderAll">
 			<tr>
 				<th><fmt:message key="label.radioprogram.name" /></th>
 				<th><fmt:message key="label.radioprogram.description" /></th>
 				<th><fmt:message key="label.radioprogram.duration" /></th>
+                                <th><fmt:message key="label.radioprogram.duration" /></th>
 			</tr>
-			<c:forEach var="rprogram" items="${searchrplist}" varStatus="status">
+			<c:forEach var="ps" items="${weeklySchedule.getProgramSlots()}" varStatus="status">
 				<tr class="${status.index%2==0?'even':'odd'}">
-					<td class="nowrap">${rprogram.name}</td>
-					<td class="nowrap">${rprogram.description}</td>
-					<td class="nowrap">${rprogram.typicalDuration}</td>
+					<td class="nowrap">${ps.duration}</td>
+					<td class="nowrap">${ps.dateOfProgram}</td>
+					<td class="nowrap">${ps.startTime}</td>
+                                        <td class="nowrap">${ps.programName}</td>
 				</tr>
 			</c:forEach>
 		</table>
-	</c:if>-->
+	</c:if>
 
 </body>
 </html>

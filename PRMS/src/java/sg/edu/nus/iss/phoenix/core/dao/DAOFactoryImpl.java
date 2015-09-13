@@ -6,7 +6,9 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.impl.RoleDaoImpl;
 import sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDaoImpl;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.ProgramDAO;
 import sg.edu.nus.iss.phoenix.radioprogram.dao.impl.ProgramDAOImpl;
+import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDAO;
 import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
+import sg.edu.nus.iss.phoenix.schedule.dao.impl.ProgramSlotDAOImpl;
 import sg.edu.nus.iss.phoenix.schedule.dao.impl.ScheduleDAOImpl;
 
 public class DAOFactoryImpl implements DAOFactory {
@@ -14,6 +16,7 @@ public class DAOFactoryImpl implements DAOFactory {
 	private RoleDao roleDAO = new RoleDaoImpl();
 	private ProgramDAO rpdao = new ProgramDAOImpl();
         private ScheduleDAO scheduledao = new ScheduleDAOImpl();
+        private ProgramSlotDAO programslotdao = new ProgramSlotDAOImpl();
 
 	@Override
 	public UserDao getUserDAO() {
@@ -35,7 +38,11 @@ public class DAOFactoryImpl implements DAOFactory {
 
 	@Override
 	public ScheduleDAO getScheduleDAO() {
-		// TODO Auto-generated method stub
-		return scheduledao;
+            return scheduledao;
 	}
+        
+        @Override
+        public ProgramSlotDAO getProgramSlotDAO() {
+            return programslotdao;
+        }
 }
