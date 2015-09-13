@@ -15,6 +15,20 @@ function selectAnnualSchedule(){
     }
     document.forms[0].submit();
 }
+
+function selectWeeklySchedule(){
+    if(document.forms[0].weeklySch.value!=""){
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectWeeklySchedule";
+        document.forms[0].submit();
+    }else{
+        selectAnnualSchedule();
+    }
+}
+
+function copyWeeklySchedule(){
+    document.forms[0].action = "${pageContext.request.contextPath}/nocturne/copyWeeklySchedule";
+    document.forms[0].submit();
+}
 </script>
 </head>
 <body>
@@ -23,12 +37,17 @@ function selectAnnualSchedule(){
 	</h2>
 	<form action="${pageContext.request.contextPath}/nocturne/viewSchedule"
 		method=post>
+            <input type="hidden" name="actionType" value="${actionType}" />
 		<center>
 			<table class="framed">
 				<tr>
                                     <td colspan="2" align="left">
+                                        <c:if test="${weeklySchedule == null && actionType == null}">
                                         <a href="#" onclick="">Create Annual Schedule</a> 
-                                        | <a href="#" onclick="">Copy Weekly Schedule</a>
+                                        </c:if>
+                                        <c:if test="${weeklySchedule != null && actionType == null}">
+                                        <a href="#" onclick="">Copy Weekly Schedule</a> 
+                                        </c:if>
                                     </td>
 				</tr>
 				<tr>
@@ -37,27 +56,36 @@ function selectAnnualSchedule(){
                                             <select name="annualSch" onchange="selectAnnualSchedule()">
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="asch" items="${annualScheduleList.getAllAnnualSchedules()}">
-                                                    <c:if test="${annualSchedule != null && annualSchedule.year eq asch.year}">
+                                                    <c:choose>
+                                                    <c:when test="${annualSchedule != null && annualSchedule.year eq asch.year}">
                                                         <option value="${asch.year}" selected>${asch.year}</option>
-                                                    </c:if>
-                                                    <c:if test="${annualSchedule == null}">
+                                                    </c:when>
+                                                    <c:otherwise>
                                                         <option value="${asch.year}">${asch.year}</option>
-                                                    </c:if>
+                                                    </c:otherwise>
+                                                    </c:choose>
                                                 </c:forEach>
                                             </select>
                                         </th>
 					<th width="25%"><fmt:message key="label.setupsch.weeklySchedule" /></th>
 					<th width="25%">
-                                            <select name="weeklySch">
+                                            <select name="weeklySch" >
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="wsch" items="${annualSchedule.getWeeklySchedules()}">
-                                                    <option value="${wsch.startDate}">${wsch.startDate}</option>
+                                                    <c:choose>
+                                                    <c:when test="${weeklySchedule != null && weeklySchedule.startDate eq wsch.startDate}">
+                                                        <option value="${wsch.startDate}" selected>${wsch.startDate}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${wsch.startDate}">${wsch.startDate}</option>
+                                                    </c:otherwise>
+                                                    </c:choose>
                                                 </c:forEach>
                                             </select>
                                         </th>
                                 </tr>
 				<tr>
-					<td colspan="4" align="center" ><input type="submit" value="Submit"> <input
+					<td colspan="4" align="center" ><input type="submit" value="Submit" onclick="selectWeeklySchedule()"> <input
 						type="reset" value="Reset"></td>
 				</tr>
 			</table>

@@ -22,6 +22,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 public class ReviewSelectAnnualScheduleCmd implements Perform{
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.getSession().removeAttribute("weeklySchedule");
         AnnualScheduleList aschList = (AnnualScheduleList)req.getSession().getAttribute("annualScheduleList");
         String year = req.getParameter("annualSch");
         if(year!=null && !"".equals(year)){
