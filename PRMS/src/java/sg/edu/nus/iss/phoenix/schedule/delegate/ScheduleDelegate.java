@@ -6,6 +6,7 @@
 package sg.edu.nus.iss.phoenix.schedule.delegate;
 
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
 
 /**
@@ -22,4 +23,8 @@ public class ScheduleDelegate {
 	public AnnualScheduleList reviewSelectAnnualSchedule() {
 		return service.getAnnualScheduleList(); 
 	}
+        
+        public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch){
+            service.copyWeeklySchedule(srcWsch, tgtWsch);
+        }
 }

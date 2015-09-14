@@ -14,6 +14,7 @@ import sg.edu.nus.iss.phoenix.radioprogram.service.ReviewSelectProgramService;
 import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
  *
@@ -43,4 +44,8 @@ public class ScheduleService {
             }
             return data; 
 	}
+        
+        public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch){
+            
+        }
 }

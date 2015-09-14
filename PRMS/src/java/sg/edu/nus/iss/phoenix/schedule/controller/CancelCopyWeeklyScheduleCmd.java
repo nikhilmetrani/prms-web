@@ -17,17 +17,11 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
  *
  * @author jayavignesh
  */
-@Action("selectAnnualSchedule")
-public class ReviewSelectAnnualScheduleCmd implements Perform{
+@Action("cancelCopy")
+public class CancelCopyWeeklyScheduleCmd implements Perform{
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setAttribute("actionType", req.getParameter("actionType"));
-        req.getSession().removeAttribute("weeklySchedule");
-        AnnualScheduleList aschList = (AnnualScheduleList)req.getSession().getAttribute("annualScheduleList");
-        String year = req.getParameter("annualSch");
-        if(year!=null && !"".equals(year)){
-            req.getSession().setAttribute("annualSchedule", aschList.findAnnualSchedule(Integer.parseInt(year)));
-        }
-        return "/pages/maintainSchedule/setupSchedule.jsp";
+        req.removeAttribute("actionType");
+        return "/nocturne/viewSchedule";
     }
 }

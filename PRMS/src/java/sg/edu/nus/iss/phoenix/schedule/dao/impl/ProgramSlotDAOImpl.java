@@ -39,7 +39,8 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
             PreparedStatement stmt = null;
             openConnection();
             try {
-                    sql = "INSERT INTO `program-slot` ( duration, dateOfProgram, startTime, `program-name`) VALUES (?, ?, ?, ?) ";
+                    sql = "INSERT INTO `program-slot` ( duration, dateOfProgram, startTime, `program-name`) " + 
+                            "VALUES (str_to_date(?, '%H:%i:%s'), str_to_date(?, '%d-%m-%Y'), str_to_date(?, '%H:%i:%s'), ?) ";
                     stmt = this.connection.prepareStatement(sql);
 
                     stmt.setString(1, valueObject.getDuration());
@@ -62,9 +63,9 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
         ProgramSlot temp = null;
         openConnection();
         String sql = "SELECT duration, DATE_FORMAT(dateOfProgram, '%d-%m-%Y') AS dtOfProgram, " 
-                + "startTime, `program-name` as programName "
+                + "DATE_FORMAT(startTime, '%H:%i:%s') as stTime, `program-name` as programName "
                 + "FROM `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < str_to_date(?, '%d-%m-%Y') + 7 "
-                + "ORDER BY dateOfProgram ASC, startTime ASC; ";
+                + "ORDER BY dateOfProgram ASC, startTime ASC ";
         List<ProgramSlot> searchResults = new ArrayList<ProgramSlot>();
         try {
             stmt = connection.prepareStatement(sql);
@@ -76,7 +77,7 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
                 temp = new ProgramSlot();
                 temp.setDuration(result.getString("duration"));
                 temp.setDateOfProgram(result.getString("dtOfProgram"));
-                temp.setStartTime(result.getString("startTime"));
+                temp.setStartTime(result.getString("stTime"));
                 temp.setProgramName(result.getString("programName"));
                 searchResults.add(temp);
             }

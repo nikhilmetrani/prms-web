@@ -21,6 +21,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 public class ReviewSelectWeeklyScheduleCmd implements Perform{
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        req.setAttribute("actionType", req.getParameter("actionType"));
         AnnualSchedule asch = (AnnualSchedule)req.getSession().getAttribute("annualSchedule");
         String startDate = req.getParameter("weeklySch");
         if(startDate!=null && !"".equals(startDate)){

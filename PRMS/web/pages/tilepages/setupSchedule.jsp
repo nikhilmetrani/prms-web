@@ -26,8 +26,23 @@ function selectWeeklySchedule(){
 }
 
 function copyWeeklySchedule(){
+    document.forms[0].actionType.value = "copy";
     document.forms[0].action = "${pageContext.request.contextPath}/nocturne/copyWeeklySchedule";
     document.forms[0].submit();
+}
+
+function confirmCopy(){
+    if(confirm('All the Program Slots in the selected Weekly Schedule will be replaced with the copied slots. Do you want to continue?', 'Yes|No')){
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/confirmCopy";
+        document.forms[0].submit();
+    }
+}
+
+function cancelCopy(){
+    if(confirm('Do you want to Cancel the copy operation?', 'Yes|No')){
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/cancelCopy";
+        document.forms[0].submit();
+    }
 }
 </script>
 </head>
@@ -42,11 +57,17 @@ function copyWeeklySchedule(){
 			<table class="framed">
 				<tr>
                                     <td colspan="2" align="left">
-                                        <c:if test="${weeklySchedule == null && actionType == null}">
+                                        <c:if test="${actionType == null || actionType eq ''}">
                                         <a href="#" onclick="">Create Annual Schedule</a> 
                                         </c:if>
-                                        <c:if test="${weeklySchedule != null && actionType == null}">
-                                        <a href="#" onclick="">Copy Weekly Schedule</a> 
+                                        <c:if test="${weeklySchedule != null && (actionType == null || actionType eq '')}">
+                                        | <a href="#" onclick="copyWeeklySchedule()">Copy Weekly Schedule</a> 
+                                        </c:if>
+                                        <c:if test="${actionType eq 'copy' && weeklySchedule != null && srcWeeklySchedule != null}">
+                                        <a href="#" onclick="confirmCopy()">Confirm</a> | 
+                                        </c:if>
+                                        <c:if test="${actionType eq 'copy'}">
+                                        <a href="#" onclick="cancelCopy()">Cancel</a> 
                                         </c:if>
                                     </td>
 				</tr>
@@ -95,17 +116,17 @@ function copyWeeklySchedule(){
 	<c:if test="${! empty  weeklySchedule.getProgramSlots()}">
 		<table class="borderAll">
 			<tr>
-				<th><fmt:message key="label.radioprogram.name" /></th>
-				<th><fmt:message key="label.radioprogram.description" /></th>
-				<th><fmt:message key="label.radioprogram.duration" /></th>
-                                <th><fmt:message key="label.radioprogram.duration" /></th>
+				<th><fmt:message key="label.setupsch.psdate" /></th>
+                                <th><fmt:message key="label.setupsch.psstarttime" /></th>
+                                <th><fmt:message key="label.setupsch.psname" /></th>
+				<th><fmt:message key="label.setupsch.psduration" /></th>
 			</tr>
 			<c:forEach var="ps" items="${weeklySchedule.getProgramSlots()}" varStatus="status">
 				<tr class="${status.index%2==0?'even':'odd'}">
-					<td class="nowrap">${ps.duration}</td>
-					<td class="nowrap">${ps.dateOfProgram}</td>
-					<td class="nowrap">${ps.startTime}</td>
+                                        <td class="nowrap">${ps.dateOfProgram}</td>
+                                        <td class="nowrap">${ps.startTime}</td>
                                         <td class="nowrap">${ps.programName}</td>
+					<td class="nowrap">${ps.duration}</td>
 				</tr>
 			</c:forEach>
 		</table>
