@@ -49,6 +49,10 @@ public class WeeklySchedule {
         return data;
     }
     
+    public void removeAllProgramSlots(){
+        programSlots = new ArrayList<ProgramSlot>();
+    }
+    
     @Override 
     public int hashCode(){
         return this.startDate.hashCode();

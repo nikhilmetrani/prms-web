@@ -71,5 +71,12 @@ public class ProgramSlot {
         this.programName = programName;
     }
     
-    
+    public ProgramSlot copy(){
+        ProgramSlot copy = new ProgramSlot();
+        copy.setDuration(this.getDuration());
+        copy.setDateOfProgram(this.getDateOfProgram());
+        copy.setProgramName(this.getProgramName());
+        copy.setStartTime(this.getStartTime());
+        return copy;
+    }
 }

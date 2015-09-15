@@ -16,4 +16,5 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 public interface ProgramSlotDAO {
     public List<ProgramSlot> getProgramSlotsForWeek(String startDate) throws SQLException;
     public void create(ProgramSlot valueObject) throws SQLException;
+    public void deleteByWeek(String startDateOfWeek) throws SQLException;
 }

@@ -90,7 +90,7 @@ function cancelCopy(){
                                         </th>
 					<th width="25%"><fmt:message key="label.setupsch.weeklySchedule" /></th>
 					<th width="25%">
-                                            <select name="weeklySch" >
+                                            <select name="weeklySch" onchange="selectWeeklySchedule()">
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="wsch" items="${annualSchedule.getWeeklySchedules()}">
                                                     <c:choose>
@@ -106,7 +106,7 @@ function cancelCopy(){
                                         </th>
                                 </tr>
 				<tr>
-					<td colspan="4" align="center" ><input type="submit" value="Submit" onclick="selectWeeklySchedule()"> <input
+					<td colspan="4" align="center" ><!--<input type="submit" value="Submit" onclick="selectWeeklySchedule()"> --><input
 						type="reset" value="Reset"></td>
 				</tr>
 			</table>
