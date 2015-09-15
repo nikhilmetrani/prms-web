@@ -5,6 +5,7 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.delegate;
 
+import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
 
@@ -13,13 +14,15 @@ import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
  * @author jayavignesh
  */
 public class ScheduleDelegate {
-    private ScheduleService service;
     
-	public ScheduleDelegate() {
-		service = new ScheduleService();
+	public void processCreate(AnnualSchedule anualSchedule) {
+		ScheduleService service = new ScheduleService();
+		service.processCreate(anualSchedule);
+		
 	}
-	
+        
 	public AnnualScheduleList reviewSelectAnnualSchedule() {
-		return service.getAnnualScheduleList(); 
+            ScheduleService service = new ScheduleService();
+            return service.getAnnualScheduleList(); 
 	}
 }

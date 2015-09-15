@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
+import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
@@ -23,7 +24,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
  *
  * @author jayavignesh
  */
-public class ScheduleDAOImpl implements ScheduleDAO{
+public class ScheduleDAOImpl implements ScheduleDAO {
 
     Connection connection;
 
@@ -45,13 +46,15 @@ public class ScheduleDAOImpl implements ScheduleDAO{
                 searchResults.add(temp);
             }
         } finally {
-                if (result != null)
-                        result.close();
-                if (stmt != null)
-                        stmt.close();
-                closeConnection();
+            if (result != null) {
+                result.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            closeConnection();
         }
-        System.out.println("record size"+searchResults.size());
+        System.out.println("record size" + searchResults.size());
         return searchResults;
     }
 
@@ -71,40 +74,85 @@ public class ScheduleDAOImpl implements ScheduleDAO{
                 searchResults.add(new WeeklySchedule(result.getString("startDate"), result.getString("assignedBy")));
             }
         } finally {
-                if (result != null)
-                        result.close();
-                if (stmt != null)
-                        stmt.close();
-                closeConnection();
+            if (result != null) {
+                result.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            closeConnection();
         }
-        System.out.println("record size"+searchResults.size());
+        System.out.println("record size" + searchResults.size());
         return searchResults;
     }
 
     private void openConnection() {
-            try {
-                    Class.forName(DBConstants.COM_MYSQL_JDBC_DRIVER);
-            } catch (ClassNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
+        try {
+            Class.forName(DBConstants.COM_MYSQL_JDBC_DRIVER);
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-            try {
-                    this.connection = DriverManager.getConnection(DBConstants.dbUrl,
-                                    DBConstants.dbUserName, DBConstants.dbPassword);
-            } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
+        try {
+            this.connection = DriverManager.getConnection(DBConstants.dbUrl,
+                    DBConstants.dbUserName, DBConstants.dbPassword);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
     private void closeConnection() {
-            try {
-                    this.connection.close();
-            } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+        try {
+            this.connection.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void create(AnnualSchedule annualSchedule) throws SQLException {
+        String sql;
+        PreparedStatement statement = null;
+        openConnection();
+        try {
+            sql = "INSERT INTO `annual-schedule` (`year`, `assignedBy`) VALUES (?,?); ";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, annualSchedule.getYear());
+            statement.setString(2, annualSchedule.getAssignedBy());
+            int rowcount = databaseUpdate(statement);
+            if (rowcount != 1) {
+                // System.out.println("PrimaryKey Error when updating DB!");
+                throw new SQLException("PrimaryKey Error when updating DB!");
             }
+        } finally {
+            if (statement != null) {
+                statement.close();
+            }
+            closeConnection();
+        }
+    }
+
+    /**
+     *
+     *
+     * databaseUpdate-method. This method is a helper method for internal use.
+     * It will execute all database handling that will change the information in
+     * tables. SELECT queries will not be executed here however. The return
+     * value indicates how many rows were affected. This method will also make
+     * sure that if cache is used, it will reset when data changes.
+     *
+     * @param conn This method requires working database connection.
+     * @param statement This parameter contains the SQL statement to be
+     * executed.
+     * @return
+     * @throws java.sql.SQLException
+     */
+    protected int databaseUpdate(PreparedStatement statement) throws SQLException {
+        int result = statement.executeUpdate();
+        return result;
     }
 }

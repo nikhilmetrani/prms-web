@@ -13,14 +13,14 @@ import java.util.List;
  * @author jayavignesh
  */
 public class AnnualSchedule {
-    private int year;
-    private String assignedBy;
+    private final int year;
+    private final String assignedBy;
     private List<WeeklySchedule> weeklySchedules;
 
     public AnnualSchedule(int year, String assignedBy){
         this.year = year;
         this.assignedBy = assignedBy;
-        weeklySchedules = new ArrayList<WeeklySchedule>();
+        weeklySchedules = new ArrayList<>();
     }
 
     /**
@@ -37,18 +37,18 @@ public class AnnualSchedule {
         return assignedBy;
     }
     
-    public void addWeeklySchedule(WeeklySchedule wsch){
-        weeklySchedules.add(wsch);
+    public void addWeeklySchedule(WeeklySchedule weeklySchedule){
+        weeklySchedules.add(weeklySchedule);
     }
 
-    public void addAllWeeklySchedules(List<WeeklySchedule> wschs){
-        weeklySchedules.addAll(wschs);
+    public void addAllWeeklySchedules(List<WeeklySchedule> weeklySchedules){
+        weeklySchedules.addAll(weeklySchedules);
     }
         
     public List<WeeklySchedule> getWeeklySchedules(){
-        List<WeeklySchedule> data = new ArrayList<WeeklySchedule>();
-        for(WeeklySchedule wsch : weeklySchedules){
-            data.add(wsch);
+        List<WeeklySchedule> data = new ArrayList<>();
+        for(WeeklySchedule weeklySchedule : weeklySchedules){
+            data.add(weeklySchedule);
         }
         return data;
     }
