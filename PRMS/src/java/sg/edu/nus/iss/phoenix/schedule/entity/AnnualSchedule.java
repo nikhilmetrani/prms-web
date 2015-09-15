@@ -52,7 +52,14 @@ public class AnnualSchedule {
         }
         return data;
     }
-    
+
+    public WeeklySchedule findWeeklySchedule(String startDate){
+        int idx = weeklySchedules.indexOf(new WeeklySchedule(startDate, null));
+        if(idx>=0)
+            return weeklySchedules.get(idx);
+        return null;
+    }
+
     @Override 
     public int hashCode(){
         return this.year;

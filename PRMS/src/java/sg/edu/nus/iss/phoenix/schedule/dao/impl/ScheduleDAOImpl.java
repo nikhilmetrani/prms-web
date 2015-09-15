@@ -12,12 +12,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
-import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDAO;
 import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
@@ -62,8 +62,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
     public List<WeeklySchedule> getAllWeeklySchedules(int year) throws SQLException {
         PreparedStatement stmt = null;
         ResultSet result = null;
+        WeeklySchedule temp = null;
+        List<ProgramSlot> slots = null;
+        ProgramSlotDAO psdao = new DAOFactoryImpl().getProgramSlotDAO();
         openConnection();
-        String sql = "SELECT DATE_FORMAT(startDate, '%d-%m-%Y') as startDate, assignedBy FROM `weekly-schedule` WHERE year(startDate) = ? ORDER BY `startDate` ASC; ";
+        String sql = "SELECT DATE_FORMAT(startDate, '%d-%m-%Y') as startDt, assignedBy FROM `weekly-schedule` WHERE year(startDate) = ? ORDER BY `startDate` ASC; ";
         List<WeeklySchedule> searchResults = new ArrayList<WeeklySchedule>();
         try {
             stmt = connection.prepareStatement(sql);
@@ -71,7 +74,12 @@ public class ScheduleDAOImpl implements ScheduleDAO {
             result = stmt.executeQuery();
 
             while (result.next()) {
-                searchResults.add(new WeeklySchedule(result.getString("startDate"), result.getString("assignedBy")));
+                temp = new WeeklySchedule(result.getString("startDt"), result.getString("assignedBy"));
+                slots = psdao.getProgramSlotsForWeek(temp.getStartDate());
+                for(ProgramSlot slot:slots){
+                    temp.addProgramSlot(slot);
+                }
+                searchResults.add(temp);
             }
         } finally {
             if (result != null) {

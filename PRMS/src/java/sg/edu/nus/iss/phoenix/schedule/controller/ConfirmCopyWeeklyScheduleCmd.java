@@ -11,22 +11,20 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
  *
  * @author jayavignesh
  */
-@Action("selectWeeklySchedule")
-public class ReviewSelectWeeklyScheduleCmd implements Perform{
+@Action("confirmCopy")
+public class ConfirmCopyWeeklyScheduleCmd implements Perform{
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.setAttribute("actionType", req.getParameter("actionType"));
-        AnnualSchedule asch = (AnnualSchedule)req.getSession().getAttribute("annualSchedule");
-        String startDate = req.getParameter("weeklySch");
-        if(startDate!=null && !"".equals(startDate)){
-            req.getSession().setAttribute("weeklySchedule", asch.findWeeklySchedule(startDate));
-        }
-        return "/pages/maintainSchedule/setupSchedule.jsp";
+        req.removeAttribute("actionType");
+        ScheduleDelegate del = new ScheduleDelegate();
+        del.copyWeeklySchedule((WeeklySchedule)req.getSession().getAttribute("srcWeeklySchedule"), (WeeklySchedule)req.getSession().getAttribute("weeklySchedule"));
+        return "/nocturne/viewSchedule";
     }
 }

@@ -21,9 +21,13 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 public class ViewScheduleCmd implements Perform{
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getSession().removeAttribute("annualScheduleList");
-        req.getSession().removeAttribute("annualSchedule");
-        req.getSession().removeAttribute("weeklySchedule");
+        req.getSession().removeAttribute("annualScheduleList"); 
+        if(!"copy".equals(req.getAttribute("actionType"))){
+            req.getSession().removeAttribute("annualSchedule"); 
+            req.getSession().removeAttribute("weeklySchedule"); 
+            req.getSession().removeAttribute("srcAnnualSchedule"); 
+            req.getSession().removeAttribute("srcWeeklySchedule"); 
+        }
         ScheduleDelegate delegate = new ScheduleDelegate();
         req.getSession().setAttribute("annualScheduleList", delegate.reviewSelectAnnualSchedule());
         return "/pages/maintainSchedule/setupSchedule.jsp";
