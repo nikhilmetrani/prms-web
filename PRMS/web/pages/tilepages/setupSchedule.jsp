@@ -15,6 +15,35 @@ function selectAnnualSchedule(){
     }
     document.forms[0].submit();
 }
+
+function selectWeeklySchedule(){
+    if(document.forms[0].weeklySch.value!=""){
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectWeeklySchedule";
+        document.forms[0].submit();
+    }else{
+        selectAnnualSchedule();
+    }
+}
+
+function copyWeeklySchedule(){
+    document.forms[0].actionType.value = "copy";
+    document.forms[0].action = "${pageContext.request.contextPath}/nocturne/copyWeeklySchedule";
+    document.forms[0].submit();
+}
+
+function confirmCopy(){
+    if(confirm('All the Program Slots in the selected Weekly Schedule will be replaced with the copied slots. Do you want to continue?', 'Yes|No')){
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/confirmCopy";
+        document.forms[0].submit();
+    }
+}
+
+function cancelCopy(){
+    if(confirm('Do you want to Cancel the copy operation?', 'Yes|No')){
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/cancelCopy";
+        document.forms[0].submit();
+    }
+}
 </script>
 </head>
 <body>
@@ -23,12 +52,23 @@ function selectAnnualSchedule(){
 	</h2>
 	<form action="${pageContext.request.contextPath}/nocturne/viewSchedule"
 		method=post>
+            <input type="hidden" name="actionType" value="${actionType}" />
 		<center>
 			<table class="framed">
 				<tr>
                                     <td colspan="2" align="left">
+                                        <c:if test="${actionType == null || actionType eq ''}">
                                         <a href="#" onclick="">Create Annual Schedule</a> 
-                                        | <a href="#" onclick="">Copy Weekly Schedule</a>
+                                        </c:if>
+                                        <c:if test="${weeklySchedule != null && (actionType == null || actionType eq '')}">
+                                        | <a href="#" onclick="copyWeeklySchedule()">Copy Weekly Schedule</a> 
+                                        </c:if>
+                                        <c:if test="${actionType eq 'copy' && weeklySchedule != null && srcWeeklySchedule != null}">
+                                        <a href="#" onclick="confirmCopy()">Confirm</a> | 
+                                        </c:if>
+                                        <c:if test="${actionType eq 'copy'}">
+                                        <a href="#" onclick="cancelCopy()">Cancel</a> 
+                                        </c:if>
                                     </td>
 				</tr>
 				<tr>
@@ -37,49 +77,60 @@ function selectAnnualSchedule(){
                                             <select name="annualSch" onchange="selectAnnualSchedule()">
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="asch" items="${annualScheduleList.getAllAnnualSchedules()}">
-                                                    <c:if test="${annualSchedule != null && annualSchedule.year eq asch.year}">
+                                                    <c:choose>
+                                                    <c:when test="${annualSchedule != null && annualSchedule.year eq asch.year}">
                                                         <option value="${asch.year}" selected>${asch.year}</option>
-                                                    </c:if>
-                                                    <c:if test="${annualSchedule == null}">
+                                                    </c:when>
+                                                    <c:otherwise>
                                                         <option value="${asch.year}">${asch.year}</option>
-                                                    </c:if>
+                                                    </c:otherwise>
+                                                    </c:choose>
                                                 </c:forEach>
                                             </select>
                                         </th>
 					<th width="25%"><fmt:message key="label.setupsch.weeklySchedule" /></th>
 					<th width="25%">
-                                            <select name="weeklySch">
+                                            <select name="weeklySch" onchange="selectWeeklySchedule()">
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="wsch" items="${annualSchedule.getWeeklySchedules()}">
-                                                    <option value="${wsch.startDate}">${wsch.startDate}</option>
+                                                    <c:choose>
+                                                    <c:when test="${weeklySchedule != null && weeklySchedule.startDate eq wsch.startDate}">
+                                                        <option value="${wsch.startDate}" selected>${wsch.startDate}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${wsch.startDate}">${wsch.startDate}</option>
+                                                    </c:otherwise>
+                                                    </c:choose>
                                                 </c:forEach>
                                             </select>
                                         </th>
                                 </tr>
 				<tr>
-					<td colspan="4" align="center" ><input type="submit" value="Submit"> <input
+					<td colspan="4" align="center" ><!--<input type="submit" value="Submit" onclick="selectWeeklySchedule()"> --><input
 						type="reset" value="Reset"></td>
 				</tr>
 			</table>
 		</center>
 
 	</form>
-	<!--<c:if test="${! empty  searchrplist}">
+	<c:if test="${! empty  weeklySchedule.getProgramSlots()}">
 		<table class="borderAll">
 			<tr>
-				<th><fmt:message key="label.radioprogram.name" /></th>
-				<th><fmt:message key="label.radioprogram.description" /></th>
-				<th><fmt:message key="label.radioprogram.duration" /></th>
+				<th><fmt:message key="label.setupsch.psdate" /></th>
+                                <th><fmt:message key="label.setupsch.psstarttime" /></th>
+                                <th><fmt:message key="label.setupsch.psname" /></th>
+				<th><fmt:message key="label.setupsch.psduration" /></th>
 			</tr>
-			<c:forEach var="rprogram" items="${searchrplist}" varStatus="status">
+			<c:forEach var="ps" items="${weeklySchedule.getProgramSlots()}" varStatus="status">
 				<tr class="${status.index%2==0?'even':'odd'}">
-					<td class="nowrap">${rprogram.name}</td>
-					<td class="nowrap">${rprogram.description}</td>
-					<td class="nowrap">${rprogram.typicalDuration}</td>
+                                        <td class="nowrap">${ps.dateOfProgram}</td>
+                                        <td class="nowrap">${ps.startTime}</td>
+                                        <td class="nowrap">${ps.programName}</td>
+					<td class="nowrap">${ps.duration}</td>
 				</tr>
 			</c:forEach>
 		</table>
-	</c:if>-->
+	</c:if>
 
 </body>
 </html>
