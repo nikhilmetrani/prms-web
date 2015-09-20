@@ -18,5 +18,5 @@ public interface ScheduleDAO {
     public List<AnnualSchedule> getAllAnnualSchedules() throws SQLException;
     public List<WeeklySchedule> getAllWeeklySchedules(int year) throws SQLException;
     public void create(AnnualSchedule annualSchedule) throws SQLException;
-    public void create(WeeklySchedule weeklySchedule) throws SQLException;
+    public void create(List<WeeklySchedule> weeklySchedules) throws SQLException;
 }

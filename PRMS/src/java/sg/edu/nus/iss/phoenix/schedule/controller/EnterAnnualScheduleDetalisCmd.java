@@ -5,22 +5,26 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.controller;
 
+import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
  *
  * @author Nikhil Metrani
  */
+@Action("enteras")
 public class EnterAnnualScheduleDetalisCmd implements Perform{
 
     @Override
@@ -29,12 +33,30 @@ public class EnterAnnualScheduleDetalisCmd implements Perform{
         int year = Integer.parseInt(req.getParameter("year"));
         String assignedBy = req.getParameter("assignedBy");
         AnnualSchedule annualSchedule = new AnnualSchedule(year, assignedBy);
-        System.out.println(annualSchedule.toString());
+        //System.out.println(annualSchedule.toString());
         scheduleDelegate.processCreate(annualSchedule);
         
-        AnnualScheduleList data = scheduleDelegate.reviewSelectAnnualSchedule();
-        req.setAttribute("asl", data);
-        return "/pages/crudas.jsp";
+        List<WeeklySchedule> weeklySchedules = new ArrayList();
+        
+        SimpleDateFormat format1 = new SimpleDateFormat("YYYY-MM-DD");
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, 0, 1, 0, 0);
+        for (int i = 0; i <= 366; i++) 
+        {
+            try 
+            {
+                cal.add(Calendar.WEEK_OF_YEAR, +1);
+                cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                String formatted = format1.format(cal.getTime());
+                formatted = formatted + " 00:00:00";
+                WeeklySchedule weeklySchedule = new WeeklySchedule(formatted, assignedBy);
+                weeklySchedules.add(weeklySchedule);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }        
+        scheduleDelegate.processCreate(weeklySchedules);
+        return "/nocturne/viewSchedule";
     }
     
 }

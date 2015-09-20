@@ -5,6 +5,7 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.delegate;
 
+import java.util.List;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
@@ -18,6 +19,11 @@ public class ScheduleDelegate {
     public void processCreate(AnnualSchedule anualSchedule) {
             ScheduleService service = new ScheduleService();
             service.processCreate(anualSchedule);
+    }
+    
+    public void processCreate(List<WeeklySchedule> weeklySchedules) {
+            ScheduleService service = new ScheduleService();
+            service.processCreate(weeklySchedules);
     }
 
     public AnnualScheduleList reviewSelectAnnualSchedule() {

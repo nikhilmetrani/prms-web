@@ -145,19 +145,21 @@ public class ScheduleDAOImpl implements ScheduleDAO {
     }
     
     @Override
-    public void create(WeeklySchedule weeklySchedule) throws SQLException {
+    public void create(List<WeeklySchedule> weeklySchedules) throws SQLException {
         String sql;
         PreparedStatement statement = null;
         openConnection();
         try {
-            sql = "INSERT INTO `weekly-schedule` (`startDate`, `assignedBy`) VALUES (?,?); ";
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, weeklySchedule.getStartDate());
-            statement.setString(2, weeklySchedule.getAssignedBy());
-            int rowcount = databaseUpdate(statement);
-            if (rowcount != 1) {
-                // System.out.println("PrimaryKey Error when updating DB!");
-                throw new SQLException("PrimaryKey Error when updating DB!");
+            for (WeeklySchedule weeklySchedule: weeklySchedules) {
+                sql = "INSERT INTO `weekly-schedule` (`startDate`, `assignedBy`) VALUES (?,?); ";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, weeklySchedule.getStartDate());
+                statement.setString(2, weeklySchedule.getAssignedBy());
+                int rowcount = databaseUpdate(statement);
+                if (rowcount != 1) {
+                    // System.out.println("PrimaryKey Error when updating DB!");
+                    throw new SQLException("PrimaryKey Error when updating DB!");
+                }
             }
         } finally {
             if (statement != null) {

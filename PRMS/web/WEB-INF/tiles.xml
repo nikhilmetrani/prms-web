@@ -27,4 +27,7 @@
         <definition name="setupSchedulePage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/setupSchedule.jsp" />
 	</definition>
+        <definition name="createasPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/createas.jsp" />
+	</definition>
 </tiles-definitions>

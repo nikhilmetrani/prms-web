@@ -57,8 +57,12 @@ function cancelCopy(){
 			<table class="framed">
 				<tr>
                                     <td colspan="2" align="left">
+                                        <c:url var="url" scope="page" value="/nocturne/createas">
+                                            <c:param name="year" value=""/>
+                                            <c:param name="assignedBy" value="${sessionScope.user.id}"/>
+                                        </c:url>
                                         <c:if test="${actionType == null || actionType eq ''}">
-                                        <a href="#" onclick="">Create Annual Schedule</a> 
+                                        <a href="${url}" onclick="">Create Annual Schedule</a> 
                                         </c:if>
                                         <c:if test="${weeklySchedule != null && (actionType == null || actionType eq '')}">
                                         | <a href="#" onclick="copyWeeklySchedule()">Copy Weekly Schedule</a> 
