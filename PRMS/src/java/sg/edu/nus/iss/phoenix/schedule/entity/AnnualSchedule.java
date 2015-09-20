@@ -16,11 +16,17 @@ public class AnnualSchedule {
     private final int year;
     private final String assignedBy;
     private List<WeeklySchedule> weeklySchedules;
-
+    
     public AnnualSchedule(int year, String assignedBy){
         this.year = year;
         this.assignedBy = assignedBy;
         weeklySchedules = new ArrayList<>();
+    }
+    
+    public AnnualSchedule(int year, String assignedBy, List<WeeklySchedule> weeklySchedules){
+        this.year = year;
+        this.assignedBy = assignedBy;
+        this.weeklySchedules = weeklySchedules;
     }
 
     /**
