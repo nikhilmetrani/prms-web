@@ -7,13 +7,15 @@ package sg.edu.nus.iss.phoenix.schedule.entity;
 
 /**
  *
- * @author jayavignesh
+ * @author jayavignesh, Rushabh Shah
  */
 public class ProgramSlot {
     private String duration;
     private String dateOfProgram; 
     private String startTime;
     private String programName;
+    private String producer;
+    private String presenter;
 
     /**
      * @return the duration
@@ -70,6 +72,36 @@ public class ProgramSlot {
     public void setProgramName(String programName) {
         this.programName = programName;
     }
+
+     /**
+     * @return the producer user id
+     */
+    public String getProducer() {
+        return producer;
+    }
+    
+     /**
+     * @param producer id
+     */ 
+    public void setProducer(String producer) {
+        this.producer = producer;
+    }
+
+     /**
+     * @return the presenter user id
+     */
+    public String getPresenter() {
+        return presenter;
+    }
+    
+     /**
+     * @param presenter user id
+     */ 
+    public void setPresenter(String presenter) {
+        this.presenter = presenter;
+    }
+    
+    
     
     public ProgramSlot copy(){
         ProgramSlot copy = new ProgramSlot();
@@ -77,6 +109,12 @@ public class ProgramSlot {
         copy.setDateOfProgram(this.getDateOfProgram());
         copy.setProgramName(this.getProgramName());
         copy.setStartTime(this.getStartTime());
+        copy.setProducer(this.getProducer());
+        copy.setPresenter(this.getPresenter());
         return copy;
     }
+    
+    
+    
+    
 }

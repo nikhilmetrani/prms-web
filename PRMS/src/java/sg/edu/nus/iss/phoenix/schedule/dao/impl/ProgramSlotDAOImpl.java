@@ -18,7 +18,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh
+ * @author jayavignesh, Rushabh Shah
  */
 public class ProgramSlotDAOImpl implements ProgramSlotDAO{
 
@@ -39,13 +39,15 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
             openConnection();
             try {
                     sql = "INSERT INTO `program-slot` ( duration, dateOfProgram, startTime, `program-name`) " 
-                            +   "VALUES (str_to_date(?, '%H:%i:%s'), str_to_date(?, '%d-%m-%Y'), str_to_date(?, '%H:%i:%s'), ?) ";
+                            +   "VALUES (str_to_date(?, '%H:%i:%s'), str_to_date(?, '%d-%m-%Y'), str_to_date(?, '%H:%i:%s'), ?, ?, ?) ";
                     stmt = this.connection.prepareStatement(sql);
 
                     stmt.setString(1, valueObject.getDuration());
                     stmt.setString(2, valueObject.getDateOfProgram());
                     stmt.setString(3, valueObject.getStartTime());
                     stmt.setString(4, valueObject.getProgramName());
+                    stmt.setString(5, valueObject.getProducer());
+                    stmt.setString(6, valueObject.getPresenter());
 
                     stmt.executeUpdate();
             } finally {
@@ -62,7 +64,8 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
         ProgramSlot temp = null;
         openConnection();
         String sql = "SELECT duration, DATE_FORMAT(dateOfProgram, '%d-%m-%Y') AS dtOfProgram, " 
-                + "DATE_FORMAT(startTime, '%H:%i:%s') as stTime, `program-name` as programName "
+                + "DATE_FORMAT(startTime, '%H:%i:%s') as stTime, "
+                + "`program-name` as programName, `producer` as producer,`presenter` as presenter "
                 + "FROM `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < str_to_date(?, '%d-%m-%Y') + 7 " 
                 + "AND dateOfProgram <= str_to_date(?, '%d-%m-%Y') " 
                 + "ORDER BY dateOfProgram ASC, startTime ASC ";
@@ -80,6 +83,8 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
                 temp.setDateOfProgram(result.getString("dtOfProgram"));
                 temp.setStartTime(result.getString("stTime"));
                 temp.setProgramName(result.getString("programName"));
+                temp.setProducer(result.getString("producer"));
+                temp.setPresenter(result.getString("presenter"));
                 searchResults.add(temp);
             }
         } finally {
