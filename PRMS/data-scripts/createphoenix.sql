@@ -123,10 +123,24 @@ CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
   `dateOfProgram` DATETIME NOT NULL ,
   `startTime` DATETIME NULL ,
   `program-name` VARCHAR(45) NULL ,
+  `producer` VARCHAR(40),
+  `presenter` VARCHAR(40),
   PRIMARY KEY (`duration`, `dateOfProgram`) ,
   CONSTRAINT `name`
     FOREIGN KEY (`program-name` )
     REFERENCES `phoenix`.`radio-program` (`name` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT 
+     `producer_fk`
+     FOREIGN KEY(`producer`) 
+     REFERENCES `phoenix`.`user` (`id` )
+  ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT 
+     `presenter_fk` 
+     FOREIGN KEY(`presenter`) 
+     REFERENCES `phoenix`.`user` (`id` ) 
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -139,7 +153,7 @@ CREATE UNIQUE INDEX `dateOfProgram_UNIQUE` ON `phoenix`.`program-slot` (`dateOfP
 -- Insert Data For Table `phoenix`.`program-slot`
 -- -----------------------------------------------------
 
-Insert into phoenix.`program-slot` values (str_to_date('00:30:00', '%H:%i:%s'), str_to_date('10-01-2015', '%d-%m-%Y'), str_to_date('13:00:00', '%H:%i:%s'), 'news');
+Insert into phoenix.`program-slot` values (str_to_date('00:30:00', '%H:%i:%s'), str_to_date('10-01-2015', '%d-%m-%Y'), str_to_date('13:00:00', '%H:%i:%s'), 'news','dilbert','wally');
 
 
 -- -----------------------------------------------------
