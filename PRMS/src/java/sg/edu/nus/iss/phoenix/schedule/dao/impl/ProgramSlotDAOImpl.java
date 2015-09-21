@@ -38,8 +38,8 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
             PreparedStatement stmt = null;
             openConnection();
             try {
-                    sql = "INSERT INTO `program-slot` ( duration, dateOfProgram, startTime, `program-name`) " 
-                            +   "VALUES (str_to_date(?, '%H:%i:%s'), str_to_date(?, '%d-%m-%Y'), str_to_date(?, '%H:%i:%s'), ?, ?, ?) ";
+                    sql = "INSERT INTO `program-slot` ( duration, dateOfProgram, startTime, `program-name`, producer, presenter) " 
+                            +   "VALUES (str_to_date(?, '%H:%i:%s'), str_to_date(?, '%d-%m-%Y'), str_to_date(?, '%H:%i:%s'), ?, ?, ? ) ";
                     stmt = this.connection.prepareStatement(sql);
 
                     stmt.setString(1, valueObject.getDuration());

@@ -48,7 +48,7 @@ public class AnnualSchedule {
     }
 
     public void addAllWeeklySchedules(List<WeeklySchedule> weeklySchedules){
-        weeklySchedules.addAll(weeklySchedules);
+        this.weeklySchedules.addAll(weeklySchedules);
     }
         
     public List<WeeklySchedule> getWeeklySchedules(){

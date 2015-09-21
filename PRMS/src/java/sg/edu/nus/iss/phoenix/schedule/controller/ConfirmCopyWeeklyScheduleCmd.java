@@ -25,6 +25,7 @@ public class ConfirmCopyWeeklyScheduleCmd implements Perform{
         req.removeAttribute("actionType");
         ScheduleDelegate del = new ScheduleDelegate();
         del.copyWeeklySchedule((WeeklySchedule)req.getSession().getAttribute("srcWeeklySchedule"), (WeeklySchedule)req.getSession().getAttribute("weeklySchedule"));
+        req.setAttribute("successMsg", "Weekly Schedule Copied Successfully");
         return "/nocturne/viewSchedule";
     }
 }

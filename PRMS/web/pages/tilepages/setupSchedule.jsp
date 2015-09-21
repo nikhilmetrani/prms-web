@@ -45,6 +45,11 @@ function cancelCopy(){
     }
 }
 </script>
+<script>
+<c:if test="${successMsg != null && !(successMsg eq '')}">
+alert('${successMsg}');
+</c:if>
+</script>
 </head>
 <body>
 	<h2>
