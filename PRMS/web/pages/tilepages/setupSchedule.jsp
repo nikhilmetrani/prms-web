@@ -124,6 +124,8 @@ function cancelCopy(){
                                 <th><fmt:message key="label.setupsch.psstarttime" /></th>
                                 <th><fmt:message key="label.setupsch.psname" /></th>
 				<th><fmt:message key="label.setupsch.psduration" /></th>
+                                <th><fmt:message key="label.setupsch.pspresenter" /></th>
+                                <th><fmt:message key="label.setupsch.psproducer" /></th>
 			</tr>
 			<c:forEach var="ps" items="${weeklySchedule.getProgramSlots()}" varStatus="status">
 				<tr class="${status.index%2==0?'even':'odd'}">
@@ -131,6 +133,8 @@ function cancelCopy(){
                                         <td class="nowrap">${ps.startTime}</td>
                                         <td class="nowrap">${ps.programName}</td>
 					<td class="nowrap">${ps.duration}</td>
+                                        <td class="nowrap">${ps.producer}</td>
+                                        <td class="nowrap">${ps.presenter}</td>
 				</tr>
 			</c:forEach>
 		</table>
