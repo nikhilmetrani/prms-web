@@ -27,6 +27,15 @@
         <definition name="setupSchedulePage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/setupSchedule.jsp" />
 	</definition>
+        <definition name="createpsPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/createps.jsp" />
+	</definition>
+        <definition name="modifypsPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/modifyps.jsp" />
+	</definition>
+        <definition name="deletepsPage" extends="homePage">
+		<put-attribute name="body" value="/pages/tilepages/deleteps.jsp" />
+	</definition>        
         <definition name="createasPage" extends="homePage">
 		<put-attribute name="body" value="/pages/tilepages/createas.jsp" />
 	</definition>

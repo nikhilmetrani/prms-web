@@ -39,7 +39,33 @@
 				</a>
 			</td>
 	</tr>
-	</c:if>
+
+        <tr>
+            <td>
+				<a href="<c:url value="/nocturne/createps"/>"> <fmt:message
+						key="caption.menu.createps" />
+				</a>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+				<a href="<c:url value="/nocturne/modifyps"/>"> <fmt:message
+						key="caption.menu.modifyps" />
+				</a>
+            </td>
+        </tr>
+        
+        <tr>
+	    <td>
+				<a href="<c:url value="/nocturne/deleteps"/>"> <fmt:message
+						key="caption.menu.deleteps" />
+				</a>
+            </td>
+        </tr>
+
+        
+        </c:if>
 	<tr>
 		<td><a href="<c:url value="/nocturne/logout"/>"> <fmt:message
 					key="caption.menu.logout" />
