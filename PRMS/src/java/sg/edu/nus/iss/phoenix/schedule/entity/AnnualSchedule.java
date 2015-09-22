@@ -43,14 +43,27 @@ public class AnnualSchedule {
         return assignedBy;
     }
     
+    /**
+     * Adds a WeeklySchedule to the AnnualSchedule
+     * @param weeklySchedule WeeklySchedule object that has to be added to the AnnualSchedule
+     * @see WeeklySchedule
+     */
     public void addWeeklySchedule(WeeklySchedule weeklySchedule){
         weeklySchedules.add(weeklySchedule);
     }
 
+    /**
+     * Adds all the WeeklySchedule objects from the List to the AnnualSchedule
+     * @param weeklySchedules 
+     */
     public void addAllWeeklySchedules(List<WeeklySchedule> weeklySchedules){
         this.weeklySchedules.addAll(weeklySchedules);
     }
-        
+
+    /**
+     * Returns the list of WeeklySchedule assigned to the AnnualSchedule
+     * @return      List of WeeklySchedule
+     */
     public List<WeeklySchedule> getWeeklySchedules(){
         List<WeeklySchedule> data = new ArrayList<>();
         for(WeeklySchedule weeklySchedule : weeklySchedules){
@@ -59,6 +72,11 @@ public class AnnualSchedule {
         return data;
     }
 
+    /**
+     * Finds and returns the WeeklySchedule for the matching startDate
+     * @param startDate Start date of the week
+     * @return WeeklySchedule
+     */
     public WeeklySchedule findWeeklySchedule(String startDate){
         int idx = weeklySchedules.indexOf(new WeeklySchedule(startDate, null));
         if(idx>=0)

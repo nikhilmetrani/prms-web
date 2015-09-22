@@ -28,6 +28,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
 
     Connection connection;
 
+    /**
+     * Returns List of Annual Schedules
+     * @return   List of AnnualSchedule
+     * @throws SQLException 
+     */
     @Override
     public List<AnnualSchedule> getAllAnnualSchedules() throws SQLException {
         PreparedStatement stmt = null;
@@ -58,6 +63,12 @@ public class ScheduleDAOImpl implements ScheduleDAO {
         return searchResults;
     }
 
+    /**
+     * Returns the list of Weekly Schedules
+     * @param year  
+     * @return   List of WeeklySchedule
+     * @throws SQLException 
+     */
     @Override
     public List<WeeklySchedule> getAllWeeklySchedules(int year) throws SQLException {
         PreparedStatement stmt = null;
@@ -121,6 +132,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
         }
     }
 
+    /**
+     * Creates Annual Scedule
+     * @param annualSchedule
+     * @throws SQLException 
+     */
     @Override
     public void create(AnnualSchedule annualSchedule) throws SQLException {
         String sql;
@@ -144,6 +160,11 @@ public class ScheduleDAOImpl implements ScheduleDAO {
         }
     }
     
+    /**
+     * Creates Weekly Schedule
+     * @param weeklySchedules
+     * @throws SQLException 
+     */
     @Override
     public void create(List<WeeklySchedule> weeklySchedules) throws SQLException {
         String sql;

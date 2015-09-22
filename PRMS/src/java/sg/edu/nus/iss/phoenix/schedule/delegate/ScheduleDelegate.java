@@ -16,21 +16,33 @@ import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
  * @author jayavignesh
  */
 public class ScheduleDelegate {
+    /**
+     * @see ScheduleService
+     */
     public void processCreate(AnnualSchedule anualSchedule) {
             ScheduleService service = new ScheduleService();
             service.processCreate(anualSchedule);
     }
     
+    /**
+     * @see ScheduleService
+     */
     public void processCreate(List<WeeklySchedule> weeklySchedules) {
             ScheduleService service = new ScheduleService();
             service.processCreate(weeklySchedules);
     }
 
+    /**
+     * @see ScheduleService
+     */
     public AnnualScheduleList reviewSelectAnnualSchedule() {
         ScheduleService service = new ScheduleService();
         return service.getAnnualScheduleList(); 
     }
 
+    /**
+     * @see ScheduleService
+     */
     public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch){
         ScheduleService service = new ScheduleService();
         service.copyWeeklySchedule(srcWsch, tgtWsch);

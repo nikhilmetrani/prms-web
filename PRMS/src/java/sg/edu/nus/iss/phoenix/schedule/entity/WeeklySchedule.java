@@ -37,10 +37,18 @@ public class WeeklySchedule {
         return assignedBy;
     }
     
+    /**
+     * Adds a ProgramSlot to the WeeklySchedule
+     * @param slot ProgramSlot object that has to be added to the WeeklySchedule
+     */
     public void addProgramSlot(ProgramSlot slot){
         programSlots.add(slot);
     }
     
+    /**
+     * Returns the list of ProgramSlots
+     * @return      List of ProgramSlot
+     */
     public List<ProgramSlot> getProgramSlots(){
         List<ProgramSlot> data = new ArrayList<ProgramSlot>();
         for(ProgramSlot ps : programSlots){
@@ -49,6 +57,9 @@ public class WeeklySchedule {
         return data;
     }
     
+    /**
+     * Removes all the ProgramSlot contained by the WeeklySchedule
+     */
     public void removeAllProgramSlots(){
         programSlots = new ArrayList<ProgramSlot>();
     }

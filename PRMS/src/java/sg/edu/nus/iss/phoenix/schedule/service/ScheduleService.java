@@ -30,6 +30,9 @@ public class ScheduleService {
     DAOFactoryImpl factory;
     ScheduleDAO scheduleDao;
 
+    /**
+     * Construtor
+    */
     public ScheduleService() {
             super();
             // TODO Auto-generated constructor stub
@@ -37,6 +40,11 @@ public class ScheduleService {
             scheduleDao = factory.getScheduleDAO();
     }
 
+    /**
+     * Returns the AnnualScheduleList
+     * @return AnnualScheduleList
+     * @see AnnualScheduleList
+     */
     public AnnualScheduleList getAnnualScheduleList() {
         AnnualScheduleList data = new AnnualScheduleList();
         List<AnnualSchedule> aschList;
@@ -51,6 +59,11 @@ public class ScheduleService {
         return data; 
     }
     
+    /**
+     * Creates an Annual Schedule
+     * @param annualSchedule AnnualSchedule object that has to be persisted
+     * @see AnnualSchedule
+     */
     public void processCreate(AnnualSchedule annualSchedule) {
         try {
             scheduleDao.create(annualSchedule);
@@ -60,6 +73,10 @@ public class ScheduleService {
         }
     }
     
+    /**
+     * Creates all the Weekly Schedules contained in the List
+     * @param weeklySchedules List of WeeklySchedule objects that has to be persisted
+     */
     public void processCreate(List<WeeklySchedule> weeklySchedules) {
         try {
             scheduleDao.create(weeklySchedules);
@@ -68,7 +85,12 @@ public class ScheduleService {
             e.printStackTrace();
         }
     }
-        
+
+    /**
+     * Copies the ProgramSlot from Source WeeklySchedule to Target WeeklySchedule
+     * @param srcWsch Source WeeklySchedule
+     * @param tgtWsch Target WeeklySchedule
+     */
     public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch){
         List<ProgramSlot> srcSlots = srcWsch.getProgramSlots();
         List<ProgramSlot> tgtSlots = null;
