@@ -7,9 +7,11 @@ package sg.edu.nus.iss.phoenix.schedule.service;
 
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
@@ -72,7 +74,8 @@ public class ScheduleService {
         List<ProgramSlot> tgtSlots = null;
         ProgramSlotService psservice = new ProgramSlotService();
         ProgramSlot temp = null;
-        SimpleDateFormat format = new SimpleDateFormat("dd-mm-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar cal = Calendar.getInstance();
         Date srcDt = null;
         Date srcPsDt = null;
         Date tgtDt = null;
@@ -89,15 +92,21 @@ public class ScheduleService {
         tgtWsch.removeAllProgramSlots();
 
         for(ProgramSlot slot : srcSlots){
+            String newDtStr = null;
             temp = slot.copy();
             try{
                 srcPsDt = format.parse(slot.getDateOfProgram());
                 diff = srcPsDt.getTime() - srcDt.getTime();
+                cal.setTime(tgtDt);
+                cal.add(Calendar.DATE, (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+                newDtStr = format.format(cal.getTime());
+                if(!newDtStr.substring(6).equals(tgtWsch.getStartDate().substring(6))) 
+                    continue;
             }catch(Exception e){
                 e.printStackTrace();
                 return;
             }
-            temp.setDateOfProgram(format.format(new Date(tgtDt.getTime() + diff)));
+            temp.setDateOfProgram(newDtStr);
             psservice.create(temp);
         }
 

@@ -66,7 +66,7 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
         String sql = "SELECT duration, DATE_FORMAT(dateOfProgram, '%d-%m-%Y') AS dtOfProgram, " 
                 + "DATE_FORMAT(startTime, '%H:%i:%s') as stTime, "
                 + "`program-name` as programName, `producer` as producer,`presenter` as presenter "
-                + "FROM `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < str_to_date(?, '%d-%m-%Y') + 7 " 
+                + "FROM `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < DATE_ADD(str_to_date(?, '%d-%m-%Y'), INTERVAL 7 DAY) " 
                 + "AND dateOfProgram <= str_to_date(?, '%d-%m-%Y') " 
                 + "ORDER BY dateOfProgram ASC, startTime ASC ";
         List<ProgramSlot> searchResults = new ArrayList<ProgramSlot>();
@@ -105,7 +105,7 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
             PreparedStatement stmt = null;
             openConnection();
             try {
-                    sql = "delete from `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < str_to_date(?, '%d-%m-%Y') + 7 " 
+                    sql = "delete from `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < DATE_ADD(str_to_date(?, '%d-%m-%Y'), INTERVAL 7 DAY) " 
                             + "AND dateOfProgram <= str_to_date(?, '%d-%m-%Y') "; 
                     stmt = this.connection.prepareStatement(sql);
 
