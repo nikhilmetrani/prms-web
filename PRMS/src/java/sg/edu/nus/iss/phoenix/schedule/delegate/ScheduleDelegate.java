@@ -17,6 +17,7 @@ import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
  */
 public class ScheduleDelegate {
     /**
+     * Delegates the call to ScheduleService
      * @see ScheduleService
      */
     public void processCreate(AnnualSchedule anualSchedule) {
@@ -25,6 +26,7 @@ public class ScheduleDelegate {
     }
     
     /**
+     * Delegates the call to ScheduleService
      * @see ScheduleService
      */
     public void processCreate(List<WeeklySchedule> weeklySchedules) {
@@ -33,6 +35,7 @@ public class ScheduleDelegate {
     }
 
     /**
+     * Delegates the call to ScheduleService
      * @see ScheduleService
      */
     public AnnualScheduleList reviewSelectAnnualSchedule() {
@@ -41,6 +44,7 @@ public class ScheduleDelegate {
     }
 
     /**
+     * Delegates the call to ScheduleService
      * @see ScheduleService
      */
     public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch){

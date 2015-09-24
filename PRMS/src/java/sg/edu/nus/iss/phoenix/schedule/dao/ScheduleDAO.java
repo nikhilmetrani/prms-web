@@ -7,11 +7,15 @@ package sg.edu.nus.iss.phoenix.schedule.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import sg.edu.nus.iss.phoenix.schedule.dao.impl.ScheduleDAOImpl;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
- *
+ * Interface for ScheduleDAOImpl
+ * 
+ * @see ScheduleDAOImpl
+ * 
  * @author jayavignesh
  */
 public interface ScheduleDAO {

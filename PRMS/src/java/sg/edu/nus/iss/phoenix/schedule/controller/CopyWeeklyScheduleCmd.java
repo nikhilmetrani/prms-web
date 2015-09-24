@@ -11,10 +11,10 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 
 /**
- *
+ * Command Object that handles the Copy Weekly Schedule Command
+ * 
  * @author jayavignesh
  */
 @Action("copyWeeklySchedule")

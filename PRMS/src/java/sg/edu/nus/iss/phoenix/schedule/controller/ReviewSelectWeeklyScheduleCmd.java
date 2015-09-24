@@ -14,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 
 /**
- *
+ * Command Object that handles the Review/Select Weekly Schedule Command
+ * 
  * @author jayavignesh
  */
 @Action("selectWeeklySchedule")

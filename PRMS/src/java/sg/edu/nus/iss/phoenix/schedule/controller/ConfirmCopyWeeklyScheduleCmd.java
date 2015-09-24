@@ -15,7 +15,8 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
- *
+ * Command Object that handles the Confirm Copy Weekly Schedule Command
+ * 
  * @author jayavignesh
  */
 @Action("confirmCopy")

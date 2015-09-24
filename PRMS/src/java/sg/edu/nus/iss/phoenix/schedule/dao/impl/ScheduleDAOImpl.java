@@ -29,7 +29,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
     Connection connection;
 
     /**
-     * Returns List of Annual Schedules
+     * Retrieves all the Annual Schedules from database and returns as a List
      * @return   List of AnnualSchedule
      * @throws SQLException 
      */
@@ -64,7 +64,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
     }
 
     /**
-     * Returns the list of Weekly Schedules
+     * Retrieves all the Weekly Schedules from database for the provided year and returns as a List
      * @param year  
      * @return   List of WeeklySchedule
      * @throws SQLException 
@@ -133,7 +133,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
     }
 
     /**
-     * Creates Annual Scedule
+     * Creates an Annual Schedule in database
      * @param annualSchedule
      * @throws SQLException 
      */
@@ -161,7 +161,7 @@ public class ScheduleDAOImpl implements ScheduleDAO {
     }
     
     /**
-     * Creates Weekly Schedule
+     * Creates the Weekly Schedule in database
      * @param weeklySchedules
      * @throws SQLException 
      */

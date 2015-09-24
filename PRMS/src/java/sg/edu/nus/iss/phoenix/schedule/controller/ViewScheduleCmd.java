@@ -17,7 +17,8 @@ import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 
 /**
- *
+ * Command Object that handles the View Schedule Command
+ * 
  * @author jayavignesh
  */
 @Action("viewSchedule")
