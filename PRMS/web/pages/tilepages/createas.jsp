@@ -17,13 +17,13 @@
 		<center>
 			<table cellpadding=4 cellspacing=2 border=0>
 				<tr>
-					<th width="30%"><fmt:message key="label.createas.year" /></th>
-					<th width="45%"><fmt:message key="label.createas.assignedBy" /></th>
+					<th width="30%"><fmt:message key="label.createas.value" /></th>
+					<th width="45%"><fmt:message key="label.createas.data" /></th>
 				</tr>
 				<tr>
 					<td><fmt:message key="label.createas.year" /></td>
 					<td><input type="text" name="year" value="${param['year']}" size=15
-								maxlength=4>
+								maxlength=4 >
 					</td>
 				</tr>
 				<tr>
@@ -37,6 +37,8 @@
 		<input type="submit" value="Submit"> <input type="reset"
 			value="Reset">
 	</form>
-
+    <script language=javascript>
+        document.forms[0].year.focus();
+    </script>
 </body>
 </html>

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,30 +32,39 @@ public class EnterAnnualScheduleDetalisCmd implements Perform{
         int year = Integer.parseInt(req.getParameter("year"));
         String assignedBy = req.getParameter("assignedBy");
         AnnualSchedule annualSchedule = new AnnualSchedule(year, assignedBy);
-        //System.out.println(annualSchedule.toString());
         scheduleDelegate.processCreate(annualSchedule);
         
-        List<WeeklySchedule> weeklySchedules = new ArrayList();
         
-        SimpleDateFormat format1 = new SimpleDateFormat("YYYY-MM-DD");
-        Calendar cal = Calendar.getInstance();
-        cal.set(year, 0, 1, 0, 0);
-        for (int i = 0; i <= 366; i++) 
-        {
-            try 
-            {
-                cal.add(Calendar.WEEK_OF_YEAR, +1);
-                cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-                String formatted = format1.format(cal.getTime());
-                formatted = formatted + " 00:00:00";
-                WeeklySchedule weeklySchedule = new WeeklySchedule(formatted, assignedBy);
-                weeklySchedules.add(weeklySchedule);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }        
+        List<WeeklySchedule> weeklySchedules = createWeeklySchedulesForYear(year, assignedBy);
         scheduleDelegate.processCreate(weeklySchedules);
+        
         return "/nocturne/viewSchedule";
     }
     
+    private List<WeeklySchedule> createWeeklySchedulesForYear(int year, String assignedBy) {
+        List<WeeklySchedule> weeklySchedules = new ArrayList();
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd");
+        for (int month = 0; month <=11; month++) { //Month is zero based - 0 to 11
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, 1);
+            int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+            for (int day = 1; day <= daysInMonth; day++) {
+                calendar.set(year, month, day);
+                int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                if (dayOfWeek == Calendar.SUNDAY) {
+                    try 
+                    {
+                        String formatted = dateFormatter.format(calendar.getTime());
+                        formatted = formatted + " 00:00:00";
+                        WeeklySchedule weeklySchedule = new WeeklySchedule(formatted, assignedBy);
+                        weeklySchedules.add(weeklySchedule);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        return weeklySchedules;
+    }
 }
