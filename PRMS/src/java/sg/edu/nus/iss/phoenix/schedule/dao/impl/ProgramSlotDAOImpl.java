@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
+import sg.edu.nus.iss.phoenix.core.dao.GeneralDAO;
 import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
@@ -20,9 +21,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
  *
  * @author jayavignesh, Rushabh Shah
  */
-public class ProgramSlotDAOImpl implements ProgramSlotDAO{
-
-    Connection connection;
+public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
 
     /*
      * (non-Javadoc)
@@ -121,30 +120,4 @@ public class ProgramSlotDAOImpl implements ProgramSlotDAO{
             }
     }
 
-    private void openConnection() {
-            try {
-                    Class.forName(DBConstants.COM_MYSQL_JDBC_DRIVER);
-            } catch (ClassNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
-
-            try {
-                    this.connection = DriverManager.getConnection(DBConstants.dbUrl,
-                                    DBConstants.dbUserName, DBConstants.dbPassword);
-            } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
-
-    }
-
-    private void closeConnection() {
-            try {
-                    this.connection.close();
-            } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-            }
-    }
 }
