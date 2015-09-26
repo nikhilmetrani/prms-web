@@ -26,7 +26,8 @@ CREATE  TABLE IF NOT EXISTS `phoenix`.`user` (
   `password` VARCHAR(45) NULL ,
   `name` VARCHAR(45) NULL ,
   `role` VARCHAR(255) NULL ,
-  PRIMARY KEY (`id`))
+  `activeuser` boolean default 1,
+PRIMARY KEY (`id`))
 --  CONSTRAINT `role`
 --    FOREIGN KEY (`role` )
 --    REFERENCES `phoenix`.`role` (`role` )

@@ -1,6 +1,7 @@
 package sg.edu.nus.iss.phoenix.authenticate.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -92,4 +93,164 @@ public class AuthenticateService {
 		}
 		return user;
 	}
+        
+        /**
+     * to retrieve all user in the repository
+     *
+     * @return list of user object
+     */
+    public ArrayList<User> findAllUser() {
+        ArrayList<User> userList = new ArrayList<User>();
+        try {
+            userList = (ArrayList<User>) udao.loadAll();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
+    /**
+     * to retrieve user from repository with matching user criteria to see user
+     * criteria, go to searchUserMatching method
+     *
+     * @param uso
+     * @return a list of user object matching the criteria
+     */
+    public ArrayList<User> searchUsers(User uso) {
+        ArrayList<User> userList = new ArrayList<User>();
+//        try {
+//            userList = (ArrayList<User>) udao.searchUserMatching(uso);
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+        return userList;
+    }
+
+    /**
+     * to retrieve user by id
+     *
+     * @param userId
+     * @return specific user object or null if not found
+     */
+    public User findUser(String userId) {
+        User u = null;
+        try {
+            u = udao.searchMatching(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Logger.getLogger(AuthenticateService.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return u;
+    }
+
+    /**
+     * to insert new user
+     *
+     * @param user t
+     */
+    public void insertUser(User user) {
+        try {
+            if (!isExist(user.getId())) {
+                udao.create(user);
+            } else {
+                throw new Exception("User is Found");
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * to update existing user
+     *
+     * @param user t
+     */
+    public void updateUser(User user) {
+        try {
+            udao.save(user);
+        } catch (NotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * to delete existing user
+     *
+     * @param user t
+     */
+    public void deleteUser(User user) {
+        try {
+            udao.delete(user);
+        } catch (NotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * to check if user is exist by id
+     *
+     * @param userId
+     * @return true or false
+     */
+    public boolean isExist(String userId) {
+        User userExist = null;
+        try {
+            userExist = udao.searchMatching(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (userExist != null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * to find all role
+     *
+     * @return an array list of Role object
+     */
+    public ArrayList<Role> findAllRoles() {
+        ArrayList<Role> roleList = new ArrayList<Role>();
+        try {
+            roleList = (ArrayList<Role>) rdao.loadAll();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return roleList;
+    }
+
+    /**
+     * to find role by name
+     *
+     * @param role
+     * @return instance of Role object
+     */
+    public Role findRole(String role) {
+        Role r = null;
+        try {
+            r = rdao.getObject(role);
+        } catch (NotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return r;
+    }
 }

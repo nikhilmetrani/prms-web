@@ -3,40 +3,82 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-	<definition name="homePage" template="/pages/layout/classic.jsp">
-		<put-attribute name="header" value="/pages/layout/header.jsp" />
-		<put-attribute name="menu" value="/pages/layout/menu.jsp" />
-		<put-attribute name="body" value="/pages/layout/body.jsp" />
-		<put-attribute name="footer" value="/pages/layout/footer.jsp" />
-	</definition>
-	<definition name="loginPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/login.jsp" />
-	</definition>
-	<definition name="errorPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/error.jsp" />
-	</definition>
-	<definition name="searchrpPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/searchrp.jsp" />
-	</definition>
-	<definition name="crudrpPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/crudrp.jsp" />
-	</definition>
-	<definition name="setuprpPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/setuprp.jsp" />
-	</definition>
-        <definition name="setupSchedulePage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/setupSchedule.jsp" />
-	</definition>
-        <definition name="createpsPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/createps.jsp" />
-	</definition>
-        <definition name="modifypsPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/modifyps.jsp" />
-	</definition>
-        <definition name="deletepsPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/deleteps.jsp" />
-	</definition>        
-        <definition name="createasPage" extends="homePage">
-		<put-attribute name="body" value="/pages/tilepages/createas.jsp" />
-	</definition>
+    <definition name="homePage" template="/pages/layout/classic.jsp">
+        <put-attribute name="header" value="/pages/layout/header.jsp" />
+        <put-attribute name="menu" value="/pages/layout/menu.jsp" />
+        <put-attribute name="body" value="/pages/layout/body.jsp" />
+        <put-attribute name="footer" value="/pages/layout/footer.jsp" />
+    </definition>
+    <definition name="loginPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/login.jsp" />
+    </definition>
+    <definition name="errorPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/error.jsp" />
+    </definition>
+    <definition name="searchrpPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/searchrp.jsp" />
+    </definition>
+    <definition name="crudrpPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/crudrp.jsp" />
+    </definition>
+    <definition name="setuprpPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/setuprp.jsp" />
+    </definition>
+    <definition name="setupSchedulePage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/setupSchedule.jsp" />
+    </definition>
+    <definition name="createpsPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/createps.jsp" />
+    </definition>
+    <definition name="modifypsPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/modifyps.jsp" />
+    </definition>
+    <definition name="deletepsPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/deleteps.jsp" />
+    </definition>        
+    <definition name="createasPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/createas.jsp" />
+    </definition>
+    <definition name="cruduserPage" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/cruduser.jsp" />
+    </definition>
+    <definition name="createuserPage" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/createuser.jsp" />
+    </definition>
+        
+    <definition name="modifyuserPage" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/modifyuser.jsp" />
+    </definition>
+        
+    <definition name="modifyuseremptyPage" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/modifyuser_empty.jsp" />
+    </definition>
+        
+    <definition name="modifyuserdetails" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/modifyuser_details.jsp" />
+    </definition>  
+    <definition name="deleteuserPage" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/deleteuser.jsp" />
+    </definition>
+        
+    <definition name="deleteuseremptyPage" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/deleteuser_empty.jsp" />
+    </definition>
+        
+    <definition name="deleteuserdetails" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/deleteuser_details.jsp" />
+    </definition> 
+        
+        
+    <definition name="resetpasswordPage" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/resetpassword.jsp" />
+    </definition>
+        
+    <definition name="resetpasswordemptyPage" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/resetpassword_empty.jsp" />
+    </definition>
+        
+    <definition name="resetpassworddetails" extends="homePage">
+        <put-attribute name="body" value="/pages/maintainuser/resetpassword_details.jsp" />
+    </definition>
 </tiles-definitions>
