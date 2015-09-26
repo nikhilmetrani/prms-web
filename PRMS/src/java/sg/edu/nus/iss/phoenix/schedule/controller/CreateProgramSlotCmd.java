@@ -20,47 +20,56 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author Rushabh Shah
  */
 @Action("createPgmSlot")
-public class CreateProgramSlotCmd implements Perform{
+public class CreateProgramSlotCmd implements Perform {
+
     @Override
-    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {       
+    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
         String name = req.getParameter("radioProgram");
+        String programDate = req.getParameter("programDate");
         if (name != null) {
             req.getSession().setAttribute("radioPgmName", name);
         }
-        List<Date> availableDates;
-        String startDate = req.getParameter("weeklySch");
-        SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
-        if(startDate !=null){
-        try {
-           
-            Date date = sdf.parse(startDate);
-            Calendar c = Calendar.getInstance();
-            
-            availableDates = new ArrayList<>();
-            for(int i=0;i<=7;i++ ){
-                c.setTime(date);
-                c.add(Calendar.DATE, i);  // number of days to add
-                date = c.getTime();
-                availableDates.add(date);
+        if (programDate != null && !programDate.isEmpty()) {
+            req.getSession().setAttribute("selectPgmDate", programDate);
+        } else {
+
+            List<String> availableDates;
+
+            String startDate = req.getParameter("weeklySch");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            if (startDate != null) {
+                try {
+
+                    Date date = sdf.parse(startDate);
+                    Calendar c = Calendar.getInstance();
+                    String strDate;
+                    availableDates = new ArrayList<>();
+                    for (int i = 0; i < 7; i++) {
+                        strDate = sdf.format(date);
+                        availableDates.add(strDate);
+                        c.setTime(date);
+                        if (strDate.startsWith("31-12")) {
+                            c.roll(Calendar.YEAR, 1);
+                        }
+                        c.roll(Calendar.DAY_OF_YEAR, 1);
+                        date = c.getTime();
+                    }
+
+                    req.getSession().setAttribute("availableDates", availableDates);
+
+                } catch (ParseException ex) {
+                    Logger.getLogger(CreateProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            req.setAttribute("availableDates", availableDates);
-            String programDate = req.getParameter("programDate");
-            if(programDate!=null){
-                req.getSession().setAttribute("selectDate", programDate);
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(CreateProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
-        }
-        
+
         return "/pages/maintainSchedule/createps.jsp";
     }
-    
+
 }

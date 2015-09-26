@@ -26,7 +26,7 @@
 }
 
     function selectProgramDate(){
-    if(document.forms[0].radioProgram.value!=""){
+    if(document.forms[0].programDate.value!=""){
         document.forms[0].action = "${pageContext.request.contextPath}/nocturne/createPgmSlot";
     }
     document.forms[0].submit();
@@ -52,8 +52,8 @@
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="pgmDate" items="${availableDates}">
                                                     <c:choose>
-                                                    <c:when test="${selectDate != null && selectDate !=''}"> 
-                                                    <option value="${selectDate}" selected>${selectDate}</option>
+                                                    <c:when test="${selectPgmDate != null && selectPgmDate eq pgmDate}"> 
+                                                     <option value="${pgmDate}" selected>${pgmDate}</option>
                                                     </c:when>
                                                     <c:otherwise>
                                                     <option value="${pgmDate}">${pgmDate}</option>
