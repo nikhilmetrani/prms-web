@@ -46,16 +46,7 @@
 						key="caption.menu.setupSchedule" />
 				</a>
 			</td>
-	</tr>
-
-        <tr>
-            <td>
-				<a href="<c:url value="/nocturne/createps"/>"> <fmt:message
-						key="caption.menu.createps" />
-				</a>
-            </td>
-        </tr>
-        
+	</tr>       
         <tr>
             <td>
 				<a href="<c:url value="/nocturne/modifyps"/>"> <fmt:message
