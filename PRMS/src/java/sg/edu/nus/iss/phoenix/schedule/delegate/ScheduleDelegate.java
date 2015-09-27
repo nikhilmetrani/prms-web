@@ -8,8 +8,11 @@ package sg.edu.nus.iss.phoenix.schedule.delegate;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
+import sg.edu.nus.iss.phoenix.schedule.service.ProgramSlotService;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
+import sg.edu.nus.iss.phoenix.schedule.exception.SlotOverlapException;
 
 /**
  *
@@ -50,5 +53,22 @@ public class ScheduleDelegate {
     public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch){
         ScheduleService service = new ScheduleService();
         service.copyWeeklySchedule(srcWsch, tgtWsch);
+    }
+    
+     /**
+     * Delegates the call to ProgramSlotService
+     * @see ProgramSlotService
+     */
+    public void processCreate(ProgramSlot programSlot) {
+            ProgramSlotService service = new ProgramSlotService();
+            service.processCreate(programSlot);
+    }
+    /**
+     * Delegates the call to ProgramSlotService
+     * @see ProgramSlotService
+     */
+    public void validateProgramSlot(ProgramSlot programSlot) throws SlotOverlapException {
+        ProgramSlotService service = new ProgramSlotService();
+            service.validateProgramSlot(programSlot);
     }
 }

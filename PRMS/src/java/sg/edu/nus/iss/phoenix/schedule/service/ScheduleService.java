@@ -86,7 +86,7 @@ public class ScheduleService {
             e.printStackTrace();
         }
     }
-
+   
     /**
      * Copies the ProgramSlot from Source WeeklySchedule to Target WeeklySchedule
      * @param srcWsch Source WeeklySchedule
@@ -130,7 +130,7 @@ public class ScheduleService {
                 return;
             }
             temp.setDateOfProgram(newDtStr);
-            psservice.create(temp);
+            psservice.processCreate(temp);
         }
 
         tgtSlots = psservice.getProgramSlotsForWeek(tgtWsch.getStartDate());

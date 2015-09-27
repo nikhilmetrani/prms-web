@@ -31,7 +31,7 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
      * Connection, sg.edu.nus.iss.phoenix.authenticate.entity.ProgramSlot)
      */
     @Override
-    public synchronized void create(ProgramSlot valueObject) throws SQLException {
+    public synchronized void create(ProgramSlot programSlot) throws SQLException {
 
             String sql = "";
             PreparedStatement stmt = null;
@@ -41,12 +41,12 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
                             +   "VALUES (str_to_date(?, '%H:%i:%s'), str_to_date(?, '%d-%m-%Y'), str_to_date(?, '%H:%i:%s'), ?, ?, ? ) ";
                     stmt = this.connection.prepareStatement(sql);
 
-                    stmt.setString(1, valueObject.getDuration());
-                    stmt.setString(2, valueObject.getDateOfProgram());
-                    stmt.setString(3, valueObject.getStartTime());
-                    stmt.setString(4, valueObject.getProgramName());
-                    stmt.setString(5, valueObject.getProducer());
-                    stmt.setString(6, valueObject.getPresenter());
+                    stmt.setString(1, programSlot.getDuration());
+                    stmt.setString(2, programSlot.getDateOfProgram());
+                    stmt.setString(3, programSlot.getStartTime());
+                    stmt.setString(4, programSlot.getProgramName());
+                    stmt.setString(5, programSlot.getProducer());
+                    stmt.setString(6, programSlot.getPresenter());
 
                     stmt.executeUpdate();
             } finally {

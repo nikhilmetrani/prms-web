@@ -5,22 +5,24 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.service;
 
+import sg.edu.nus.iss.phoenix.schedule.exception.SlotOverlapException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
 import sg.edu.nus.iss.phoenix.radioprogram.service.ReviewSelectProgramService;
 import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDAO;
-import sg.edu.nus.iss.phoenix.schedule.dao.ScheduleDAO;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh
+ * @author jayavignesh, Rushabh Shah
  */
 public class ProgramSlotService {
 	DAOFactoryImpl factory;
@@ -33,13 +35,49 @@ public class ProgramSlotService {
 		psdao = factory.getProgramSlotDAO();
 	}
 
-	public void create(ProgramSlot slot) {
-            try {
+	public void processCreate(ProgramSlot slot) {
+            try {                
                 psdao.create(slot);
             } catch (SQLException ex) {
                 Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
 	}
+        
+        public void validateProgramSlot(ProgramSlot slot) throws SlotOverlapException{
+            checkProgramSlotOverlap(slot);
+        }
+
+       private  void checkProgramSlotOverlap(ProgramSlot slot) throws SlotOverlapException {
+        Date duration, startTime, endTime, inputStartTime;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");       
+        Calendar cEnd = Calendar.getInstance();
+        Calendar cDur = Calendar.getInstance();
+        try {
+            inputStartTime = sdf.parse(slot.getStartTime());
+
+            List<ProgramSlot> programSlots = getProgramSlotsForWeek(slot.getDateOfProgram());
+            for (ProgramSlot programSlot : programSlots) {
+                startTime = sdf.parse(programSlot.getStartTime());
+                duration = sdf.parse(programSlot.getDuration());
+                
+                cDur.setTime(duration);             
+                cEnd.setTime(startTime);
+               
+                
+                cEnd.add(Calendar.HOUR_OF_DAY, cDur.get(Calendar.HOUR_OF_DAY));
+                cEnd.add(Calendar.MINUTE, cDur.get(Calendar.MINUTE));
+                cEnd.add(Calendar.SECOND, cDur.get(Calendar.SECOND));
+                
+                endTime = cEnd.getTime();
+                
+                if (inputStartTime.after(startTime) && inputStartTime.before(endTime)) {
+                    throw new SlotOverlapException("Program Slots are overlapping");
+                }
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
         public List<ProgramSlot> getProgramSlotsForWeek(String startDate){
             try {

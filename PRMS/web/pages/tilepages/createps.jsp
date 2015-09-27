@@ -63,10 +63,14 @@
                                             </select>
                                         </th>
 				</tr>
+                                <tr> 
+                                     <th width="25%"><fmt:message key="label.createps.startTime" /></th>
+                                     <th width="25%"><input type="time" name="startTime" value="${param['startTime']}" />
+                                </tr>
 				<tr>
                                     <th width="25%"><fmt:message key="label.createps.duration" /></th>
-					<th width="25%"><input type="text" name="typicalDuration"
-                                                                   value="${param['typicalDuration']}" size=15 maxlength=20></th>
+					<th width="25%"><input type="text" name="pgmSlotDuration"
+                                                                   value="${param['pgmSlotDuration']}" size=15 maxlength=20></th>
 				</tr>
                                 <tr>
                                  <th width="25%"><fmt:message key="label.createps.radioProgram" /></th>
