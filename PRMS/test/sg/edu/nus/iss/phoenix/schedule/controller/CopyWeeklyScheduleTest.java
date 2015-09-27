@@ -35,8 +35,8 @@ public class CopyWeeklyScheduleTest {
         AnnualScheduleList aschList = new ScheduleDelegate().reviewSelectAnnualSchedule();
         String srcYear = "2015";
         String tgtYear = "2015";
-        String srcWeekStDate = "08-01-2015";
-        String tgtWeekStDate = "15-01-2015";
+        String srcWeekStDate = "04-01-2015";
+        String tgtWeekStDate = "11-01-2015";
         
         when(req.getSession()).thenReturn(session);
         try{

@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -123,8 +122,6 @@ public class ScheduleService {
                 cal.setTime(tgtDt);
                 cal.add(Calendar.DATE, (int)TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
                 newDtStr = format.format(cal.getTime());
-                if(!newDtStr.substring(6).equals(tgtWsch.getStartDate().substring(6))) 
-                    continue;
             }catch(Exception e){
                 e.printStackTrace();
                 return;

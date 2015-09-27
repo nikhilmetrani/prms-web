@@ -66,14 +66,12 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
                 + "DATE_FORMAT(startTime, '%H:%i:%s') as stTime, "
                 + "`program-name` as programName, `producer` as producer,`presenter` as presenter "
                 + "FROM `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < DATE_ADD(str_to_date(?, '%d-%m-%Y'), INTERVAL 7 DAY) " 
-                + "AND dateOfProgram <= str_to_date(?, '%d-%m-%Y') " 
                 + "ORDER BY dateOfProgram ASC, startTime ASC ";
         List<ProgramSlot> searchResults = new ArrayList<ProgramSlot>();
         try {
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, startDate);
             stmt.setString(2, startDate);
-            stmt.setString(3, "31-12-"+(startDate.substring(6)));
             result = stmt.executeQuery();
 
             while (result.next()) {
@@ -104,13 +102,11 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
             PreparedStatement stmt = null;
             openConnection();
             try {
-                    sql = "delete from `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < DATE_ADD(str_to_date(?, '%d-%m-%Y'), INTERVAL 7 DAY) " 
-                            + "AND dateOfProgram <= str_to_date(?, '%d-%m-%Y') "; 
+                    sql = "delete from `program-slot` WHERE dateOfProgram >= str_to_date(?, '%d-%m-%Y') AND dateOfProgram < DATE_ADD(str_to_date(?, '%d-%m-%Y'), INTERVAL 7 DAY) "; 
                     stmt = this.connection.prepareStatement(sql);
 
                     stmt.setString(1, startDateOfWeek);
                     stmt.setString(2, startDateOfWeek);
-                    stmt.setString(3, "31-12-"+(startDateOfWeek.substring(6)));
 
                     stmt.executeUpdate();
             } finally {
