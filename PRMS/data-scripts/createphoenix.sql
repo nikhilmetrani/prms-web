@@ -121,12 +121,12 @@ DROP TABLE IF EXISTS `phoenix`.`program-slot` ;
 
 CREATE  TABLE IF NOT EXISTS `phoenix`.`program-slot` (
   `duration` TIME NOT NULL ,
-  `dateOfProgram` DATETIME NOT NULL ,
-  `startTime` DATETIME NULL ,
+  `dateOfProgram` DATE NOT NULL ,
+  `startTime` TIME NULL ,
   `program-name` VARCHAR(45) NULL ,
   `producer` VARCHAR(40),
   `presenter` VARCHAR(40),
-  PRIMARY KEY (`duration`, `dateOfProgram`) ,
+  PRIMARY KEY (`startTime`, `dateOfProgram`) ,
   CONSTRAINT `name`
     FOREIGN KEY (`program-name` )
     REFERENCES `phoenix`.`radio-program` (`name` )
@@ -148,7 +148,7 @@ ENGINE = InnoDB;
 
 CREATE INDEX `name_program_slot` ON `phoenix`.`program-slot` (`program-name` ASC) ;
 
-CREATE UNIQUE INDEX `dateOfProgram_UNIQUE` ON `phoenix`.`program-slot` (`dateOfProgram` ASC) ;
+CREATE INDEX `dateOfProgram` ON `phoenix`.`program-slot` (`dateOfProgram` ASC) ;
 
 -- -----------------------------------------------------
 -- Insert Data For Table `phoenix`.`program-slot`
@@ -176,62 +176,5 @@ CREATE UNIQUE INDEX `startDate_UNIQUE` ON `phoenix`.`weekly-schedule` (`startDat
 
 CREATE INDEX `id_assigned_by` ON `phoenix`.`weekly-schedule` (`assignedBy` ASC) ;
 
--- -----------------------------------------------------
--- Insert Data For Table `phoenix`.`weekly-schedule`
--- -----------------------------------------------------
-
-Insert into phoenix.`weekly-schedule` values (str_to_date('01-01-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('08-01-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('15-01-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('22-01-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('29-01-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('05-02-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('12-02-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('19-02-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('26-02-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('05-03-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('12-03-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('19-03-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('26-03-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('02-04-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('09-04-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('16-04-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('23-04-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('30-04-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('07-05-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('14-05-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('21-05-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('28-05-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('04-06-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('11-06-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('18-06-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('25-06-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('02-07-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('09-07-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('16-07-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('23-07-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('30-07-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('06-08-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('13-08-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('20-08-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('27-08-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('03-09-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('10-09-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('17-09-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('24-09-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('01-10-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('08-10-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('15-10-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('22-10-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('29-10-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('05-11-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('12-11-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('19-11-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('26-11-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('03-12-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('10-12-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('17-12-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('24-12-2015', '%d-%m-%Y'), 'pointyhead');
-Insert into phoenix.`weekly-schedule` values (str_to_date('31-12-2015', '%d-%m-%Y'), 'pointyhead');
 
 
