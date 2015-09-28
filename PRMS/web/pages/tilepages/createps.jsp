@@ -48,7 +48,7 @@
 				<tr>
 					<th width="25%"><fmt:message key="label.createps.programDate" /></th>
                                         <th width="25%">
-                                            <select name="programDate" onchange="selectProgramDate()" >
+                                            <select required name="programDate" onchange="selectProgramDate()">
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="pgmDate" items="${availableDates}">
                                                     <c:choose>
@@ -65,17 +65,18 @@
 				</tr>
                                 <tr> 
                                      <th width="25%"><fmt:message key="label.createps.startTime" /></th>
-                                     <th width="25%"><input type="time" name="startTime" value="${param['startTime']}" />
+                                     <th width="25%"><input type="time" name="startTime" pattern="([0-1][0-9]|20|21|22|23|[0-9])?(:([0-5][0-9]|[0-9]))?(:([0-5][0-9]|[0-9]))"
+                                                            value="${param['startTime']}" size=15 maxlength=8 title="Please enter valid time in proper format" required />
                                 </tr>
 				<tr>
                                     <th width="25%"><fmt:message key="label.createps.duration" /></th>
-					<th width="25%"><input type="text" name="pgmSlotDuration"
-                                                                   value="${param['pgmSlotDuration']}" size=15 maxlength=20></th>
+				    <th width="25%"><input type="time" name="pgmSlotDuration" pattern="([0-1][0-9]|20|21|22|23|[0-9])?(:([0-5][0-9]|[0-9]))?(:([0-5][0-9]|[0-9]))"
+                                                             value="${param['pgmSlotDuration']}" size=15 maxlength=8 title="Please enter valid time in proper format" required></th>
 				</tr>
                                 <tr>
                                  <th width="25%"><fmt:message key="label.createps.radioProgram" /></th>
                                         <th width="25%">
-                                            <select name="radioProgram" onchange="selectRadioProgram()" >
+                                            <select required name="radioProgram" onchange="selectRadioProgram()" >
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="radioPgm" items="${radioPgms}">
                                                     <c:choose>
