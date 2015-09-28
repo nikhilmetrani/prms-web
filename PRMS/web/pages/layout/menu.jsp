@@ -15,7 +15,16 @@
 					key="caption.menu.login" />
 		</a></td>
 	</tr>
-	<c:if test="${sessionScope.user.roles[0].role=='manager'}">
+        <c:if test="${(sessionScope.user.hasRole('producer')) || (sessionScope.user.hasRole('presenter'))}">
+        <tr>
+		<td>
+                        <a href="<c:url value="/nocturne/viewempdetails"/>"> <fmt:message
+                                        key="caption.menu.viewempdetails" />
+                        </a>
+                </td>
+	</tr>
+        </c:if>
+	<c:if test="${sessionScope.user.hasRole('manager')}">
 	<tr>
 		<td>
 				<a href="<c:url value="/nocturne/searchrp"/>"> <fmt:message

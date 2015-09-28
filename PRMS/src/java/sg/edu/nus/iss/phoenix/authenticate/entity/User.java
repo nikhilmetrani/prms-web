@@ -23,6 +23,9 @@ public class User implements Cloneable, Serializable {
     private ArrayList<Role> roles = new ArrayList<Role>();
     private String role;
     private boolean activeUserFlag;
+    private String email;
+    private String phoneNumber;
+    private Profile profile;
 
     /**
      * Constructors. The first one takes no arguments and provides the most
@@ -31,13 +34,18 @@ public class User implements Cloneable, Serializable {
      */
 
     public User() {
-
+        id = "";
+        password = "";
+        name = "";
+        //role = "";
+        activeUserFlag = true;
+        email = "";
+        phoneNumber = "";
+        profile = new Profile();
     }
 
     public User(String idIn) {
-
-        this.id = idIn;
-
+        id = idIn;
     }
 
     /**
@@ -46,27 +54,28 @@ public class User implements Cloneable, Serializable {
      * manual additions.
      */
     public String getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(String idIn) {
-        this.id = idIn;
+        if (null != idIn)
+            id = idIn;
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     public void setPassword(String passwordIn) {
-        this.password = passwordIn;
+        password = passwordIn;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String nameIn) {
-        this.name = nameIn;
+        name = nameIn;
     }
 
     public ArrayList<Role> getRoles() {
@@ -93,6 +102,35 @@ public class User implements Cloneable, Serializable {
         this.role = role;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        if(null != profile)
+            this.profile = profile.clone();
+    }
+    
+    public boolean hasRole(String role) {
+        return getRoleString().contains(role);
+    }
+    
     /**
      * setAll allows to set all persistent variables in one method call. This is
      * useful, when all data is available and it is needed to set the initial
@@ -101,11 +139,11 @@ public class User implements Cloneable, Serializable {
      */
     public void setAll(String idIn, String passwordIn, String nameIn,
             String roleIn) {
-        this.id = idIn;
-        this.password = passwordIn;
-        this.name = nameIn;
+        id = idIn;
+        password = passwordIn;
+        name = nameIn;
         Role e = new Role(roleIn);
-        this.roles.add(e);
+        roles.add(e);
     }
 
     /**
@@ -117,28 +155,28 @@ public class User implements Cloneable, Serializable {
      */
     public boolean hasEqualMapping(User valueObject) {
 
-        if (valueObject.getId() != this.id) {
+        if (valueObject.getId() != id) {
             return (false);
         }
-        if (this.password == null) {
+        if (password == null) {
             if (valueObject.getPassword() != null) {
                 return (false);
             }
-        } else if (!this.password.equals(valueObject.getPassword())) {
+        } else if (!password.equals(valueObject.getPassword())) {
             return (false);
         }
-        if (this.name == null) {
+        if (name == null) {
             if (valueObject.getName() != null) {
                 return (false);
             }
-        } else if (!this.name.equals(valueObject.getName())) {
+        } else if (!name.equals(valueObject.getName())) {
             return (false);
         }
-        if (this.roles.get(0).getRole() != null) {
+        if (roles.get(0).getRole() != null) {
             if (valueObject.roles.get(0).getRole() != null) {
                 return (false);
             }
-        } else if (!this.roles.get(0).equals(valueObject.roles.get(0).getRole())) {
+        } else if (!roles.get(0).equals(valueObject.roles.get(0).getRole())) {
             return (false);
         }
 
@@ -154,10 +192,10 @@ public class User implements Cloneable, Serializable {
         StringBuffer out = new StringBuffer("toString: ");
         out.append("\nclass User, mapping to table user\n");
         out.append("Persistent attributes: \n");
-        out.append("id = " + this.id + "\n");
-        out.append("password = " + this.password + "\n");
-        out.append("name = " + this.name + "\n");
-        out.append("role = " + this.getRoleString() + "\n");
+        out.append("id = " + id + "\n");
+        out.append("password = " + password + "\n");
+        out.append("name = " + name + "\n");
+        out.append("role = " + getRoleString() + "\n");
         return out.toString();
     }
 
@@ -169,17 +207,26 @@ public class User implements Cloneable, Serializable {
      */
     public Object clone() {
         User cloned = new User();
-        if (this.id != null) {
-            cloned.setId(new String(this.id));
+        if (id != null) {
+            cloned.setId(new String(id));
         }
-        if (this.password != null) {
-            cloned.setPassword(new String(this.password));
+        if (password != null) {
+            cloned.setPassword(new String(password));
         }
-        if (this.name != null) {
-            cloned.setName(new String(this.name));
+        if (name != null) {
+            cloned.setName(new String(name));
         }
-        if (this.roles != null && !this.roles.isEmpty()) {
-            cloned.setRoles(this.roles);
+        if (roles != null && !roles.isEmpty()) {
+            cloned.setRoles(roles);
+        }
+        if (email != null) {
+            cloned.setEmail(new String(email));
+        }
+        if (phoneNumber != null) {
+            cloned.setPhoneNumber(phoneNumber);
+        }
+        if (profile != null) {
+            cloned.setProfile(profile);
         }
         return cloned;
     }

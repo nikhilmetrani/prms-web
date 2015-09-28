@@ -81,4 +81,7 @@
     <definition name="resetpassworddetails" extends="homePage">
         <put-attribute name="body" value="/pages/maintainuser/resetpassword_details.jsp" />
     </definition>
+    <definition name="viewEmploymentDetailsPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/viewempdetails.jsp" />
+    </definition>
 </tiles-definitions>

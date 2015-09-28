@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.phoenix.authenticate.dao.impl;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,8 +13,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
+import sg.edu.nus.iss.phoenix.authenticate.entity.Profile;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 
 /**
@@ -117,7 +120,7 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement stmt = null;
         try {
             sql = "INSERT INTO user ( id, password, name, "
-                    + "role,activeuser) VALUES (?, ?, ?, ?,?) ";
+                    + "role,activeuser, email, phoneNo, siteLink, profileImage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
             stmt = this.connection.prepareStatement(sql);
 
             stmt.setString(1, valueObject.getId());
@@ -125,6 +128,10 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(3, valueObject.getName());
             stmt.setString(4, valueObject.getRoleString());
             stmt.setBoolean(5, Boolean.TRUE);
+            stmt.setString(6, valueObject.getEmail());
+            stmt.setString(7, valueObject.getPhoneNumber());
+            stmt.setString(8, valueObject.getProfile().getSiteLink());
+            stmt.setString(9, valueObject.getProfile().getImage());
             int rowcount = databaseUpdate(stmt);
             if (rowcount != 1) {
                 // System.out.println("PrimaryKey Error when updating DB!");
@@ -149,7 +156,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void save(User valueObject) throws NotFoundException, SQLException {
 
-        String sql = "UPDATE user SET password = ?, name = ?, role = ?,activeuser=? WHERE (id = ? ) ";
+        String sql = "UPDATE user SET password = ?, name = ?, role = ?, activeuser=?, email=?, phoneNo=?, siteLink=?, profileImage=? WHERE (id = ? ) ";
         PreparedStatement stmt = null;
 
         try {
@@ -158,8 +165,12 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(2, valueObject.getName());
             stmt.setString(3, valueObject.getRoleString());
             stmt.setBoolean(4, Boolean.TRUE);
-
-            stmt.setString(5, valueObject.getId());
+            stmt.setString(5, valueObject.getEmail());
+            stmt.setString(6, valueObject.getPhoneNumber());
+            stmt.setString(7, valueObject.getProfile().getSiteLink());
+            stmt.setString(8, valueObject.getProfile().getImage());
+            
+            stmt.setString(9, valueObject.getId());
 
             int rowcount = databaseUpdate(stmt);
             if (rowcount == 0) {
@@ -384,6 +395,12 @@ public class UserDaoImpl implements UserDao {
                 valueObject.setName(result.getString("name"));
                 valueObject.setRoles(createRoles(result.getString("role")));
                 valueObject.setActiveUserFlag(result.getBoolean("activeuser"));
+                valueObject.setEmail(result.getString("email"));
+                valueObject.setPhoneNumber(result.getString("phoneNo"));
+                Profile profile = new Profile();
+                profile.setSiteLink(result.getString("siteLink"));
+                profile.setImage(result.getString("profileImage"));
+                valueObject.setProfile(profile);
 				//Role e = new Role(result.getString("role"));
                 //ArrayList<Role> roles = new ArrayList<Role>();
                 //roles.add(e);
@@ -426,6 +443,12 @@ public class UserDaoImpl implements UserDao {
                 temp.setPassword(result.getString("password"));
                 temp.setName(result.getString("name"));
                 temp.setRoles(createRoles(result.getString("role")));
+                temp.setEmail(result.getString("email"));
+                temp.setPhoneNumber(result.getString("phoneNo"));
+                Profile profile = new Profile();
+                profile.setSiteLink(result.getString("siteLink"));
+                profile.setImage(result.getString("profileImage"));
+                temp.setProfile(profile);
 				//Role e = new Role(result.getString("role"));
                 //ArrayList<Role> roles = new ArrayList<Role>();
                 //roles.add(e);
@@ -458,7 +481,7 @@ public class UserDaoImpl implements UserDao {
     private Connection openConnection() {
         Connection conn = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(DBConstants.COM_MYSQL_JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -466,8 +489,8 @@ public class UserDaoImpl implements UserDao {
 
         try {
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/phoenix", "phoenix",
-                    "password");
+                    DBConstants.dbUrl, DBConstants.dbUserName,
+                    DBConstants.dbPassword);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
