@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        //req.removeAttribute("actionType");
         
         String name = req.getParameter("radioProgram");
         String programDate = req.getParameter("programDate");
@@ -38,14 +37,11 @@ public class DeleteProgramSlotCmd implements Perform {
         if (programDate != null && !programDate.isEmpty()) {
             req.getSession().setAttribute("selectPgmDate", programDate);
         } else {
-
             List<String> availableDates;
-
             String startDate = req.getParameter("weeklySch");
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             if (startDate != null) {
                 try {
-
                     Date date = sdf.parse(startDate);
                     Calendar c = Calendar.getInstance();
                     String strDate;
@@ -60,9 +56,7 @@ public class DeleteProgramSlotCmd implements Perform {
                         c.roll(Calendar.DAY_OF_YEAR, 1);
                         date = c.getTime();
                     }
-
                     req.getSession().setAttribute("availableDates", availableDates);
-
                 } catch (ParseException ex) {
                     Logger.getLogger(CreateProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
                 }

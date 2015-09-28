@@ -18,19 +18,18 @@
 
 <title><fmt:message key="title.deleteps" /></title>
 <script>
-    function selectRadioProgram(){
-    if(document.forms[0].radioProgram.value!=""){
-        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
+    function selectProgramSlot(){
+        if(document.forms[0].programSlot.value!=""){
+            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
+        }
+        document.forms[0].submit();
     }
-    document.forms[0].submit();
-}
-
-    function selectProgramDate(){
-    if(document.forms[0].programDate.value!=""){
-        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
-    }
-    document.forms[0].submit();
     
+    function selectProgramDate(){
+        if(document.forms[0].programDate.value!=""){
+            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
+        }
+        document.forms[0].submit();
     }
 </script>
 </head>
@@ -63,37 +62,27 @@
                                             </select>
                                         </th>
 				</tr>
-                                <tr> 
-                                     <th width="25%"><fmt:message key="label.deleteps.startTime" /></th>
-                                     <th width="25%"><input type="time" name="startTime" value="${param['startTime']}" />
-                                </tr>
-				<tr>
-                                    <th width="25%"><fmt:message key="label.deleteps.duration" /></th>
-					<th width="25%"><input type="text" name="pgmSlotDuration"
-                                                                   value="${param['pgmSlotDuration']}" size=15 maxlength=20></th>
-				</tr>
+                                
                                 <tr>
-                                 <th width="25%"><fmt:message key="label.deleteps.radioProgram" /></th>
-                                        <th width="25%">
-                                            <select name="radioProgram" onchange="selectRadioProgram()" >
-                                                <option value="">--Select--</option>
-                                                <c:forEach var="radioPgm" items="${radioPgms}">
+                                <th width="25%"><fmt:message key="label.deleteps.programSlot" /></th>
+                                    <th width="25%">
+                                        <select name="programSlot" onchange="selectProgramSlot()" >
+                                            <option value="">--Select--</option>
+                                                <c:forEach var="pgmSlot" items="${pgmSlots}">
                                                     <c:choose>
-                                                    <c:when test="${radioPgmName != null && radioPgmName eq radioPgm.name}"> 
-                                                    <option value="${radioPgm.name}" selected>${radioPgm.name}</option>
+                                                    <c:when test="${pgmSlotName != null && pgmSlotName eq pgmSlot.name}"> 
+                                                    <option value="${pgmSlot.name}" selected>${pgmSlot.name}</option>
                                                     </c:when>
                                                     <c:otherwise>
-                                                    <option value="${radioPgm.name}">${radioPgm.name}</option>
+                                                        <option value="${pgmSlot.name}">${pgmSlot.name}</option>
                                                     </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
                                             </select>
                                         </th>
                                 </tr>
-                               
-			</table>
-                                         <input  type="submit" value="Submit"> <input  type="reset" value="Reset">
-                                         
+			</table>                        
+                        <input  type="submit" value="Submit"> <input  type="reset" value="Reset">
 		</center>                     
 	</form>    
 </body>
