@@ -5,12 +5,6 @@
  */
 package sg.edu.nus.iss.phoenix.authenticate.entity;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-
 /**
  *
  * @author Nikhil Metrani
@@ -38,14 +32,15 @@ public class Profile {
     }
     
     public Profile() {
-        image = "";
+        image = "/phoenix/img/defaultpi.png";
         siteLink = "";
     }
     
+    @Override
     public Profile clone() {
         Profile clone = new Profile();
-        clone.setImage(new String(image));
-        clone.setSiteLink(new String(siteLink));
+        clone.setImage(image);
+        clone.setSiteLink(siteLink);
         return clone;
     }
 }
