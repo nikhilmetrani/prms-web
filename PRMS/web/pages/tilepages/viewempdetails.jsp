@@ -13,51 +13,51 @@
 <title><fmt:message key="title.viewempdetails" /></title>
 </head>
 <body>
-	<form action="${pageContext.request.contextPath}/nocturne/updateprofile" method=post>
-		<center>
-                    <c:if test="${errorMessage!=''}">
-                    <p width="30%"><fmt:message key="${errorMessage}" /></p>
-                    </c:if>
-			<table cellpadding=4 cellspacing=2 border=0>
-				<tr>
-					<th width="30%"><fmt:message key="label.createas.value" /></th>
-					<th width="45%"><fmt:message key="label.createas.data" /></th>
-				</tr>
-				<tr>
-					<td><fmt:message key="label.viewempdetails.name" /></td>
-					<td><input type="text" name="name" value="${name}" size=45 >
-					</td>
-				</tr>
-				<tr>
-					<td><fmt:message key="label.viewempdetails.email" /></td>
-					<td><input type="text" name="email" value="${email}" size=45 >
-					</td>
-				</tr>
-                                <tr>
-					<td><fmt:message key="label.viewempdetails.phoneno" /></td>
-					<td><input type="text" name="phoneNo" value="${phoneNo}" size=45 >
-					</td>
-				</tr>
-                                <tr>
-					<td><fmt:message key="label.viewempdetails.sitelink" /></td>
-					<td><input type="text" name="siteLink" value="${siteLink}" size=45 >
-					</td>
-				</tr>
-                                <tr>
-					<td><fmt:message key="label.viewempdetails.profileimage" /></td>
-					<td><img src="${profileImage}" height="192" width="192">
-					</td>
-				</tr>
-                                <tr>
-					<td></td>
-                                        <td><input type="file" accept="image/*" name="profileImage" id="newProfileImage" size=45 >
-					</td>
-				</tr>
-			</table>
-		</center>
-		<input type="submit" value="Submit"> <input type="reset"
-			value="Reset">
-	</form>
+    <form action="${pageContext.request.contextPath}/nocturne/updateprofile" method=post>
+        <center>
+            <c:if test="${errorMessage!=''}">
+            <p width="30%"><fmt:message key="${errorMessage}" /></p>
+            </c:if>
+                <table cellpadding=4 cellspacing=2 border=0>
+                    <tr>
+                        <th width="30%"><fmt:message key="label.createas.value" /></th>
+                        <th width="45%"><fmt:message key="label.createas.data" /></th>
+                    </tr>
+                    <tr>
+                        <td><fmt:message key="label.viewempdetails.name" /></td>
+                        <td><input type="text" name="name" value="${name}" size=45 >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><fmt:message key="label.viewempdetails.email" /></td>
+                        <td><input type="email" name="email" value="${email}" size=45 >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><fmt:message key="label.viewempdetails.phoneno" /></td>
+                        <td><input type="text" name="phoneNo" value="${phoneNo}" size=45 >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><fmt:message key="label.viewempdetails.sitelink" /></td>
+                        <td><input type="text" name="siteLink" value="${siteLink}" size=45 >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><fmt:message key="label.viewempdetails.profileimage" /></td>
+                        <td><img src="${profileImage}" height="192" width="192">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="file" accept="image/*" name="profileImage" id="newProfileImage" size=45 >
+                        </td>
+                    </tr>
+                </table>
+        </center>
+        <input type="submit" value="Update Profile"> <input type="reset"
+                value="Reset">
+    </form>
     <script language=javascript>
         document.forms[0].name.focus();
     </script>
