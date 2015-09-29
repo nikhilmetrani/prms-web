@@ -158,11 +158,11 @@ CREATE INDEX `dateOfProgram` ON `phoenix`.`program-slot` (`dateOfProgram` ASC) ;
 -- Insert Data For Table `phoenix`.`program-slot`
 -- -----------------------------------------------------
 
-Insert into phoenix.`program-slot` values (str_to_date('00:30:00', '%H:%i:%s'), str_to_date('10-01-2015', '%d-%m-%Y'), str_to_date('13:00:00', '%H:%i:%s'), 'news','dilbert','wally');
-Insert into phoenix.`program-slot` values (str_to_date('00:45:00', '%H:%i:%s'), str_to_date('10-01-2015', '%d-%m-%Y'), str_to_date('14:00:00', '%H:%i:%s'), 'charity','dilbert','wally');
-Insert into phoenix.`program-slot` values (str_to_date('01:00:00', '%H:%i:%s'), str_to_date('11-01-2015', '%d-%m-%Y'), str_to_date('09:00:00', '%H:%i:%s'), 'dance floor','dilbert','wally');
-Insert into phoenix.`program-slot` values (str_to_date('00:30:00', '%H:%i:%s'), str_to_date('11-01-2015', '%d-%m-%Y'), str_to_date('11:00:00', '%H:%i:%s'), 'noose','dilbert','wally');
-Insert into phoenix.`program-slot` values (str_to_date('00:15:00', '%H:%i:%s'), str_to_date('11-01-2015', '%d-%m-%Y'), str_to_date('12:00:00', '%H:%i:%s'), 'news','dilbert','wally');
+Insert into phoenix.`program-slot` values (str_to_date('00:30:00', '%H:%i:%s'), str_to_date('10-01-2015', '%d-%m-%Y'), str_to_date('13:00:00', '%H:%i:%s'), 'news','dilbert','dilbert');
+Insert into phoenix.`program-slot` values (str_to_date('01:30:00', '%H:%i:%s'), str_to_date('10-01-2015', '%d-%m-%Y'), str_to_date('14:00:00', '%H:%i:%s'), 'charity','dilbert','wally');
+Insert into phoenix.`program-slot` values (str_to_date('02:00:00', '%H:%i:%s'), str_to_date('11-01-2015', '%d-%m-%Y'), str_to_date('09:00:00', '%H:%i:%s'), 'dance floor','dilbert','wally');
+Insert into phoenix.`program-slot` values (str_to_date('02:30:00', '%H:%i:%s'), str_to_date('11-01-2015', '%d-%m-%Y'), str_to_date('11:00:00', '%H:%i:%s'), 'noose','dilbert','wally');
+Insert into phoenix.`program-slot` values (str_to_date('01:00:00', '%H:%i:%s'), str_to_date('11-01-2015', '%d-%m-%Y'), str_to_date('12:00:00', '%H:%i:%s'), 'news','dilbert','dilbert');
 
 -- -----------------------------------------------------
 -- Table `phoenix`.`weekly-schedule`
