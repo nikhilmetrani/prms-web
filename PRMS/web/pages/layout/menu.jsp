@@ -10,11 +10,13 @@
 	<fmt:message key="caption.menu" />
 </h3>
 <table class="framed">
+        <c:if test="${sessionScope.user == null}">
 	<tr>
 		<td><a href="<c:url value="/pages/login.jsp"/>"> <fmt:message
 					key="caption.menu.login" />
 		</a></td>
 	</tr>
+        </c:if>
         <c:if test="${(sessionScope.user.hasRole('producer')) || (sessionScope.user.hasRole('presenter'))}">
         <tr>
 		<td>
@@ -71,14 +73,14 @@
 				</a>
             </td>
         </tr>
-
-        
         </c:if>
+        <c:if test="${sessionScope.user != null}">
 	<tr>
 		<td><a href="<c:url value="/nocturne/logout"/>"> <fmt:message
 					key="caption.menu.logout" />
 		</a></td>
 	</tr>
+        </c:if>
 </table>
 
 
