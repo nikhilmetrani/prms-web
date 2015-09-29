@@ -5,21 +5,18 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.dao.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import sg.edu.nus.iss.phoenix.core.dao.DBConstants;
 import sg.edu.nus.iss.phoenix.core.dao.GeneralDAO;
 import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh, Rushabh Shah
+ * @author jayavignesh, Rushabh Shah(Added producer/presenter fields)
  */
 public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
 
@@ -60,7 +57,7 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
     public List<ProgramSlot> getProgramSlotsForWeek(String startDate) throws SQLException {
         PreparedStatement stmt = null;
         ResultSet result = null;
-        ProgramSlot temp = null;
+        ProgramSlot programSlot = null;
         openConnection();
         String sql = "SELECT duration, DATE_FORMAT(dateOfProgram, '%d-%m-%Y') AS dtOfProgram, " 
                 + "DATE_FORMAT(startTime, '%H:%i:%s') as stTime, "
@@ -75,14 +72,14 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
             result = stmt.executeQuery();
 
             while (result.next()) {
-                temp = new ProgramSlot();
-                temp.setDuration(result.getString("duration"));
-                temp.setDateOfProgram(result.getString("dtOfProgram"));
-                temp.setStartTime(result.getString("stTime"));
-                temp.setProgramName(result.getString("programName"));
-                temp.setProducer(result.getString("producer"));
-                temp.setPresenter(result.getString("presenter"));
-                searchResults.add(temp);
+                programSlot = new ProgramSlot();
+                programSlot.setDuration(result.getString("duration"));
+                programSlot.setDateOfProgram(result.getString("dtOfProgram"));
+                programSlot.setStartTime(result.getString("stTime"));
+                programSlot.setProgramName(result.getString("programName"));
+                programSlot.setProducer(result.getString("producer"));
+                programSlot.setPresenter(result.getString("presenter"));
+                searchResults.add(programSlot);
             }
         } finally {
                 if (result != null)

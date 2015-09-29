@@ -8,15 +8,15 @@ package sg.edu.nus.iss.phoenix.schedule.controller;
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
-import sg.edu.nus.iss.phoenix.schedule.exception.SlotOverlapException;
+import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 
 /**
  *
@@ -42,10 +42,16 @@ public class EnterProgramSlotDetailsCmd implements Perform{
         try {
             scheduleDelegate.validateProgramSlot(programSlot);
             scheduleDelegate.processCreate(programSlot);
-        } catch (SlotOverlapException ex) {
+        } catch (ProgramSlotException ex) {
             Logger.getLogger(EnterProgramSlotDetailsCmd.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-       
+            req.setAttribute("errPgmSlot", ex.getMessage());
+            return "/pages/maintainSchedule/createps.jsp";
+        }
+        final HttpSession session = req.getSession();
+        
+        session.removeAttribute("availableDates");
+        session.removeAttribute("selectPgmDate");
+        session.removeAttribute("radioPgmName");       
         
        return "/nocturne/viewSchedule";
     }

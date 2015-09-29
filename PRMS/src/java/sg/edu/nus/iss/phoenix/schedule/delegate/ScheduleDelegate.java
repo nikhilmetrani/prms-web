@@ -12,13 +12,22 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.schedule.service.ProgramSlotService;
 import sg.edu.nus.iss.phoenix.schedule.service.ScheduleService;
-import sg.edu.nus.iss.phoenix.schedule.exception.SlotOverlapException;
+import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 
 /**
  *
- * @author jayavignesh
+ * @author jayavignesh, Rushabh Shah(validateProgramSlot and constructor added)
  */
 public class ScheduleDelegate {
+    
+    ProgramSlotService programSlotservice;
+    
+
+    public ScheduleDelegate() {
+         programSlotservice = new ProgramSlotService();
+    }
+    
+    
     /**
      * Delegates the call to ScheduleService
      * @see ScheduleService
@@ -57,18 +66,19 @@ public class ScheduleDelegate {
     
      /**
      * Delegates the call to ProgramSlotService
+     * @param programSlot
      * @see ProgramSlotService
      */
-    public void processCreate(ProgramSlot programSlot) {
-            ProgramSlotService service = new ProgramSlotService();
-            service.processCreate(programSlot);
+    public void processCreate(ProgramSlot programSlot) {            
+            programSlotservice.processCreate(programSlot);
     }
     /**
      * Delegates the call to ProgramSlotService
+     * @param programSlot
+     * @throws sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException
      * @see ProgramSlotService
      */
-    public void validateProgramSlot(ProgramSlot programSlot) throws SlotOverlapException {
-        ProgramSlotService service = new ProgramSlotService();
-            service.validateProgramSlot(programSlot);
+    public void validateProgramSlot(ProgramSlot programSlot) throws ProgramSlotException {        
+            programSlotservice.validateProgramSlot(programSlot);
     }
 }

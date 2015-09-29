@@ -9,10 +9,10 @@ package sg.edu.nus.iss.phoenix.schedule.exception;
  *
  * @author Rushabh Shah
  */
-public class SlotOverlapException extends Exception {
+public class ProgramSlotException extends Exception {
    
 
-    public SlotOverlapException(String program_Slots_are_overlapping) {
+    public ProgramSlotException(String program_Slots_are_overlapping) {
         super(program_Slots_are_overlapping);
     }
     

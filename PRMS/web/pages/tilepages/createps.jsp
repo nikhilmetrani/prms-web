@@ -41,6 +41,12 @@
 	<form action="${pageContext.request.contextPath}/nocturne/enterps" method=post>
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
+                                <tr valign="top">
+                                     <c:if test="${errPgmSlot!=null && !errPgmSlot.isEmpty()}">
+                                        <td width="40%" style="color: red"><b>Error</b></td>
+                                        <td style="color: red">${errPgmSlot}</td>
+                                     </c:if>
+                                </tr>
 				<tr>
 					<th width="30%"><fmt:message key="label.createps.value" /></th>
 					<th width="45%"><fmt:message key="label.createps.data" /></th>
@@ -65,13 +71,13 @@
 				</tr>
                                 <tr> 
                                      <th width="25%"><fmt:message key="label.createps.startTime" /></th>
-                                     <th width="25%"><input type="time" name="startTime" pattern="([0-1][0-9]|20|21|22|23|[0-9])?(:([0-5][0-9]|[0-9]))?(:([0-5][0-9]|[0-9]))"
-                                                            value="${param['startTime']}" size=15 maxlength=8 title="Please enter valid time in proper format" required />
+                                     <th width="25%"><input type="time" name="startTime" pattern="([0-1][0-9]|20|21|22|23|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])"
+                                                            value="${param['startTime']}" size=15 maxlength=8 title=" of Start time" required />
                                 </tr>
 				<tr>
                                     <th width="25%"><fmt:message key="label.createps.duration" /></th>
-				    <th width="25%"><input type="time" name="pgmSlotDuration" pattern="([0-1][0-9]|20|21|22|23|[0-9])?(:([0-5][0-9]|[0-9]))?(:([0-5][0-9]|[0-9]))"
-                                                             value="${param['pgmSlotDuration']}" size=15 maxlength=8 title="Please enter valid time in proper format" required></th>
+				    <th width="25%"><input type="time" name="pgmSlotDuration" pattern="([0-1][0-9]|20|21|22|23|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])"
+                                                             value="${param['pgmSlotDuration']}" size=15 maxlength=8 title=" of Duration" required></th>
 				</tr>
                                 <tr>
                                  <th width="25%"><fmt:message key="label.createps.radioProgram" /></th>
@@ -93,8 +99,7 @@
                                 </tr>
                                
 			</table>
-                                         <input  type="submit" value="Submit"> <input  type="reset" value="Reset">
-                                         
+                                         <input  type="submit" value="Submit"> <input  type="reset" value="Reset">                                         
 		</center>                     
 	</form>    
 </body>
