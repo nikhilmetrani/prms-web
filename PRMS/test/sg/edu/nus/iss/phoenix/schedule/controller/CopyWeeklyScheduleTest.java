@@ -6,18 +6,12 @@
 package sg.edu.nus.iss.phoenix.schedule.controller;
 
 import static org.mockito.Mockito.*;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.junit.Test;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
-import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
