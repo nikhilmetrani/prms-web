@@ -23,6 +23,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 /**
  *
  * @author jayavignesh, Rushabh Shah(Program-slot validations added)
+ * @author Niu Yiming (services for modify/delete program slot added)
  */
 public class ProgramSlotService {
 
@@ -39,6 +40,22 @@ public class ProgramSlotService {
     public void processCreate(ProgramSlot slot) {
         try {
             psdao.create(slot);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void processModify(ProgramSlot origPs, ProgramSlot newPs) {
+        try {
+            psdao.modify(origPs, newPs);
+        } catch (SQLException ex) {
+            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void processDelete(ProgramSlot slot) {
+        try {
+            psdao.delete(slot);
         } catch (SQLException ex) {
             Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
         }

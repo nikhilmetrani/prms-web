@@ -54,6 +54,38 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
     }
     
     @Override
+    public synchronized void modify(ProgramSlot origPs, ProgramSlot newPs) throws SQLException {
+
+            String sql = "";
+            PreparedStatement stmt = null;
+            String duration, presenter, producer, programName;
+            
+            openConnection();
+            try {   
+                    //get updated details of the program slot
+                    duration = newPs.getDuration();
+                    presenter = newPs.getPresenter();
+                    producer = newPs.getProducer();
+                    programName = newPs.getProgramName();
+                    
+                    sql = "UPDATE `program-slot` SET duration = "+ duration + 
+                            ", presenter = " + presenter +
+                            ", producer = " + producer +
+                            ", programName = " + programName + 
+                            " WHERE date = str_to_date(?, '%d-%m-%Y') and startTime = str_to_date(?, '%H:%i:%s')";
+                    stmt = this.connection.prepareStatement(sql);
+                    stmt.setString(1, origPs.getDateOfProgram());
+                    stmt.setString(2, origPs.getStartTime());
+                    
+                    stmt.executeUpdate();
+            } finally {
+                    if (stmt != null)
+                            stmt.close();
+                    closeConnection();
+            }
+    }
+    
+    @Override
     public synchronized void delete(ProgramSlot programSlot) throws SQLException {
 
             String sql = "";

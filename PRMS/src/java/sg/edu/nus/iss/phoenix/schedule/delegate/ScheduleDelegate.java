@@ -19,66 +19,79 @@ import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
  * @author jayavignesh, Rushabh Shah(validateProgramSlot and constructor added)
  */
 public class ScheduleDelegate {
-    
+
     ProgramSlotService programSlotservice;
-    
 
     public ScheduleDelegate() {
-         programSlotservice = new ProgramSlotService();
+        programSlotservice = new ProgramSlotService();
     }
-    
-    
+
     /**
      * Delegates the call to ScheduleService
+     *
      * @see ScheduleService
      */
     public void processCreate(AnnualSchedule anualSchedule) {
-            ScheduleService service = new ScheduleService();
-            service.processCreate(anualSchedule);
-    }
-    
-    /**
-     * Delegates the call to ScheduleService
-     * @see ScheduleService
-     */
-    public void processCreate(List<WeeklySchedule> weeklySchedules) {
-            ScheduleService service = new ScheduleService();
-            service.processCreate(weeklySchedules);
+        ScheduleService service = new ScheduleService();
+        service.processCreate(anualSchedule);
     }
 
     /**
      * Delegates the call to ScheduleService
+     *
+     * @see ScheduleService
+     */
+    public void processCreate(List<WeeklySchedule> weeklySchedules) {
+        ScheduleService service = new ScheduleService();
+        service.processCreate(weeklySchedules);
+    }
+
+    /**
+     * Delegates the call to ScheduleService
+     *
      * @see ScheduleService
      */
     public AnnualScheduleList reviewSelectAnnualSchedule() {
         ScheduleService service = new ScheduleService();
-        return service.getAnnualScheduleList(); 
+        return service.getAnnualScheduleList();
     }
 
     /**
      * Delegates the call to ScheduleService
+     *
      * @see ScheduleService
      */
-    public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch){
+    public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch) {
         ScheduleService service = new ScheduleService();
         service.copyWeeklySchedule(srcWsch, tgtWsch);
     }
-    
-     /**
+
+    /**
      * Delegates the call to ProgramSlotService
+     *
      * @param programSlot
      * @see ProgramSlotService
      */
-    public void processCreate(ProgramSlot programSlot) {            
-            programSlotservice.processCreate(programSlot);
+    public void processCreate(ProgramSlot programSlot) {
+        programSlotservice.processCreate(programSlot);
     }
+    
+    public void processModify(ProgramSlot origPs, ProgramSlot newPs) {
+        programSlotservice.processModify(origPs, newPs);
+    }
+    
+    public void processDelete(ProgramSlot programSlot) {
+        programSlotservice.processDelete(programSlot);
+    }
+
     /**
      * Delegates the call to ProgramSlotService
+     *
      * @param programSlot
      * @throws sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException
      * @see ProgramSlotService
      */
-    public void validateProgramSlot(ProgramSlot programSlot) throws ProgramSlotException {        
-            programSlotservice.validateProgramSlot(programSlot);
+    public void validateProgramSlot(ProgramSlot programSlot) throws ProgramSlotException {
+        programSlotservice.validateProgramSlot(programSlot);
     }
 }
