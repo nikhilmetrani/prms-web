@@ -52,7 +52,28 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
                     closeConnection();
             }
     }
+    
+    @Override
+    public synchronized void delete(ProgramSlot programSlot) throws SQLException {
 
+            String sql = "";
+            PreparedStatement stmt = null;
+            openConnection();
+            try {
+                    sql = "DELETE FROM `program-slot`" 
+                            +   " WHERE date = str_to_date(?, '%d-%m-%Y') and startTime = str_to_date(?, '%H:%i:%s')";
+                    stmt = this.connection.prepareStatement(sql);
+                    stmt.setString(1, programSlot.getDateOfProgram());
+                    stmt.setString(2, programSlot.getStartTime());
+                    
+                    stmt.executeUpdate();
+            } finally {
+                    if (stmt != null)
+                            stmt.close();
+                    closeConnection();
+            }
+    }
+    
     @Override
     public List<ProgramSlot> getProgramSlotsForWeek(String startDate) throws SQLException {
         PreparedStatement stmt = null;

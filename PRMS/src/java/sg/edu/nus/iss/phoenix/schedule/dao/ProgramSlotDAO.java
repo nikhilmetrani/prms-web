@@ -11,10 +11,11 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh
+ * @author jayavignesh, Niu Yiming
  */
 public interface ProgramSlotDAO {
     public List<ProgramSlot> getProgramSlotsForWeek(String startDate) throws SQLException;
     public void create(ProgramSlot valueObject) throws SQLException;
+    public void delete(ProgramSlot valueObject) throws SQLException;
     public void deleteByWeek(String startDateOfWeek) throws SQLException;
 }
