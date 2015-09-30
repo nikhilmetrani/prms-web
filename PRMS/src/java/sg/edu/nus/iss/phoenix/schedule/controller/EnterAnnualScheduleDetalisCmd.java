@@ -7,13 +7,10 @@ package sg.edu.nus.iss.phoenix.schedule.controller;
 
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
@@ -44,7 +41,7 @@ public class EnterAnnualScheduleDetalisCmd implements Perform{
             List<WeeklySchedule> weeklySchedules = createWeeklySchedulesForYear(year, assignedBy);
             scheduleDelegate.processCreate(weeklySchedules);
         }
-        catch (SQLException ex) {
+        catch (Exception ex) {
             req.setAttribute("errorMessage", ex.getMessage());
             return "/nocturne/createas";
         }
@@ -52,9 +49,9 @@ public class EnterAnnualScheduleDetalisCmd implements Perform{
         return "/nocturne/viewSchedule";
     }
     
-    private List<WeeklySchedule> createWeeklySchedulesForYear(int year, String assignedBy) {
+    private List<WeeklySchedule> createWeeklySchedulesForYear(int year, String assignedBy) throws Exception {
         List<WeeklySchedule> weeklySchedules = new ArrayList();
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         for (int month = 0; month <=11; month++) { //Month is zero based - 0 to 11
             Calendar calendar = Calendar.getInstance();
             calendar.set(year, month, 1);
@@ -70,7 +67,7 @@ public class EnterAnnualScheduleDetalisCmd implements Perform{
                         WeeklySchedule weeklySchedule = new WeeklySchedule(formatted, assignedBy);
                         weeklySchedules.add(weeklySchedule);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        throw new Exception("Failed to create weekly schedules");
                     }
                 }
             }

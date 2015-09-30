@@ -25,19 +25,20 @@
                 </tr>
                 <tr>
                     <td><fmt:message key="label.createas.year" /></td>
-                    <td><input type="text" pattern="(\d\d\d\d)" name="year" value="${param['year']}" size=15
-                               maxlength=4 title="Please enter a valid year in format YYYY. Example: 2015" required>
+                    <td><input type="text" pattern="(\d{4})" name="year" value="${param['year']}" size=25
+                               maxlength=4 title="Please enter a valid year (current year or higher) in format YYYY. Example: 2015" required>
                     </td>
                 </tr>
                 <tr>
                     <td><fmt:message key="label.createas.assignedBy" /></td>
                     <td><input type="text" name="assignedBy"
-                            value="${param['assignedBy']}" size=45 maxlength=20 readonly="readonly">
+                            value="${param['assignedBy']}" size=25 readonly="readonly">
                     </td>
                 </tr>
             </table>
             <input type="submit" value="Create"> <input type="reset"
-                    value="Reset">
+                                                        value="Reset"> 
+            <!--input type="button" value="Back" onclick="pages/maintainSchedule/setupSchedule.jsp"-->
         </center>
     </form>
     <script language=javascript>
