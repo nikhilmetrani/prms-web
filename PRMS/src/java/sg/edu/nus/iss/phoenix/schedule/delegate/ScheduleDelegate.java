@@ -16,14 +16,15 @@ import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 
 /**
  *
- * @author jayavignesh, Rushabh Shah(validateProgramSlot and constructor added)
+ * @author jayavignesh, 
+ * @author Rushabh Shah(validateProgramSlot , getProgramSlotByDateOfProgramAndStartTime method and constructor added)
  */
 public class ScheduleDelegate {
 
     ProgramSlotService programSlotservice;
 
     public ScheduleDelegate() {
-        programSlotservice = new ProgramSlotService();
+         programSlotservice = new ProgramSlotService();
     }
 
     /**
@@ -93,5 +94,16 @@ public class ScheduleDelegate {
      */
     public void validateProgramSlot(ProgramSlot programSlot) throws ProgramSlotException {
         programSlotservice.validateProgramSlot(programSlot);
+    }
+    
+     /**
+     * Delegates the call to ProgramSlotService
+     * @param programDate
+     * @param startTime
+     * @return ProgramSlot
+     * @see ProgramSlotService
+     */
+    public ProgramSlot getProgramSlotByDateOfProgramAndStartTime(String programDate,String startTime){
+           return programSlotservice.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
     }
 }

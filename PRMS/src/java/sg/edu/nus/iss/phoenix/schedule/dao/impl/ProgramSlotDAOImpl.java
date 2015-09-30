@@ -16,7 +16,8 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh, Rushabh Shah(Added producer/presenter fields)
+ * @author jayavignesh, 
+ * @author Rushabh Shah(Added getProgramSlotByDateOfProgramAndStartTime() method and producer/presenter fields)
  */
 public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
 
@@ -164,6 +165,42 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
                             stmt.close();
                     closeConnection();
             }
+    }
+    
+    @Override
+    public ProgramSlot getProgramSlotByDateOfProgramAndStartTime(String programDate,String startTime) throws SQLException {
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        ProgramSlot programSlot = null;
+        openConnection();
+        String sql = "SELECT duration, DATE_FORMAT(dateOfProgram, '%d-%m-%Y') AS dtOfProgram, " 
+                + "DATE_FORMAT(startTime, '%H:%i:%s') as stTime, "
+                + "`program-name` as programName, `producer` as producer,`presenter` as presenter "
+                + "FROM `program-slot` WHERE dateOfProgram like str_to_date(?, '%d-%m-%Y') AND startTime like str_to_date(?, '%H:%i:%s')";              
+       
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, programDate);
+            stmt.setString(2, startTime);
+            result = stmt.executeQuery();
+
+            while (result.next()) {
+                programSlot = new ProgramSlot();
+                programSlot.setDuration(result.getString("duration"));
+                programSlot.setDateOfProgram(result.getString("dtOfProgram"));
+                programSlot.setStartTime(result.getString("stTime"));
+                programSlot.setProgramName(result.getString("programName"));
+                programSlot.setProducer(result.getString("producer"));
+                programSlot.setPresenter(result.getString("presenter"));              
+            }
+        } finally {
+                if (result != null)
+                        result.close();
+                if (stmt != null)
+                        stmt.close();
+                closeConnection();
+        }       
+        return programSlot;
     }
 
 }

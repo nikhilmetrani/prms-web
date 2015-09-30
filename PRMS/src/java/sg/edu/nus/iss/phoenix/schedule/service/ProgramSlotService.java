@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import sg.edu.nus.iss.phoenix.core.dao.DAOFactoryImpl;
-import sg.edu.nus.iss.phoenix.radioprogram.service.ReviewSelectProgramService;
 import sg.edu.nus.iss.phoenix.schedule.dao.ProgramSlotDAO;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh, Rushabh Shah(Program-slot validations added)
+ * @author jayavignesh, 
+ * @author Rushabh Shah(Program-slot validations, getProgramSlotByDateOfProgramAndStartTime method added)
  * @author Niu Yiming (services for modify/delete program slot added)
  */
 public class ProgramSlotService {
@@ -41,7 +41,7 @@ public class ProgramSlotService {
         try {
             psdao.create(slot);
         } catch (SQLException ex) {
-            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -49,7 +49,7 @@ public class ProgramSlotService {
         try {
             psdao.modify(origPs, newPs);
         } catch (SQLException ex) {
-            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -57,7 +57,7 @@ public class ProgramSlotService {
         try {
             psdao.delete(slot);
         } catch (SQLException ex) {
-            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -167,7 +167,7 @@ public class ProgramSlotService {
         try {
             return psdao.getProgramSlotsForWeek(startDate);
         } catch (SQLException ex) {
-            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new ArrayList<ProgramSlot>();
     }
@@ -176,8 +176,24 @@ public class ProgramSlotService {
         try {
             psdao.deleteByWeek(startDateOfWeek);
         } catch (SQLException ex) {
-            Logger.getLogger(ReviewSelectProgramService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+      /**
+     * Delegates the call to ProgramSlotService
+     * @param programDate
+     * @param startTime
+     * @return ProgramSlot
+     * @see ProgramSlotService
+     */
+     public ProgramSlot getProgramSlotByDateOfProgramAndStartTime(String programDate,String startTime){
+         try {
+           return  psdao.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+     }
 
 }
