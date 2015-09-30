@@ -19,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 @Action("createas")
 public class CreateAnnualScheduleCmd implements Perform {
     @Override
-    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    public String perform(String path, HttpServletRequest req, HttpServletResponse resp){
+        req.getSession().setAttribute("errorMessage", "");
         return "/pages/maintainSchedule/createas.jsp";
     }
 }

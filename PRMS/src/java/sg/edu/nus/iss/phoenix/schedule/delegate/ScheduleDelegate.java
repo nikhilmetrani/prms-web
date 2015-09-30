@@ -5,6 +5,7 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.delegate;
 
+import java.sql.SQLException;
 import java.util.List;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
@@ -32,9 +33,9 @@ public class ScheduleDelegate {
      *
      * @see ScheduleService
      */
-    public void processCreate(AnnualSchedule anualSchedule) {
-        ScheduleService service = new ScheduleService();
-        service.processCreate(anualSchedule);
+    public void processCreate(AnnualSchedule anualSchedule) throws SQLException {
+            ScheduleService service = new ScheduleService();
+            service.processCreate(anualSchedule);
     }
 
     /**
@@ -42,9 +43,9 @@ public class ScheduleDelegate {
      *
      * @see ScheduleService
      */
-    public void processCreate(List<WeeklySchedule> weeklySchedules) {
-        ScheduleService service = new ScheduleService();
-        service.processCreate(weeklySchedules);
+    public void processCreate(List<WeeklySchedule> weeklySchedules) throws SQLException {
+            ScheduleService service = new ScheduleService();
+            service.processCreate(weeklySchedules);
     }
 
     /**

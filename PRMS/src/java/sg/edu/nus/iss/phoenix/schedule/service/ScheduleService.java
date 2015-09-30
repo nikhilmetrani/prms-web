@@ -64,26 +64,16 @@ public class ScheduleService {
      * @param annualSchedule AnnualSchedule object that has to be persisted
      * @see AnnualSchedule
      */
-    public void processCreate(AnnualSchedule annualSchedule) {
-        try {
-            scheduleDao.create(annualSchedule);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public void processCreate(AnnualSchedule annualSchedule) throws SQLException {
+        scheduleDao.create(annualSchedule);
     }
     
     /**
      * Creates all the Weekly Schedules contained in the List
      * @param weeklySchedules List of WeeklySchedule objects that has to be persisted
      */
-    public void processCreate(List<WeeklySchedule> weeklySchedules) {
-        try {
-            scheduleDao.create(weeklySchedules);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    public void processCreate(List<WeeklySchedule> weeklySchedules) throws SQLException {
+        scheduleDao.create(weeklySchedules);
     }
    
     /**

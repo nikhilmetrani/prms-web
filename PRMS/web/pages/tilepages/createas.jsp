@@ -13,30 +13,33 @@
 <title><fmt:message key="title.createas" /></title>
 </head>
 <body>
-	<form action="${pageContext.request.contextPath}/nocturne/enteras" method=post>
-		<center>
-			<table cellpadding=4 cellspacing=2 border=0>
-				<tr>
-					<th width="30%"><fmt:message key="label.createas.value" /></th>
-					<th width="45%"><fmt:message key="label.createas.data" /></th>
-				</tr>
-				<tr>
-					<td><fmt:message key="label.createas.year" /></td>
-					<td><input type="text" name="year" value="${param['year']}" size=15
-								maxlength=4 >
-					</td>
-				</tr>
-				<tr>
-					<td><fmt:message key="label.createas.assignedBy" /></td>
-					<td><input type="text" name="assignedBy"
-						value="${param['assignedBy']}" size=45 maxlength=20 readonly="readonly">
-                                        </td>
-				</tr>
-			</table>
-		</center>
-		<input type="submit" value="Submit"> <input type="reset"
-			value="Reset">
-	</form>
+    <form action="${pageContext.request.contextPath}/nocturne/enteras" method=post>
+        <center>
+            <c:if test="${errorMessage!=''}">
+                <p><font color="red">Error: ${errorMessage}"</font></p>
+            </c:if>
+            <table cellpadding=4 cellspacing=2 border=0>
+                <tr>
+                    <th width="30%"><fmt:message key="label.createas.value" /></th>
+                    <th width="45%"><fmt:message key="label.createas.data" /></th>
+                </tr>
+                <tr>
+                    <td><fmt:message key="label.createas.year" /></td>
+                    <td><input type="text" pattern="(\d\d\d\d)" name="year" value="${param['year']}" size=15
+                               maxlength=4 title="Please enter a valid year in format YYYY. Example: 2015" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td><fmt:message key="label.createas.assignedBy" /></td>
+                    <td><input type="text" name="assignedBy"
+                            value="${param['assignedBy']}" size=45 maxlength=20 readonly="readonly">
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" value="Create"> <input type="reset"
+                    value="Reset">
+        </center>
+    </form>
     <script language=javascript>
         document.forms[0].year.focus();
     </script>

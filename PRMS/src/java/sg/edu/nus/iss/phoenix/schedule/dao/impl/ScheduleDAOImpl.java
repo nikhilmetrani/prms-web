@@ -119,9 +119,10 @@ public class ScheduleDAOImpl extends GeneralDAO implements ScheduleDAO {
             statement.setString(2, annualSchedule.getAssignedBy());
             int rowcount = databaseUpdate(statement);
             if (rowcount != 1) {
-                // System.out.println("PrimaryKey Error when updating DB!");
-                throw new SQLException("PrimaryKey Error when updating DB!");
+                throw new SQLException("Annual Schedule for the year " + annualSchedule.getYear() + " already exists");
             }
+        } catch (SQLException ex) {
+            throw new SQLException("Annual Schedule for the year " + annualSchedule.getYear() + " already exists");
         } finally {
             if (statement != null) {
                 statement.close();
@@ -148,10 +149,11 @@ public class ScheduleDAOImpl extends GeneralDAO implements ScheduleDAO {
                 statement.setString(2, weeklySchedule.getAssignedBy());
                 int rowcount = databaseUpdate(statement);
                 if (rowcount != 1) {
-                    // System.out.println("PrimaryKey Error when updating DB!");
-                    throw new SQLException("PrimaryKey Error when updating DB!");
+                    throw new SQLException("Weekly Schedule for " + weeklySchedule.getStartDate() + " already exists");
                 }
             }
+        } catch (SQLException ex) {
+            throw new SQLException("Weekly Schedule already exists");
         } finally {
             if (statement != null) {
                 statement.close();

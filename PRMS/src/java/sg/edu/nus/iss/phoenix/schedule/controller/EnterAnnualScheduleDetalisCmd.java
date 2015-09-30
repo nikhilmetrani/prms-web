@@ -8,6 +8,7 @@ package sg.edu.nus.iss.phoenix.schedule.controller;
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,16 +28,26 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 public class EnterAnnualScheduleDetalisCmd implements Perform{
 
     @Override
-    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    public String perform(String path, HttpServletRequest req, HttpServletResponse resp){
+        req.getSession().setAttribute("errorMessage", "");
         ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
         int year = Integer.parseInt(req.getParameter("year"));
+        if(year < Calendar.getInstance().get(Calendar.YEAR)) {
+            req.setAttribute("errorMessage", "Year cannot be less than current year!");
+            return "/nocturne/createas";
+        }
         String assignedBy = req.getParameter("assignedBy");
         AnnualSchedule annualSchedule = new AnnualSchedule(year, assignedBy);
-        scheduleDelegate.processCreate(annualSchedule);
-        
-        
-        List<WeeklySchedule> weeklySchedules = createWeeklySchedulesForYear(year, assignedBy);
-        scheduleDelegate.processCreate(weeklySchedules);
+        try{
+            scheduleDelegate.processCreate(annualSchedule);
+
+            List<WeeklySchedule> weeklySchedules = createWeeklySchedulesForYear(year, assignedBy);
+            scheduleDelegate.processCreate(weeklySchedules);
+        }
+        catch (SQLException ex) {
+            req.setAttribute("errorMessage", ex.getMessage());
+            return "/nocturne/createas";
+        }
         
         return "/nocturne/viewSchedule";
     }
@@ -51,7 +62,7 @@ public class EnterAnnualScheduleDetalisCmd implements Perform{
             for (int day = 1; day <= daysInMonth; day++) {
                 calendar.set(year, month, day);
                 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-                if (dayOfWeek == Calendar.SUNDAY) {
+                if (dayOfWeek == Calendar.MONDAY) {
                     try 
                     {
                         String formatted = dateFormatter.format(calendar.getTime());
