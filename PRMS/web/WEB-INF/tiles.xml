@@ -84,4 +84,8 @@
     <definition name="viewEmploymentDetailsPage" extends="homePage">
         <put-attribute name="body" value="/pages/tilepages/viewempdetails.jsp" />
     </definition>
+    
+    <definition name="searchpresenterPage" extends="homePage">
+        <put-attribute name="body" value="/pages/tilepages/searchpresenter.jsp" />
+    </definition>
 </tiles-definitions>

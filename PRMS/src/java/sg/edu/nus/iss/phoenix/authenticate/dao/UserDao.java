@@ -56,6 +56,29 @@ public interface UserDao {
 	 *            This method requires working database connection.
 	 */
 	public abstract List<User> loadAll() throws SQLException;
+        
+        /**
+	 * loadProducer-method. This will read all producer from database table and build
+	 * a List containing valueObjects. Please note, that this method will
+	 * consume huge amounts of resources if table has lot's of rows. This should
+	 * only be used when target tables have only small amounts of data.
+	 * 
+	 * @param conn
+	 *            This method requires working database connection.
+	 */
+        public abstract List<User> loadProducer() throws SQLException;
+        
+         /**
+	 * loadProducer-method. This will read all presenter from database table and build
+	 * a List containing valueObjects. Please note, that this method will
+	 * consume huge amounts of resources if table has lot's of rows. This should
+	 * only be used when target tables have only small amounts of data.
+	 * 
+	 * @param conn
+	 *            This method requires working database connection.
+	 */
+        public abstract List<User> loadPresenter(String name) throws SQLException;
+        
 
 	/**
 	 * create-method. This will create new row in database according to supplied

@@ -86,6 +86,49 @@ public class UserDaoImpl implements UserDao {
             }
         }
     }
+    
+     /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDao#loadProducer(java.sql
+     * .Connection)
+     */
+    @Override
+    public List<User> loadProducer() throws SQLException {
+
+        String sql = "SELECT * FROM user where role like '%producer%' ORDER BY id ASC ";
+        List<User> searchResults = listQuery(this.connection
+                .prepareStatement(sql));
+
+        return searchResults;
+    }
+    
+     /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDao#loadPresenter(java.sql
+     * .Connection)
+     */
+    @Override
+    public List<User> loadPresenter(String name) throws SQLException {
+        String sql ="";
+        if(name.isEmpty())
+        {
+            sql = "SELECT * FROM user where role like '%presenter%' ORDER BY id ASC ";
+        }
+        else
+        {
+            sql = "SELECT * FROM user where name like '"+name+"' and role like '%presenter%' ORDER BY id ASC ";
+        }
+         
+        List<User> searchResults = listQuery(this.connection
+                .prepareStatement(sql));
+
+        return searchResults;
+    }
+
 
     /*
      * (non-Javadoc)
