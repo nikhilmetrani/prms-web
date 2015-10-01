@@ -16,7 +16,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh, 
+ * @author Ganapathy Rajan Jaya Vignesh, 
  * @author Rushabh Shah(Added getProgramSlotByDateOfProgramAndStartTime() method and producer/presenter fields)
  */
 public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{

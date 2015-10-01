@@ -11,7 +11,8 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh, Niu Yiming,
+ * @author Ganapathy Rajan Jaya Vignesh
+ * @author Niu Yiming
  * @author Rushabh Shah(getProgramSlotByDateOfProgramAndStartTime() method added)
  */
 public interface ProgramSlotDAO {

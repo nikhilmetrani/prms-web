@@ -16,7 +16,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 /**
  * Command Object that handles the Review/Select Weekly Schedule Command
  * 
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  */
 @Action("selectWeeklySchedule")
 public class ReviewSelectWeeklyScheduleCmd implements Perform{

@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  */
 public class WeeklySchedule {
     private String startDate;

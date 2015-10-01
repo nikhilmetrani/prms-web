@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  */
 public class AnnualScheduleList {
     private List<AnnualSchedule> scheduleList = new ArrayList<AnnualSchedule>();

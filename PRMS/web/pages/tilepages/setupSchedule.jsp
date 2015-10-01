@@ -1,7 +1,7 @@
 <%-- 
     Document   : setupSchedule.jsp
     Created on : Sep 5, 2015, 11:51:40 AM
-    Author     : jayavignesh
+    Author     : Ganapathy Rajan Jaya Vignesh
 --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

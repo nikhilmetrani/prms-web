@@ -7,7 +7,8 @@ package sg.edu.nus.iss.phoenix.schedule.entity;
 
 /**
  *
- * @author jayavignesh, Rushabh Shah
+ * @author Ganapathy Rajan Jaya Vignesh
+ * @author Rushabh Shah
  */
 public class ProgramSlot {
     private String duration;

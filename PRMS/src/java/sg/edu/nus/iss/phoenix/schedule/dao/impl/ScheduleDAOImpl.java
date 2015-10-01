@@ -20,7 +20,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
  *
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  * @author Nikhil Metrani
  */
 public class ScheduleDAOImpl extends GeneralDAO implements ScheduleDAO {

@@ -19,7 +19,7 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 /**
  * Command Object that handles the View Schedule Command
  * 
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  */
 @Action("viewSchedule")
 public class ViewScheduleCmd implements Perform{

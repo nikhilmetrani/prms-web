@@ -24,7 +24,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 /**
  * Service class for Maintain Schedule
  * 
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  * @author Nikhil Metrani
  */
 public class ScheduleService {

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Command Object that handles the Copy Weekly Schedule Command
  * 
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  */
 @Action("copyWeeklySchedule")
 public class CopyWeeklyScheduleCmd implements Perform{

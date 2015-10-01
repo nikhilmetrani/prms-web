@@ -21,7 +21,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 
 /**
  *
- * @author jayavignesh, 
+ * @author Ganapathy Rajan Jaya Vignesh  
  * @author Rushabh Shah(Program-slot validations, getProgramSlotByDateOfProgramAndStartTime method added)
  * @author Niu Yiming (services for modify/delete program slot added)
  */

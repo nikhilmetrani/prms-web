@@ -17,7 +17,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 /**
  * Tests the Copy Weekly Schedule Functionality
  * 
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  */
 public class CopyWeeklyScheduleTest {
     

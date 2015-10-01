@@ -17,7 +17,7 @@ import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 
 /**
  *
- * @author jayavignesh, 
+ * @author Ganapathy Rajan Jaya Vignesh 
  * @author Rushabh Shah(validateProgramSlot , getProgramSlotByDateOfProgramAndStartTime method and constructor added)
  */
 public class ScheduleDelegate {

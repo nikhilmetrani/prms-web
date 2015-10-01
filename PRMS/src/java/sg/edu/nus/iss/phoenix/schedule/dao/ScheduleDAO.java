@@ -16,7 +16,8 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
  * 
  * @see ScheduleDAOImpl
  * 
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
+ * 
  */
 public interface ScheduleDAO {
     public List<AnnualSchedule> getAllAnnualSchedules() throws SQLException;

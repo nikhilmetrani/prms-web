@@ -16,7 +16,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 /**
  * Command Object that handles the Cancel Copy Weekly Schedule Command
  * 
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  */
 @Action("cancelCopy")
 public class CancelCopyWeeklyScheduleCmd implements Perform{

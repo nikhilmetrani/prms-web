@@ -16,7 +16,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 /**
  * Command Object that handles the Review/Select Annual Schedule Command
  * 
- * @author jayavignesh
+ * @author Ganapathy Rajan Jaya Vignesh
  */
 @Action("selectAnnualSchedule")
 public class ReviewSelectAnnualScheduleCmd implements Perform{
