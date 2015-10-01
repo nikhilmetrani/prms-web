@@ -33,7 +33,7 @@ public class CreateProgramSlotTest {
         HttpSession session = mock(HttpSession.class);
         AnnualScheduleList aschList = new ScheduleDelegate().reviewSelectAnnualSchedule();
         String year = "2015";
-        String weekStDate = "04-01-2015";
+        String weekStDate = "05-01-2015";
         String name = "news";
         String programDate = "10-01-2015";
 
@@ -66,13 +66,13 @@ public class CreateProgramSlotTest {
             when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
 
             List<String> availableDates = new ArrayList<>();
-            availableDates.add("04-01-2015");
             availableDates.add("05-01-2015");
             availableDates.add("06-01-2015");
             availableDates.add("07-01-2015");
             availableDates.add("08-01-2015");
             availableDates.add("09-01-2015");
             availableDates.add("10-01-2015");
+            availableDates.add("11-01-2015");
 
             //Select program date
             when(session.getAttribute("availableDates")).thenReturn(availableDates);
@@ -111,14 +111,14 @@ public class CreateProgramSlotTest {
             //Select program date
             when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
 
-            List<String> availableDates = new ArrayList<>();
-            availableDates.add("04-01-2015");
+            List<String> availableDates = new ArrayList<>();            
             availableDates.add("05-01-2015");
             availableDates.add("06-01-2015");
             availableDates.add("07-01-2015");
             availableDates.add("08-01-2015");
             availableDates.add("09-01-2015");
             availableDates.add("10-01-2015");
+            availableDates.add("11-01-2015");
 
             //Select program date
             when(session.getAttribute("availableDates")).thenReturn(availableDates);

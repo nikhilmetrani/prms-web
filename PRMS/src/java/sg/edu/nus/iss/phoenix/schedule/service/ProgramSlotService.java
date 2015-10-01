@@ -112,11 +112,11 @@ public class ProgramSlotService {
             startDate = sdf_date.parse(getDate(slot));
             Calendar cStart = Calendar.getInstance();
             cStart.setTime(startDate);
-            if (cStart.get(Calendar.DAY_OF_WEEK) == 7) {
+            if (cStart.get(Calendar.DAY_OF_WEEK) == 1) {
                 duration = sdf_time.parse(slot.getDuration());
                 Calendar cEnd = Calendar.getInstance();
                 addDuration(duration, cEnd, startDate);
-                if (cEnd.get(Calendar.DAY_OF_WEEK) == 1) {
+                if (cEnd.get(Calendar.DAY_OF_WEEK) == 2) {
                     throw new ProgramSlotException("Program slot cannot span to next week");
                 }
             }

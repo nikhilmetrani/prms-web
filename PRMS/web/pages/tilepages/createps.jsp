@@ -72,12 +72,12 @@
                                 <tr> 
                                      <th width="25%"><fmt:message key="label.createps.startTime" /></th>
                                      <th width="25%"><input type="time" name="startTime" pattern="([0-1][0-9]|20|21|22|23|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])"
-                                                            value="${param['startTime']}" size=15 maxlength=8 title=" of Start time" required />
+                                                            value="${param['startTime']}" size=15 maxlength=8 title="Please enter Start time in proper format" required />
                                 </tr>
 				<tr>
                                     <th width="25%"><fmt:message key="label.createps.duration" /></th>
 				    <th width="25%"><input type="time" name="pgmSlotDuration" pattern="([0-1][0-9]|20|21|22|23|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])"
-                                                             value="${param['pgmSlotDuration']}" size=15 maxlength=8 title=" of Duration" required></th>
+                                                             value="${param['pgmSlotDuration']}" size=15 maxlength=8 title="Please enter Duration in proper format" required></th>
 				</tr>
                                 <tr>
                                  <th width="25%"><fmt:message key="label.createps.radioProgram" /></th>
