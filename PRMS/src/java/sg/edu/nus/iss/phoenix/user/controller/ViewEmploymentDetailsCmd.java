@@ -7,21 +7,30 @@ package sg.edu.nus.iss.phoenix.user.controller;
 
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
-import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 
 /**
- *
- * @author nick
+ * Command object that allows users to view their profile. <br>
+ * Users must have producer or presenter role to be able to perform this action.
+ * @author Nikhil Metrani
  */
 @Action("viewempdetails")
 public class ViewEmploymentDetailsCmd implements Perform{
 
+    /**
+     * Allows users with producer or presenter role to view their profile information.
+     * @param path Path
+     * @param req Http Servlet Request
+     * @param resp Httlp Servlet Response
+     * @return Path of page that allows users to view employment details.<br>
+     * If the user is not logged in, path of login page is returned.
+     * @throws ServletException 
+     */
     @Override
-    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws ServletException {
         req.getSession().setAttribute("errorMessage", "");
         User currentUser = (User)req.getSession().getAttribute("user");
         if (null != currentUser) {
@@ -34,11 +43,12 @@ public class ViewEmploymentDetailsCmd implements Perform{
                 req.getSession().setAttribute("profileImage", currentUser.getProfile().getImage());
             }
             else {
-                req.getSession().setAttribute("errorMessage", "Current user is not a presenter or producer.");
+                req.getSession().setAttribute("errorMessage", "You do not have the appropriate access to view this page. Please contact your administrator.");
             }
         }
         else {
-            req.getSession().setAttribute("errorMessage", "Error finding employment details.");
+            //Let's go back to login page since we cannot validate the user.
+            return "/pages/login.jsp";
         }
         return "/pages/maintainuser/viewempdetails.jsp";
     }

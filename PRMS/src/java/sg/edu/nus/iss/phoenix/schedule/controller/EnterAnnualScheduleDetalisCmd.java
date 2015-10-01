@@ -18,12 +18,24 @@ import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
- *
+ * Command object that creates Annual Schedule for given year if it doesn't exist.
  * @author Nikhil Metrani
  */
 @Action("enteras")
 public class EnterAnnualScheduleDetalisCmd implements Perform{
 
+    /**
+     * Creates Annual Schedule for the given year if it does not exist.
+     * The year must not be less than the current year.<br>
+     * The request must contain following parameters:<br>
+     * 1. year: The year for which the annual schedule is to be created<br>
+     * 2. assignedBy: User name of the assignee<br>
+     * @param path Path
+     * @param req Http Servlet Request
+     * @param resp Http Servlet Response
+     * @return Returns path of viewSchedule command.<br>
+     * If there are any errors, errorMessage parameter will be set and path of createas command is returned.
+     */
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp){
         req.getSession().setAttribute("errorMessage", "");
@@ -72,7 +84,6 @@ public class EnterAnnualScheduleDetalisCmd implements Perform{
                 }
             }
         }
-        
         return weeklySchedules;
     }
 }

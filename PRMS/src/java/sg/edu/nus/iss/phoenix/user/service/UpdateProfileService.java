@@ -11,10 +11,18 @@ import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 
 /**
- *
+ * Service object that helps to update user profile.
  * @author Nikhil Metrani
  */
 public class UpdateProfileService {
+    /**
+     * Updates user profile
+     * @param user User object to be updated.
+     * @throws NotFoundException
+     * @throws SQLException 
+     * @see User
+     * @see UserDaoImpl
+     */
     public void processUpdate(User user)  throws NotFoundException, SQLException {
         UserDaoImpl userDao = new UserDaoImpl();
         userDao.save(user);

@@ -7,37 +7,35 @@ package sg.edu.nus.iss.phoenix.user.controller;
 
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
-import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
-//import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Profile;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.user.delegate.UpdateProfileDelegate;
+import sg.edu.nus.iss.phoenix.user.service.UpdateProfileService;
 
 /**
- *
+ * Command object that allows users to update their profile information
  * @author Nikhil Metrani
  */
 @Action("updateprofile")
-//@MultipartConfig(fileSizeThreshold=1024*1024*10,    // 10 MB 
-//                 maxFileSize=1024*1024*50,          // 50 MB
-//                 maxRequestSize=1024*1024*100)      // 100 MB
 public class UpdateProfileCmd implements Perform {
 
     /**
-     * Directory where uploaded files will be saved, its relative to
-     * the web application directory.
+     * Initiates process to update user profile. The user must have appropriate role to perform this action.
+     * @param path Path
+     * @param req Http Servlet Request
+     * @param resp Httlp Servlet Response
+     * @return If the profile was updated, path of page that allows users to view employment details is returned.<br>
+     * If the user is not logged in, path of login page is returned.
+     * @throws ServletException 
+     * @see UpdateProfileService
      */
-    private static final String UPLOAD_DIR = "uploads";
-    
     @Override
-    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws ServletException {
         req.getSession().setAttribute("errorMessage", "");
         User currentUser = (User)req.getSession().getAttribute("user");
         if (null != currentUser) {
@@ -50,62 +48,22 @@ public class UpdateProfileCmd implements Perform {
                 profile.setSiteLink(req.getParameter("siteLink"));
                 profile.setImage(req.getParameter("profileImage"));
                 currentUser.setProfile(profile);
-                UpdateProfileDelegate upd = new UpdateProfileDelegate();
+                UpdateProfileDelegate updatedeligate = new UpdateProfileDelegate();
                 try {
-                    upd.processUpdate(currentUser);
-//                    try {
-//                        uploadProdileImage(req, resp);
-//                    } catch (IOException ex) {
-//                        req.getSession().setAttribute("errorMessage", "Failed to upload profileimage.");
-//                    }
+                    updatedeligate.processUpdate(currentUser);
+                    req.getSession().setAttribute("user", currentUser);
                 } catch (NotFoundException | SQLException ex) {
-                    req.getSession().setAttribute("errorMessage", "Failed to update.");
+                    req.getSession().setAttribute("errorMessage", "Failed to update profile.");
                 }
-                req.getSession().setAttribute("user", currentUser);
             }
             else {
-                req.getSession().setAttribute("errorMessage", "Current user is not a presenter or producer.");
+                req.getSession().setAttribute("errorMessage", "You do not have access to perform this operation. Please contact your administrator.");
             }
         }
         else {
-            req.getSession().setAttribute("errorMessage", "Error finding employment details.");
+            //Let's go back to login page since we cannot validate the user.
+            return "/pages/login.jsp";
         }
         return "/nocturne/viewempdetails";
-    }
-    
-    public void uploadProdileImage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // gets absolute path of the web application
-        String applicationPath = request.getServletContext().getRealPath("");
-        // constructs path of the directory to save uploaded file
-        String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
-          
-        // creates the save directory if it does not exists
-        File fileSaveDir = new File(uploadFilePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdirs();
-        }
-        System.out.println("Upload File Directory="+fileSaveDir.getAbsolutePath());
-         
-        String fileName = null;
-        //Get all the parts from request and write it to the file on server
-        for (Part part : request.getParts()) {
-            fileName = getFileName(part);
-            part.write(uploadFilePath + File.separator + fileName);
-        }
-    }
-    
-    /**
-     * Utility method to get file name from HTTP header content-disposition
-     */
-    private String getFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        System.out.println("content-disposition header= "+contentDisp);
-        String[] tokens = contentDisp.split(";");
-        for (String token : tokens) {
-            if (token.trim().startsWith("filename")) {
-                return token.substring(token.indexOf("=") + 2, token.length()-1);
-            }
-        }
-        return "";
     }
 }

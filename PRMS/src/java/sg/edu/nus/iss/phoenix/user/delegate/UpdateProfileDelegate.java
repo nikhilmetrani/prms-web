@@ -15,6 +15,13 @@ import sg.edu.nus.iss.phoenix.user.service.UpdateProfileService;
  * @author Nikhil Metrani
  */
 public class UpdateProfileDelegate {
+    /**
+     * Delegates the call to UpdateProfileService
+     * @param user User object to be updated
+     * @throws NotFoundException
+     * @throws SQLException 
+     * @see UpdateProfileService
+     */
     public void processUpdate(User user)  throws NotFoundException, SQLException {
         UpdateProfileService service = new UpdateProfileService();
         service.processUpdate(user);

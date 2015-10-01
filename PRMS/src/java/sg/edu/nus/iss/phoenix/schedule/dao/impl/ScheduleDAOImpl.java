@@ -5,7 +5,6 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.dao.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,6 +21,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 /**
  *
  * @author jayavignesh
+ * @author Nikhil Metrani
  */
 public class ScheduleDAOImpl extends GeneralDAO implements ScheduleDAO {
 
@@ -103,9 +103,10 @@ public class ScheduleDAOImpl extends GeneralDAO implements ScheduleDAO {
     }
 
     /**
-     * Creates an Annual Schedule in database
-     * @param annualSchedule
-     * @throws SQLException 
+     * Saves the given Annual Schedule object into database.
+     * @param annualSchedule This should be the annual schedule object to be saved.
+     * @throws SQLException SQLException will be thrown when the method fails to write info into the database.
+     * This could happen if the schedule already exists.
      */
     @Override
     public void create(AnnualSchedule annualSchedule) throws SQLException {
@@ -132,9 +133,10 @@ public class ScheduleDAOImpl extends GeneralDAO implements ScheduleDAO {
     }
     
     /**
-     * Creates the Weekly Schedule in database
-     * @param weeklySchedules
-     * @throws SQLException 
+     * Saves the given list of weekly schedules into the database.
+     * @param weeklySchedules A list of weekly schedules that are to be saved.
+     * @throws SQLException SQLException will be thrown when the method fails to write info into the database.
+     * This could happen if any of the schedules already exists.
      */
     @Override
     public void create(List<WeeklySchedule> weeklySchedules) throws SQLException {
@@ -171,10 +173,9 @@ public class ScheduleDAOImpl extends GeneralDAO implements ScheduleDAO {
      * value indicates how many rows were affected. This method will also make
      * sure that if cache is used, it will reset when data changes.
      *
-     * @param conn This method requires working database connection.
      * @param statement This parameter contains the SQL statement to be
      * executed.
-     * @return
+     * @return Returns the number of rows that were committed to the database
      * @throws java.sql.SQLException
      */
     protected int databaseUpdate(PreparedStatement statement) throws SQLException {

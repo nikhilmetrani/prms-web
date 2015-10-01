@@ -25,6 +25,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
  * Service class for Maintain Schedule
  * 
  * @author jayavignesh
+ * @author Nikhil Metrani
  */
 public class ScheduleService {
     DAOFactoryImpl factory;
@@ -62,6 +63,7 @@ public class ScheduleService {
     /**
      * Creates an Annual Schedule
      * @param annualSchedule AnnualSchedule object that has to be persisted
+     * @throws java.sql.SQLException
      * @see AnnualSchedule
      */
     public void processCreate(AnnualSchedule annualSchedule) throws SQLException {
@@ -71,6 +73,7 @@ public class ScheduleService {
     /**
      * Creates all the Weekly Schedules contained in the List
      * @param weeklySchedules List of WeeklySchedule objects that has to be persisted
+     * @throws java.sql.SQLException
      */
     public void processCreate(List<WeeklySchedule> weeklySchedules) throws SQLException {
         scheduleDao.create(weeklySchedules);

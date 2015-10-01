@@ -31,6 +31,8 @@ public class ScheduleDelegate {
     /**
      * Delegates the call to ScheduleService
      *
+     * @param anualSchedule The annual schedule that is to be saved to the database
+     * @throws java.sql.SQLException
      * @see ScheduleService
      */
     public void processCreate(AnnualSchedule anualSchedule) throws SQLException {
@@ -41,6 +43,8 @@ public class ScheduleDelegate {
     /**
      * Delegates the call to ScheduleService
      *
+     * @param weeklySchedules List of weekly schedules to be saved to the database.
+     * @throws java.sql.SQLException
      * @see ScheduleService
      */
     public void processCreate(List<WeeklySchedule> weeklySchedules) throws SQLException {

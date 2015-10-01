@@ -7,17 +7,22 @@ package sg.edu.nus.iss.phoenix.schedule.controller;
 
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
-import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Command object that initiates creation of new Annual Schedule.
  * @author Nikhil Metrani
  */
 @Action("createas")
 public class CreateAnnualScheduleCmd implements Perform {
+    /**
+     * This action will take users to the Annual Schedule creation page where they can enter the year.
+     * @param path Path
+     * @param req Http Servlet Request
+     * @param resp Http Servlet Response
+     * @return Returns the path of page where the user can enter details
+     */
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp){
         req.getSession().setAttribute("errorMessage", "");
