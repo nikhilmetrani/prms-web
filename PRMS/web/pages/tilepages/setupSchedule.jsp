@@ -31,10 +31,21 @@ function selectWeeklySchedule(){
     }
 }
 
-
 function createProgramSlot(){
     document.forms[0].actionType.value = "createPgmSlot";
     document.forms[0].action = "${pageContext.request.contextPath}/nocturne/createPgmSlot";
+    document.forms[0].submit();
+}
+
+function modifyProgramSlot(){
+    document.forms[0].actionType.value = "modifyPgmSlot";
+    document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
+    document.forms[0].submit();
+}
+
+function deleteProgramSlot(){
+    document.forms[0].actionType.value = "deletePgmSlot";
+    document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
     document.forms[0].submit();
 }
 
@@ -85,6 +96,8 @@ alert('${successMsg}');
                                         <c:if test="${weeklySchedule != null && (actionType == null || actionType eq '')}">
                                         | <a href="#" onclick="copyWeeklySchedule()">Copy Weekly Schedule</a> 
                                         | <a href="#" onclick="createProgramSlot()">Create Program Slot</a> 
+                                        | <a href="#" onclick="modifyProgramSlot()">Modify Program Slot</a> 
+                                        | <a href="#" onclick="deleteProgramSlot()">Delete Program Slot</a> 
                                         </c:if>                                       
                                         <c:if test="${actionType eq 'copy' && weeklySchedule != null && srcWeeklySchedule != null}">
                                         <a href="#" onclick="confirmCopy()">Confirm</a> | 
