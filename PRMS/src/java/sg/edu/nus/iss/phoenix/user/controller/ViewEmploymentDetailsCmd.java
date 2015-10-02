@@ -40,7 +40,7 @@ public class ViewEmploymentDetailsCmd implements Perform{
                 req.getSession().setAttribute("email", currentUser.getEmail());
                 req.getSession().setAttribute("phoneNo", currentUser.getPhoneNumber());
                 req.getSession().setAttribute("siteLink", currentUser.getProfile().getSiteLink());
-                req.getSession().setAttribute("profileImage", currentUser.getProfile().getImage());
+                req.getSession().setAttribute("profilePicture", currentUser.getProfile().getImage());
             }
             else {
                 req.setAttribute("errorMessage", "You do not have the appropriate access to view this page. Please contact your administrator.");

@@ -23,6 +23,14 @@ import static org.junit.Assert.*;
  */
 public class ViewEmploymentDetailsTest {
     
+    HttpServletRequest request;
+    HttpServletResponse response;
+    HttpSession session;
+    int scheduleYearPast;
+    int scheduleYearCurrent;
+    int scheduleYearFuture;
+    String userName;
+    
     public ViewEmploymentDetailsTest() {
     }
     
