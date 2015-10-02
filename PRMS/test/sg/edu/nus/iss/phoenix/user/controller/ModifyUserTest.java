@@ -39,9 +39,10 @@ public class ModifyUserTest {
             User toModify = dao.getObject("test_three");
             when(req.getAttribute("user")).thenReturn(toModify);
             
-            when(req.getAttribute("name")).thenReturn(newName);
-            when(req.getAttribute("id")).thenReturn("test_three");
-            when(req.getAttribute("role")).thenReturn(newRoles);
+            when(req.getParameter("name")).thenReturn(newName);
+            when(req.getParameter("id")).thenReturn("test_three");
+            when(req.getParameterValues("role")).thenReturn(newRoles);
+            when(req.getParameter("password")).thenReturn(password);
             new ModifyUserCmd().perform(null, req, res);
             
             User modified = dao.getObject("test_three");

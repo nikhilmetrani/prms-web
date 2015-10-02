@@ -27,16 +27,15 @@ public class ResetPasswordTest {
         HttpServletResponse res = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
         
-        String newName = "test_three_modified";
+        String newName = "test_three";
         String password = "password1234";
-        String[] newRoles = new String[]{"manager", "producer", "presenter"};
 
         when(req.getSession()).thenReturn(session);
         try {
-            when(req.getAttribute("name")).thenReturn(newName);
-            when(req.getAttribute("id")).thenReturn("test_three");
-            when(req.getAttribute("oldPassword")).thenReturn(password);
-            when(req.getAttribute("newPassword")).thenReturn("newpassword1234");
+            when(req.getParameter("name")).thenReturn(newName);
+            when(req.getParameter("id")).thenReturn("test_three");
+            when(req.getParameter("old_password")).thenReturn(password);
+            when(req.getParameter("new_password")).thenReturn("newpassword1234");
             new ResetPasswordCmd().perform(null, req, res);
             
             UserDaoImpl dao = new UserDaoImpl();
