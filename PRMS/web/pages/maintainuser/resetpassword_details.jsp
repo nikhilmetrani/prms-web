@@ -8,6 +8,15 @@
 <html>
     <head>
         <fmt:setBundle basename="ApplicationResources" />
+         <style type="text/css">
+            errorMessage{
+                color: crimson;
+                margin-bottom: 10px;
+            successMessage{
+                color: green;
+                margin-bottom: 10px;
+            }
+        </style>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title><fmt:message key="label.cruduser.resetpw" /></title>
         <script type="text/javascript">
@@ -65,6 +74,11 @@
         %>
 
         <form name="usrForm" action="${pageContext.request.contextPath}/nocturne/resetpassword" method="post">
+            <errorMessage>${errorMessage}</errorMessage>
+           <successMessage>${successMessage}</successMessage>
+            <c:forEach items="${errorMessageList}" var="errorMessage">
+                <errorMessage>${errorMessage}</errorMessage><br>
+            </c:forEach>
             <p id="demo"></p>
             <center>
                 <table cellpadding=4 cellspacing=2 border=0>

@@ -19,6 +19,7 @@ import sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDaoImpl;
 import sg.edu.nus.iss.phoenix.authenticate.delegate.AuthenticateDelegate;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import static sg.edu.nus.iss.phoenix.core.controller.FCUtilities.validatePassword;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.user.delegate.ModifyUserDelegate;
 
@@ -33,7 +34,6 @@ public class ModifyUserCmd implements Perform {
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String name = (String) req.getParameter("name");
         String id = (String) req.getParameter("id");
-        //String action = req.getParameter("delete");
         if (name != null && id != null) {
             ModifyUserDelegate del = new ModifyUserDelegate();
             AuthenticateDelegate adel = new AuthenticateDelegate();
@@ -46,9 +46,8 @@ public class ModifyUserCmd implements Perform {
 
                 ArrayList<Role> roleList = new ArrayList<Role>();
                 String[] roles = req.getParameterValues("role");
-                if (roles == null || roles.length == 0) {
-                    req.setAttribute("errorMessage", "Please enter role details");
-                } else {
+
+                if (roles != null && roles.length > 0) {
                     for (int i = 0; i < roles.length; i++) {
                         Role r = adel.findRole(roles[i].toString());
                         if (r != null) {
@@ -57,9 +56,18 @@ public class ModifyUserCmd implements Perform {
                         }
                     }
                 }
+                ArrayList<String> errorMessageList = new ArrayList<String>();
+                errorMessageList = validateModifyUser(updatedUser);
 
-                del.processModify(updatedUser);
-                req.setAttribute("updated", "yes");
+                if (errorMessageList.isEmpty()) {
+                    del.processModify(updatedUser);
+                    req.setAttribute("updated", "yes");
+                } else {
+                    req.setAttribute("errorMessageList", errorMessageList);
+                    req.setAttribute("user", updatedUser);
+                    return "/pages/modifyuser_details.jsp";
+                }
+
                 //}
             } catch (NotFoundException ex) {
                 Logger.getLogger(ModifyUserCmd.class.getName()).log(Level.SEVERE, null, ex);
@@ -70,20 +78,20 @@ public class ModifyUserCmd implements Perform {
             return "/pages/modifyuser.jsp";
         } else if (id != null) {
             UserDaoImpl userDao = new UserDaoImpl();
-            User user = new User();
+            User user = null;
             try {
                 user = userDao.getObject(id);
             } catch (Exception e) {
                 req.setAttribute("errorMessage", "User not found");
-                return "/pages/modifyuser_empty.jsp";
+                return "/pages/modifyuser.jsp";
             }
             if (user == null) {
                 req.setAttribute("Empty", "yes");
                 req.setAttribute("errorMessage", "User not found");
-                return "/pages/modifyuser_empty.jsp";
+                return "/pages/modifyuser.jsp";
             } else if (user != null && !user.isActiveUserFlag()) {
                 req.setAttribute("errorMessage", "User is not active");
-                return "/pages/modifyuser_empty.jsp";
+                return "/pages/modifyuser.jsp";
             } else {
                 req.setAttribute("user", user);
                 return "/pages/modifyuser_details.jsp";
@@ -94,4 +102,30 @@ public class ModifyUserCmd implements Perform {
         }
     }
 
+    private ArrayList<String> validateModifyUser(User user) {
+        String userName = user.getName();
+        String password = user.getPassword();
+        String errorMessage = null;
+        String blankValue = "";
+        ArrayList<String> errorMessages = new ArrayList<String>();
+
+//        if (roles == null || roles.isEmpty()) {
+//            //req.setAttribute("errorMessage", "Please enter role details");
+//            //errorMessage += "Please enter role details"+newLine;
+//            errorMessages.add("Please enter role details");
+//        }
+        if (userName.equals(blankValue)) {
+            errorMessages.add("Please enter User name");
+        }
+        if (password.equals(blankValue)) {
+            errorMessages.add("Please enter password");
+        } else {
+            errorMessage = validatePassword(password);
+            if (errorMessage != null && !errorMessage.equals(blankValue)) {
+                errorMessages.add(errorMessage);
+            }
+        }
+
+        return errorMessages;
+    }
 }

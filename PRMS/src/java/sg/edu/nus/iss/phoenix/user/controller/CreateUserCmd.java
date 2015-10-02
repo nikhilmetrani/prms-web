@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.authenticate.delegate.AuthenticateDelegate;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Role;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import static sg.edu.nus.iss.phoenix.core.controller.FCUtilities.validatePassword;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.user.delegate.CreateUserDelegate;
 
@@ -35,33 +36,28 @@ public class CreateUserCmd implements Perform {
         user.setId(req.getParameter("id"));
         user.setPassword(req.getParameter("password"));
         user.setName(req.getParameter("name"));
-        String errorMessage = "";
-
-       // String action = req.getParameter("action");
-
-            ArrayList<Role> roleList = new ArrayList<Role>();
-            String[] roles = req.getParameterValues("role");
-            if (roles == null || roles.length == 0) {
-                req.setAttribute("errorMessage", "Please enter role details");
-            }else{
-                for (int i = 0; i < roles.length; i++) {
-                    Role r = adel.findRole(roles[i].toString());
-                    if (r != null) {
-                        roleList.add(r);
-                        user.setRoles(roleList);
-                    }
+        ArrayList<Role> roleList = new ArrayList<Role>();
+        String[] roles = req.getParameterValues("role");
+        if (roles != null && roles.length > 0) {
+            for (int i = 0; i < roles.length; i++) {
+                Role r = adel.findRole(roles[i].toString());
+                if (r != null) {
+                    roleList.add(r);
+                    user.setRoles(roleList);
                 }
             }
-//        Role newRole = new Role();
-//        newRole.setRole(req.getParameter("role"));
-//        newRole.setAccessPrivilege(req.getParameter("access"));
-//        roles.add(0, newRole);
-//        user.setRoles(roles);
-//        user.setRole(req.getParameter("role"));
-//        
+        }
+        ArrayList<String> errorMessageList = new ArrayList<String>();
+        errorMessageList = validateNewUser(user);
+
         User newUser = null;
         try {
-            newUser = del.processCreate(user);
+            if (errorMessageList.isEmpty()) {
+                newUser = del.processCreate(user);
+            } else {
+                req.setAttribute("errorMessageList", errorMessageList);
+                return "/pages/createuser.jsp";
+            }
             //req.setAttribute("user", newUser);
         } catch (NotFoundException ex) {
             Logger.getLogger(CreateUserCmd.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,4 +73,33 @@ public class CreateUserCmd implements Perform {
 
         return "/pages/createuser.jsp";
     }
+
+    private ArrayList<String> validateNewUser(User user) {
+        String userId = user.getId();
+        String userName = user.getName();
+        String password = user.getPassword();
+        ArrayList<Role> roles = user.getRoles();
+        String errorMessage = null;
+        String blankValue = "";
+        ArrayList<String> errorMessages = new ArrayList<String>();
+        if (roles == null || roles.isEmpty()) {
+            errorMessages.add("Please enter role details");
+        }
+        if (userId.equals(blankValue)) {
+            errorMessages.add("Please enter Id");
+        }
+        if (userName.equals(blankValue)) {
+            errorMessages.add("Please enter User name");
+        }
+        if (password.equals(blankValue)) {
+            errorMessages.add("Please enter password");
+        } else {
+            errorMessage = validatePassword(password);
+            if (errorMessage != null && !errorMessage.equals(blankValue)) {
+                errorMessages.add(errorMessage);
+            }
+        }
+        return errorMessages;
+    }
+
 }

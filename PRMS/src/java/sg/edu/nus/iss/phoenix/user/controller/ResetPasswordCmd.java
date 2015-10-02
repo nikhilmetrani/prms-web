@@ -9,6 +9,7 @@ import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -16,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.authenticate.dao.impl.UserDaoImpl;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
+import static sg.edu.nus.iss.phoenix.core.controller.FCUtilities.validatePassword;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
-import sg.edu.nus.iss.phoenix.user.delegate.ModifyUserDelegate;
 import sg.edu.nus.iss.phoenix.user.delegate.ResetPasswordDelegate;
 
 /**
@@ -42,8 +43,20 @@ public class ResetPasswordCmd implements Perform {
                 updatedUser = userDao.getObject(id);
                 updatedUser.setName(name);
                 updatedUser.setPassword(newPassword);
-                del.processModify(updatedUser);
-                req.setAttribute("updated", "yes");
+
+                ArrayList<String> errorMessageList = new ArrayList<String>();
+                errorMessageList = validateResetPassword(oldPassword, newPassword);
+
+                if (errorMessageList.isEmpty()) {
+                    del.processModify(updatedUser);
+                    req.setAttribute("updated", "yes");
+                } else {
+                    req.setAttribute("errorMessageList", errorMessageList);
+                    updatedUser.setPassword(oldPassword);
+                    req.setAttribute("user", updatedUser);
+                    return "/pages/resetpassword_details.jsp";
+                }
+
             } catch (NotFoundException ex) {
                 Logger.getLogger(ResetPasswordCmd.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
@@ -53,20 +66,20 @@ public class ResetPasswordCmd implements Perform {
             return "/pages/resetpassword.jsp";
         } else if (id != null) {
             UserDaoImpl userDao = new UserDaoImpl();
-            User user = new User();
+            User user = null;
             try {
                 user = userDao.getObject(id);
             } catch (Exception e) {
                 req.setAttribute("errorMessage", "User not found");
-                return "/pages/resetpassword_empty.jsp";
+                return "/pages/resetpassword.jsp";
             }
             if (user == null) {
                 req.setAttribute("Empty", "yes");
+                req.setAttribute("errorMessage", "User not found");
+                return "/pages/resetpassword.jsp";
+            } else if (user != null && !user.isActiveUserFlag()) {
                 req.setAttribute("errorMessage", "User is not active");
-                return "/pages/resetpassword_empty.jsp";
-            }else if (user != null && !user.isActiveUserFlag()) {
-                req.setAttribute("errorMessage", "User is not active");
-                return "/pages/resetpassword_empty.jsp";
+                return "/pages/resetpassword.jsp";
             } else {
                 req.setAttribute("user", user);
                 return "/pages/resetpassword_details.jsp";
@@ -77,4 +90,24 @@ public class ResetPasswordCmd implements Perform {
         }
     }
 
+    private ArrayList<String> validateResetPassword(String oldPassword, String newPassword) {
+        String errorMessage = null;
+        String blankValue = "";
+        ArrayList<String> errorMessages = new ArrayList<String>();
+        if (newPassword.equals(blankValue)) {
+            errorMessages.add("Please enter password");
+        } else {
+            if (oldPassword != null && newPassword != null) {
+                if (oldPassword.equals(newPassword)) {
+                    errorMessages.add("Old password and new password cannot be same");
+                } else {
+                    errorMessage = validatePassword(newPassword);
+                    if (errorMessage != null && !errorMessage.equals(blankValue)) {
+                        errorMessages.add(errorMessage);
+                    }
+                }
+            }
+        }
+        return errorMessages;
+    }
 }

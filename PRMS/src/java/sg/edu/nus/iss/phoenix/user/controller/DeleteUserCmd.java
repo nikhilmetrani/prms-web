@@ -55,15 +55,15 @@ public class DeleteUserCmd implements Perform {
                 user = userDao.getObject(id);
             } catch (Exception e) {
                 req.setAttribute("errorMessage", "User not found");
-                return "/pages/deleteuser_empty.jsp";
+                return "/pages/deleteuser.jsp";
             }
             if (user == null) {
                 req.setAttribute("Empty", "yes");
                 req.setAttribute("errorMessage", "User not found");
-                return "/pages/deleteuser_empty.jsp";
+                return "/pages/deleteuser.jsp";
             } else if(user != null && !user.isActiveUserFlag()){
                 req.setAttribute("errorMessage", "User is not active");
-                return "/pages/deleteuser_empty.jsp";
+                return "/pages/deleteuser.jsp";
             }else{
                 req.setAttribute("user", user);
                 return "/pages/deleteuser_details.jsp";
