@@ -15,8 +15,8 @@
 <body>
     <form action="${pageContext.request.contextPath}/nocturne/enteras" method=post>
         <center>
-            <c:if test="${errorMessage!=''}">
-                <p><font color="red">Error: ${errorMessage}"</font></p>
+            <c:if test="${errorMessage!=null}">
+                <p><font color="red">Error: ${errorMessage}</font></p>
             </c:if>
             <table cellpadding=4 cellspacing=2 border=0>
                 <tr>

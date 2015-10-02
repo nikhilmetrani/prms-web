@@ -25,7 +25,7 @@ public class CreateAnnualScheduleCmd implements Perform {
      */
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp){
-        req.getSession().setAttribute("errorMessage", "");
+        req.removeAttribute("errorMessage");
         return "/pages/maintainSchedule/createas.jsp";
     }
 }

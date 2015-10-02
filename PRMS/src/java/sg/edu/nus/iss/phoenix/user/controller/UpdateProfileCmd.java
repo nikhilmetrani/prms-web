@@ -36,7 +36,7 @@ public class UpdateProfileCmd implements Perform {
      */
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-        req.getSession().setAttribute("errorMessage", "");
+        req.removeAttribute("errorMessage");
         User currentUser = (User)req.getSession().getAttribute("user");
         if (null != currentUser) {
             if (currentUser.hasRole("producer") ||
@@ -53,11 +53,11 @@ public class UpdateProfileCmd implements Perform {
                     updatedeligate.processUpdate(currentUser);
                     req.getSession().setAttribute("user", currentUser);
                 } catch (NotFoundException | SQLException ex) {
-                    req.getSession().setAttribute("errorMessage", "Failed to update profile.");
+                    req.setAttribute("errorMessage", "Failed to update profile.");
                 }
             }
             else {
-                req.getSession().setAttribute("errorMessage", "You do not have access to perform this operation. Please contact your administrator.");
+                req.setAttribute("errorMessage", "You do not have access to perform this operation. Please contact your administrator.");
             }
         }
         else {

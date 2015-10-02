@@ -38,7 +38,7 @@ public class EnterAnnualScheduleDetalisCmd implements Perform{
      */
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp){
-        req.getSession().setAttribute("errorMessage", "");
+        req.removeAttribute("errorMessage");
         ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
         int year = Integer.parseInt(req.getParameter("year"));
         if(year < Calendar.getInstance().get(Calendar.YEAR)) {

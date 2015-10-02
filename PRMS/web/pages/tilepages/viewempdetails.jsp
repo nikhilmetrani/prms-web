@@ -15,10 +15,10 @@
 <body>
     <form action="${pageContext.request.contextPath}/nocturne/updateprofile" method=post>
         <center>
-            <c:if test="${errorMessage!=''}">
+            <c:if test="${errorMessage!=null}">
                 <p><font color="red">${errorMessage}</font></p>
             </c:if>
-            <c:if test="${errorMessage==''}">
+            <c:if test="${errorMessage==null}">
             <table cellpadding=4 cellspacing=2 border=0>
                 <tr>
                     <th width="30%"><fmt:message key="label.createas.value" /></th>
