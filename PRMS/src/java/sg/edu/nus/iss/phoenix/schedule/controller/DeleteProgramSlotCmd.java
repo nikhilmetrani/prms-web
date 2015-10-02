@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Niu Yiming
  */
-@Action("deleteps")
+@Action("deletePgmSlot")
 public class DeleteProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -62,10 +62,8 @@ public class DeleteProgramSlotCmd implements Perform {
                 }
             }
         }
-
         return "/pages/maintainSchedule/deleteps.jsp";
-    }
-    
+    } 
 }
 
 

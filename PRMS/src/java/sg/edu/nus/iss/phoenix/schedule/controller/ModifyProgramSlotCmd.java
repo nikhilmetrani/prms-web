@@ -24,11 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Niu Yiming
  */
-@Action("modifyps")
+@Action("modifyPgmSlot")
 public class ModifyProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        //req.removeAttribute("actionType");
         
         String name = req.getParameter("radioProgram");
         String programDate = req.getParameter("programDate");
@@ -68,8 +67,6 @@ public class ModifyProgramSlotCmd implements Perform {
                 }
             }
         }
-
         return "/pages/maintainSchedule/modifyps.jsp";
-    }
-           
+    }           
 }
