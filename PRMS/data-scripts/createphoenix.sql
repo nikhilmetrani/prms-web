@@ -30,7 +30,7 @@ CREATE  TABLE IF NOT EXISTS `phoenix`.`user` (
   `email` VARCHAR(255) NULL ,
   `phoneNo` VARCHAR(45) NULL ,
   `siteLink` MEDIUMTEXT NULL ,
-  `profileImage` VARCHAR(255) NULL ,
+  `profilePicture` MEDIUMBLOB NULL ,
 PRIMARY KEY (`id`))
 --  CONSTRAINT `role`
 --    FOREIGN KEY (`role` )

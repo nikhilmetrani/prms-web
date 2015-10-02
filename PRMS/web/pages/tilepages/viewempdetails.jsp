@@ -13,7 +13,7 @@
 <title><fmt:message key="title.viewempdetails" /></title>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/nocturne/updateprofile" method=post>
+    <form action="${pageContext.request.contextPath}/nocturne/updateprofile" method="post" >
         <center>
             <c:if test="${errorMessage!=null}">
                 <p><font color="red">${errorMessage}</font></p>
@@ -49,13 +49,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><fmt:message key="label.viewempdetails.profileimage" /></td>
-                    <td><img src="${profileImage}" height="192" width="192">
+                    <td><fmt:message key="label.viewempdetails.profilepicture" /></td>
+                    <td><img src="${pageContext.request.contextPath}/nocturne/viewProfileImage" height="192" width="192">
                     </td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="file" accept="image/*" name="profileImage" id="newProfileImage" size=45 >
+                    <td><input type="file" accept="image/*" name="profilePicture" id="profilePicture">
                     </td>
                 </tr>
             </table>
