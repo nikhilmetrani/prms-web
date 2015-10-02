@@ -18,15 +18,15 @@
 
 <title><fmt:message key="title.deleteps" /></title>
 <script>
-    function selectProgramSlot(){
-        if(document.forms[0].programSlot.value!=""){
+    function selectProgramDate(){
+        if(document.forms[0].programDate.value!=""){
             document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
         }
         document.forms[0].submit();
     }
     
-    function selectProgramDate(){
-        if(document.forms[0].programDate.value!=""){
+    function selectStartDate(){
+        if(document.forms[0].startDate.value!=""){
             document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
         }
         document.forms[0].submit();
@@ -64,11 +64,11 @@
 				</tr>
                                 
                                 <tr>
-                                <th width="25%"><fmt:message key="label.deleteps.programSlot" /></th>
+                                <th width="25%"><fmt:message key="label.deleteps.startTime" /></th>
                                     <th width="25%">
-                                        <select name="programSlot" onchange="selectProgramSlot()" >
+                                        <select name="startTime" onchange="selectStartDate()" >
                                             <option value="">--Select--</option>
-                                                <c:forEach var="pgmSlot" items="${pgmSlots}">
+                                                <c:forEach var="startDate" items="${startDates}">
                                                     <c:choose>
                                                     <c:when test="${pgmSlotName != null && pgmSlotName eq pgmSlot.name}"> 
                                                     <option value="${pgmSlot.name}" selected>${pgmSlot.name}</option>

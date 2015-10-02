@@ -27,7 +27,7 @@ import sg.edu.nus.iss.phoenix.schedule.service.ProgramSlotService;
 public class ModifyProgramSlotTest {
 
     @Test
-    public void createProgramSlotCmdTest() {
+    public void modifyProgramSlotCmdTest() {
         HttpServletRequest req = mock(HttpServletRequest.class);
         HttpServletResponse res = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
@@ -76,64 +76,11 @@ public class ModifyProgramSlotTest {
 
             //Select program date
             when(session.getAttribute("availableDates")).thenReturn(availableDates);
-            new CreateProgramSlotCmd().perform(null, req, res);
+            new ModifyProgramSlotCmd().perform(null, req, res);
 
         } catch (Exception e) {
             assert (false);
             e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void enterProgramSlotDetailsCmdTest() {
-        HttpServletRequest req = mock(HttpServletRequest.class);
-        HttpServletResponse res = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
-
-        String name = "news";
-        String programDate = "10-01-2015";
-        String startTime = "02:30:00";
-        String duration = "00:30:00";
-
-        when(req.getSession()).thenReturn(session);
-        try {
-            //Select radioProgram
-            when(req.getParameter("radioProgram")).thenReturn(name);
-            //Select program date
-            when(req.getParameter("programDate")).thenReturn(programDate);
-            //Select startTime
-            when(req.getParameter("startTime")).thenReturn(startTime);
-            //Select pgmSlotDuration
-            when(req.getParameter("pgmSlotDuration")).thenReturn(duration);
-
-            //Select program name
-            when(session.getAttribute("radioPgmName")).thenReturn(name);
-            //Select program date
-            when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
-
-            List<String> availableDates = new ArrayList<>();            
-            availableDates.add("05-01-2015");
-            availableDates.add("06-01-2015");
-            availableDates.add("07-01-2015");
-            availableDates.add("08-01-2015");
-            availableDates.add("09-01-2015");
-            availableDates.add("10-01-2015");
-            availableDates.add("11-01-2015");
-
-            //Select program date
-            when(session.getAttribute("availableDates")).thenReturn(availableDates);
-            new EnterProgramSlotDetailsCmd().perform(null, req, res);
-
-            ProgramSlotService programSlotService = new ProgramSlotService();
-            ProgramSlot programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
-
-            Assert.assertNotNull(programSlot);
-            Assert.assertEquals(name, programSlot.getProgramName());
-            Assert.assertEquals(duration, programSlot.getDuration());
-
-        } catch (Exception e) {
-            assert (false);           
-
         }
     }
 

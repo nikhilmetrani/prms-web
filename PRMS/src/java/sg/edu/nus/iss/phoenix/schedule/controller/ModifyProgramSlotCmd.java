@@ -40,7 +40,7 @@ public class ModifyProgramSlotCmd implements Perform {
 
             List<String> availableDates;
 
-            String startDate = req.getParameter("weeklySch");
+            String startDate = req.getParameter("weeklySch");   //get start date of the weekly schedule
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             if (startDate != null) {
                 try {
