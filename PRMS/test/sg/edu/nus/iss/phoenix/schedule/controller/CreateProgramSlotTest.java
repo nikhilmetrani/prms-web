@@ -94,6 +94,15 @@ public class CreateProgramSlotTest {
         String programDate = "10-01-2015";
         String startTime = "02:30:00";
         String duration = "00:30:00";
+        
+        ProgramSlotService programSlotService = new ProgramSlotService();
+        ProgramSlot programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+        if(programSlot!=null){
+            programSlotService.processDelete(programSlot);
+        }
+        
+        programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+        Assert.assertNull(programSlot);
 
         when(req.getSession()).thenReturn(session);
         try {
@@ -123,13 +132,18 @@ public class CreateProgramSlotTest {
             //Select program date
             when(session.getAttribute("availableDates")).thenReturn(availableDates);
             new EnterProgramSlotDetailsCmd().perform(null, req, res);
-
-            ProgramSlotService programSlotService = new ProgramSlotService();
-            ProgramSlot programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+           
+            programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
 
             Assert.assertNotNull(programSlot);
             Assert.assertEquals(name, programSlot.getProgramName());
             Assert.assertEquals(duration, programSlot.getDuration());
+            
+            
+            programSlotService.processDelete(programSlot);
+            programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+            Assert.assertNull(programSlot);
+            
 
         } catch (Exception e) {
             assert (false);           
