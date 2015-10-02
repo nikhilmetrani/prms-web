@@ -66,6 +66,13 @@
 				</a>
 			</td>
 	</tr>       
+        <tr>
+            <td>
+				<a href="<c:url value="/nocturne/createPgmSlot"/>"> <fmt:message
+						key="caption.menu.createps" />
+				</a>
+            </td>
+        </tr>
         
         </c:if>
         <c:if test="${sessionScope.user != null}">

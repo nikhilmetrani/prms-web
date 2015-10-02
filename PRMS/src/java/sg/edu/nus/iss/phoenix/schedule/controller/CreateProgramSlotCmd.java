@@ -19,6 +19,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 
 /**
  *
@@ -29,19 +32,28 @@ public class CreateProgramSlotCmd implements Perform {
 
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        
+        ScheduleDelegate delegate = new ScheduleDelegate();
+        req.getSession().setAttribute("annualScheduleList", delegate.reviewSelectAnnualSchedule());
+        ReviewSelectProgramDelegate del = new ReviewSelectProgramDelegate();
+        List<RadioProgram> radioPrograms = del.reviewSelectRadioProgram();     
+        req.getSession().setAttribute("radioPgms", radioPrograms);
+        req.setAttribute("actionType", "createPgmSlot");
 
         String name = req.getParameter("radioProgram");
         String programDate = req.getParameter("programDate");
         if (name != null) {
             req.getSession().setAttribute("radioPgmName", name);
         }
-        if (programDate != null && !programDate.isEmpty()) {
+         String startDate = req.getParameter("weeklySch");
+        if (programDate != null  && !programDate.isEmpty() 
+                && req.getSession().getAttribute("availableDates" )!=null) {
             req.getSession().setAttribute("selectPgmDate", programDate);
         } else {
 
             List<String> availableDates;
 
-            String startDate = req.getParameter("weeklySch");
+           
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             if (startDate != null) {
                 try {

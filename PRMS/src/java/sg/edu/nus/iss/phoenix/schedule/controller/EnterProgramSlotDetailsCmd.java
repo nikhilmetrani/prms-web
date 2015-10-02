@@ -49,12 +49,25 @@ public class EnterProgramSlotDetailsCmd implements Perform{
         }
         final HttpSession session = req.getSession();
         
+        session.removeAttribute("annualScheduleList");
+        session.removeAttribute("weeklySch");
         session.removeAttribute("availableDates");
         session.removeAttribute("selectPgmDate");
-        session.removeAttribute("radioPgmName");       
+        session.removeAttribute("radioPgms");
+        session.removeAttribute("radioPgmName");   
+        session.removeAttribute("annualSchedule");
+        session.removeAttribute("weeklySchedule");
         
-       return "/nocturne/viewSchedule";
+        req.removeAttribute("startTime");
+        req.removeAttribute("pgmSlotDuration");
+        
+        req.setAttribute("successMsg", "Program Slot has been created Successfully !"); 
+        
+//        return "/pages/home.jsp";
+//        return "/nocturne/createPgmSlot";
+        return "/pages/maintainSchedule/createps.jsp";
     }
     
    
+    
 }

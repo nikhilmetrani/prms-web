@@ -32,6 +32,34 @@
     document.forms[0].submit();
     
     }
+function selectAnnualSchedule(){
+    if(document.forms[0].annualSch.value!=""){        
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectAnnualSchedule";
+    }
+    document.forms[0].submit();
+}
+
+function selectWeeklySchedule(){
+    if(document.forms[0].weeklySch.value!=""){
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectWeeklySchedule";
+        document.forms[0].submit();
+    }else{
+        selectAnnualSchedule();
+    }
+}
+
+function createProgramSlot(){
+    document.forms[0].actionType.value = "createPgmSlot";
+    document.forms[0].action = "${pageContext.request.contextPath}/nocturne/createPgmSlot";
+    document.forms[0].submit();
+}
+
+
+</script>
+<script>
+<c:if test="${successMsg != null && !(successMsg eq '')}">
+alert('${successMsg}');
+</c:if>
 </script>
 </head>
 <body>
@@ -39,18 +67,59 @@
 		<fmt:message key="title.createps" />
 	</h2>
 	<form action="${pageContext.request.contextPath}/nocturne/enterps" method=post>
+             <input type="hidden" name="actionType" value="${actionType}" />
 		<center>
-			<table cellpadding=5 cellspacing=2 border=0>
+			<table cellpadding=5 cellspacing=2 border=0 >
+                                
                                 <tr valign="top">
                                      <c:if test="${errPgmSlot!=null && !errPgmSlot.isEmpty()}">
                                         <td width="40%" style="color: red"><b>Error</b></td>
                                         <td style="color: red">${errPgmSlot}</td>
                                      </c:if>
                                 </tr>
-				<tr>
+                                <tr>
 					<th width="30%"><fmt:message key="label.createps.value" /></th>
 					<th width="45%"><fmt:message key="label.createps.data" /></th>
 				</tr>
+                            
+                               	<tr>
+					<th width="25%"><fmt:message key="label.setupsch.annualSchedule" /></th>
+					<th width="25%">
+                                            <select required name="annualSch" onchange="selectAnnualSchedule()">
+                                                <option value="">--Select--</option>
+                                                <c:forEach var="asch" items="${annualScheduleList.getAllAnnualSchedules()}">
+                                                    <c:choose>
+                                                    <c:when test="${annualSchedule != null && annualSchedule.year eq asch.year}">
+                                                        <option value="${asch.year}" selected>${asch.year}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${asch.year}">${asch.year}</option>
+                                                    </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                </tr>
+                                <tr>
+					<th width="25%"><fmt:message key="label.setupsch.weeklySchedule" /></th>
+					<th width="25%">
+                                            <select required name="weeklySch" onchange="selectWeeklySchedule()">
+                                                <option value="">--Select--</option>
+                                                <c:forEach var="wsch" items="${annualSchedule.getWeeklySchedules()}">
+                                                    <c:choose>
+                                                    <c:when test="${weeklySchedule != null && weeklySchedule.startDate eq wsch.startDate}">
+                                                        <option value="${wsch.startDate}" selected>${wsch.startDate}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${wsch.startDate}">${wsch.startDate}</option>
+                                                    </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </select>
+                                        </th>                                     
+                                </tr>                       
+                             
+				
 				<tr>
 					<th width="25%"><fmt:message key="label.createps.programDate" /></th>
                                         <th width="25%">
