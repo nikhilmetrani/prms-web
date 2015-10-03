@@ -28,7 +28,7 @@ public class CreateUserTest {
         HttpSession session = mock(HttpSession.class);
         String id = "test_three";
         String name = "test_three";
-        String password = "Password@1234";
+        String password = "password1234";
         String[] roles = new String[]{"manager", "producer"};
 
         when(req.getSession()).thenReturn(session);
