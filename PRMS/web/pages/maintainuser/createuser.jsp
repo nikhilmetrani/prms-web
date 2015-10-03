@@ -61,7 +61,6 @@
     </head>
 
     <body>
-        <c:set var="usr" value="${adel.findUser(param['id'])}"/>
         <form name="usrForm" action="${pageContext.request.contextPath}/nocturne/adduser" method="post" >
            <errorMessage>${errorMessage}</errorMessage>
            <successMessage>${successMessage}</successMessage>
