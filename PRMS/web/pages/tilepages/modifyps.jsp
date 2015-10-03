@@ -33,6 +33,19 @@
         document.forms[0].submit();
     }
     
+    function popupPresenterPage(){        
+        var url = "/phoenix/nocturne/searchpresenter";        
+        window.open(url,"","dialogWidth:950px;dialogHeight:400px"); 
+    }
+    
+   
+    
+    function popupProducerPage(){
+        
+        var url = "/phoenix/nocturne/searchproducer";              
+        window.open(url,"","dialogWidth:950px;dialogHeight:400px");  
+    }
+    
     function selectAnnualSchedule(){
         if(document.forms[0].annualSch.value!=""){        
             document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectAnnualSchedule";
@@ -152,7 +165,21 @@
                                             </select>
                                         </th>
                                 </tr>
-                               
+                               <tr>
+                                    <th width="25%"><fmt:message key="label.presenter.id" /></th>
+				    <th width="25%"><input type="text" name="presenterName" size=25 maxlength=40 title="Please choose the presenter" required readonly>
+                                        <c:url var="url" scope="page" value="/nocturne/searchpresenter"> </c:url>
+                                        <a href="#" onclick="popupPresenterPage()">Select</a>    
+                                    </th>
+				</tr>
+                                
+                                 <tr>
+                                    <th width="25%"><fmt:message key="label.producer.id" /></th>
+				    <th width="25%"><input type="text" name="producerName" size=25 maxlength=40 title="Please choose the producer" required readonly>
+                                        <c:url var="url" scope="page" value="/nocturne/searchproducer"> </c:url>
+                                        <a href="#" onclick="popupProducerPage()">Select</a>    
+                                    </th>
+				</tr>
 			</table>
                                          <input  type="submit" value="Submit"> <input  type="reset" value="Reset">
                                          
