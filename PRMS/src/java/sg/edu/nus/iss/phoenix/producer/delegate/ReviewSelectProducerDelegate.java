@@ -11,8 +11,8 @@ public class ReviewSelectProducerDelegate {
 		service = new ReviewSelectProducerService();
 	}
 	
-	public List<User> reviewSelectRadioProducer() {
-		return service.reviewSelectProducer();	
+	public List<User> reviewSelectProducer(String name) {
+		return service.reviewSelectProducer(name);	
 	}
 
 }

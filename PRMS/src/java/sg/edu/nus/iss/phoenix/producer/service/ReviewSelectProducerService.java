@@ -20,10 +20,10 @@ public class ReviewSelectProducerService {
 		userdao = factory.getUserDAO();
 	}
 
-	public List<User> reviewSelectProducer() {
+	public List<User> reviewSelectProducer(String name) {
             List<User> data = null;
             try {
-                data = userdao.loadProducer();
+                data = userdao.loadProducer(name);
             } catch (SQLException ex) {
                 Logger.getLogger(ReviewSelectProducerService.class.getName()).log(Level.SEVERE, null, ex);
             }

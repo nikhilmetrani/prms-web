@@ -66,7 +66,7 @@ public interface UserDao {
 	 * @param conn
 	 *            This method requires working database connection.
 	 */
-        public abstract List<User> loadProducer() throws SQLException;
+        public abstract List<User> loadProducer(String name) throws SQLException;
         
          /**
 	 * loadProducer-method. This will read all presenter from database table and build

@@ -32,6 +32,21 @@
     document.forms[0].submit();
     
     }
+    
+    function popupPresenterPage(){        
+        var url = "/phoenix/nocturne/searchpresenter";        
+        window.open(url,"","dialogWidth:950px;dialogHeight:400px"); 
+    }
+    
+   
+    
+    function popupProducerPage(){
+        
+        var url = "/phoenix/nocturne/searchproducer";              
+        window.open(url,"","dialogWidth:950px;dialogHeight:400px");  
+    }
+    
+   
 </script>
 </head>
 <body>
@@ -78,7 +93,7 @@
                                     <th width="25%"><fmt:message key="label.createps.duration" /></th>
 				    <th width="25%"><input type="time" name="pgmSlotDuration" pattern="([0-1][0-9]|20|21|22|23|[0-9]):([0-5][0-9]|[0-9]):([0-5][0-9]|[0-9])"
                                                              value="${param['pgmSlotDuration']}" size=15 maxlength=8 title="Please enter Duration in proper format" required></th>
-				</tr>
+				</tr>                                
                                 <tr>
                                  <th width="25%"><fmt:message key="label.createps.radioProgram" /></th>
                                         <th width="25%">
@@ -97,6 +112,22 @@
                                             </select>
                                         </th>
                                 </tr>
+                                
+                                <tr>
+                                    <th width="25%"><fmt:message key="label.presenter.id" /></th>
+				    <th width="25%"><input type="text" name="presenterName" size=25 maxlength=40 title="Please choose the presenter" required readonly>
+                                        <c:url var="url" scope="page" value="/nocturne/searchpresenter"> </c:url>
+                                        <a href="#" onclick="popupPresenterPage()">Select</a>    
+                                    </th>
+				</tr>
+                                
+                                 <tr>
+                                    <th width="25%"><fmt:message key="label.producer.id" /></th>
+				    <th width="25%"><input type="text" name="producerName" size=25 maxlength=40 title="Please choose the producer" required readonly>
+                                        <c:url var="url" scope="page" value="/nocturne/searchproducer"> </c:url>
+                                        <a href="#" onclick="popupProducerPage()">Select</a>    
+                                    </th>
+				</tr>
                                
 			</table>
                                          <input  type="submit" value="Submit"> <input  type="reset" value="Reset">                                         

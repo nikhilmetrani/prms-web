@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sg.edu.nus.iss.phoenix.presenter.controller;
+package sg.edu.nus.iss.phoenix.producer.controller;
 
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
@@ -12,26 +12,26 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sg.edu.nus.iss.phoenix.presenter.delegate.ReviewSelectPresenterDelegate;
+import sg.edu.nus.iss.phoenix.producer.delegate.ReviewSelectProducerDelegate;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 
 /**
  *
  * @author jingdong
  */
-@Action("searchpresenter")
-public class SearchPresenterCmd implements Perform {
+@Action("searchproducer")
+public class SearchProducerCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {   
         String name="";
-        if(req.getParameter("presentername") != null)
+        if(req.getParameter("producername") != null)
         {
-            name = req.getParameter("presentername");
+            name = req.getParameter("producername");
         }
-        ReviewSelectPresenterDelegate del = new ReviewSelectPresenterDelegate();
-        List<User> data = del.reviewSelectPresenter(name);
-        req.setAttribute("searchpresenterlist", data);
+        ReviewSelectProducerDelegate del = new ReviewSelectProducerDelegate();
+        List<User> data = del.reviewSelectProducer(name);
+        req.setAttribute("searchproducerlist", data);
         
-        return "/pages/searchpresenter.jsp";
+        return "/pages/searchproducer.jsp";
     }
 }

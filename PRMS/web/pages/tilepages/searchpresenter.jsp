@@ -8,12 +8,21 @@
 <fmt:setBundle basename="ApplicationResources" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><fmt:message key="title.searchpresenter" /></title>
+
+<script>
+    function selectPresenter(presenter){
+        window.opener.document.getElementsByName('presenterName')[0].value=presenter;        
+        window.close();
+    }
+
+</script>
 </head>
 <body>
 	<h2>
 		<fmt:message key="title.searchpresenter" />
 	</h2>
-	<form action="${pageContext.request.contextPath}/nocturne/searchpresenter" method=post>
+        <base target="_self" />
+	<form target="_self" action="${pageContext.request.contextPath}/nocturne/searchpresenter" method=post  >
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
 				<tr>
@@ -21,10 +30,10 @@
 				</tr>
 				<tr>
 					<td><fmt:message key="fieldLabel.name.presenter" /></td>
-					<td><input type="text" name="name" value="${param['presentername']}" size=45 maxlength=45></td>
+					<td><input type="text" name="presentername" value="${param['presentername']}" size=45 maxlength=45></td>
 				</tr>				
 				<tr>
-					<td colspan="2" align="center"><input type="submit" value="Submit"> <input
+					<td colspan="2" align="center"><input type="submit" value="Search"> <input
 						type="reset" value="Reset"></td>
 				</tr>
 			</table>
@@ -34,6 +43,7 @@
 	<c:if test="${! empty  searchpresenterlist}">
 		<table class="borderAll">
 			<tr>
+                                <th><fmt:message key="label.presenter.id" /></th>
 				<th><fmt:message key="label.presenter.name" /></th>
 				<th><fmt:message key="label.presenter.email" /></th>
 				<th><fmt:message key="label.presenter.phoneNumber" /></th>
@@ -41,11 +51,12 @@
 			</tr>
 			<c:forEach var="presenter" items="${searchpresenterlist}" varStatus="status">
 				<tr class="${status.index%2==0?'even':'odd'}">
+                                        <td class="nowrap">${presenter.id}</td>
 					<td class="nowrap">${presenter.name}</td>
 					<td class="nowrap">${presenter.email}</td>
 					<td class="nowrap">${presenter.phoneNumber}</td>
-                                        <td class="nowrap">
-                                           
+                                        <td class="nowrap">                                           
+                                             <a href="#" onclick="selectPresenter('${presenter.id}');">Select</a> 
                                         </td>
 				</tr>
 			</c:forEach>

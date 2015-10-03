@@ -31,11 +31,15 @@ public class EnterProgramSlotDetailsCmd implements Perform{
        String programDate = req.getParameter("programDate"); 
        String startTime = req.getParameter("startTime");
        String duration = req.getParameter("pgmSlotDuration");
+       String presenterId=req.getParameter("presenterName");
+       String producerId=req.getParameter("producerName");
        ProgramSlot programSlot = new ProgramSlot();
        programSlot.setProgramName(name);
        programSlot.setStartTime(startTime);
        programSlot.setDateOfProgram(programDate);
        programSlot.setDuration(duration);  
+       programSlot.setPresenter(presenterId);
+       programSlot.setProducer(producerId);
        
         ScheduleDelegate scheduleDelegate = new ScheduleDelegate();        
         

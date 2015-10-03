@@ -43,13 +43,7 @@
 			</td>
 	</tr>
         
-        <tr>
-		<td>
-				<a href="<c:url value="/nocturne/searchpresenter"/>"> <fmt:message
-						key="caption.menu.searchpresenter" />
-				</a>
-			</td>
-	</tr>
+        
         
         <tr>
 		<td>

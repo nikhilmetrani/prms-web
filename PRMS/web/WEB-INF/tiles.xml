@@ -9,6 +9,9 @@
         <put-attribute name="body" value="/pages/layout/body.jsp" />
         <put-attribute name="footer" value="/pages/layout/footer.jsp" />
     </definition>
+    <definition name="popupPage" template="/pages/layout/popupPage.jsp">       
+        <put-attribute name="body" value="/pages/layout/body.jsp" />       
+    </definition>
     <definition name="loginPage" extends="homePage">
         <put-attribute name="body" value="/pages/tilepages/login.jsp" />
     </definition>
@@ -85,7 +88,11 @@
         <put-attribute name="body" value="/pages/tilepages/viewempdetails.jsp" />
     </definition>
     
-    <definition name="searchpresenterPage" extends="homePage">
+    <definition name="searchpresenterPage" extends="popupPage">
         <put-attribute name="body" value="/pages/tilepages/searchpresenter.jsp" />
+    </definition>
+    
+    <definition name="searchproducerPage" extends="popupPage">
+        <put-attribute name="body" value="/pages/tilepages/searchproducer.jsp" />
     </definition>
 </tiles-definitions>

@@ -95,9 +95,19 @@ public class UserDaoImpl implements UserDao {
      * .Connection)
      */
     @Override
-    public List<User> loadProducer() throws SQLException {
+    public List<User> loadProducer(String name) throws SQLException {
 
-        String sql = "SELECT * FROM user where role like '%producer%' ORDER BY id ASC ";
+        String sql = "";
+        
+        if(name.isEmpty())
+        {
+            sql = "SELECT * FROM user where role like '%producer%' ORDER BY id ASC ";
+        }
+        else
+        {
+            sql = "SELECT * FROM user where name like '%"+name+"%' and role like '%producer%' ORDER BY id ASC ";
+        }
+        
         List<User> searchResults = listQuery(this.connection
                 .prepareStatement(sql));
 
@@ -120,7 +130,7 @@ public class UserDaoImpl implements UserDao {
         }
         else
         {
-            sql = "SELECT * FROM user where name like '"+name+"' and role like '%presenter%' ORDER BY id ASC ";
+            sql = "SELECT * FROM user where name like '%"+name+"%' and role like '%presenter%' ORDER BY id ASC ";
         }
          
         List<User> searchResults = listQuery(this.connection
