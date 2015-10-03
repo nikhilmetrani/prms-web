@@ -30,12 +30,11 @@ public class UpdateProfileCmd implements Perform {
      * @param req Http Servlet Request
      * @param resp Httlp Servlet Response
      * @return If the profile was updated, path of page that allows users to view employment details is returned.<br>
-     * If the user is not logged in, path of login page is returned.
-     * @throws ServletException 
+     * If the user is not logged in, path of login page is returned. 
      * @see UpdateProfileService
      */
     @Override
-    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) {
         req.removeAttribute("errorMessage");
         User currentUser = (User)req.getSession().getAttribute("user");
         if (null != currentUser) {
@@ -58,7 +57,7 @@ public class UpdateProfileCmd implements Perform {
             }
             else {
                 req.setAttribute("errorMessage", "You do not have access to perform this operation. Please contact your administrator.");
-                return "/nocturne/viewempdetails?error=noAccess";
+                return "/nocturne/viewempdetails?error=failed";
             }
         } else {
             //Let's go back to login page since we cannot validate the user.

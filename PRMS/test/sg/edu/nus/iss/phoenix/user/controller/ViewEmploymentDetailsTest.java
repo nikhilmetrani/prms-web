@@ -64,10 +64,7 @@ public class ViewEmploymentDetailsTest {
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(null);
         String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-        if (!"/pages/login.jsp".equals(returnValue))
-            fail("Expected re-direct to login page");
-        else
-            assert(true);
+        assertEquals("/pages/login.jsp", returnValue);
     }
     
     @Test
@@ -78,10 +75,7 @@ public class ViewEmploymentDetailsTest {
             manager = userDao.getObject(managerId);
             when(session.getAttribute("user")).thenReturn(manager);
             String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-            if (!"/pages/maintainuser/viewempdetails.jsp?errorMessage=Error".equals(returnValue))
-                fail("ViewEmploymentDetailsCmd should have failed user without Producer/Presenter role");
-            else
-                assert(true);
+            assertEquals("/pages/maintainuser/viewempdetails.jsp?errorMessage=Error", returnValue);
         } catch (NotFoundException | SQLException ex) {
             fail("Unexpected error: " + ex.getMessage());
         }
@@ -94,10 +88,7 @@ public class ViewEmploymentDetailsTest {
             manager = userDao.getObject(managerId);
             when(session.getAttribute("user")).thenReturn(manager);
             String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-            if (!"/pages/maintainuser/viewempdetails.jsp?errorMessage=Error".equals(returnValue))
-                fail("ViewEmploymentDetailsCmd should have failed user without Producer/Presenter role");
-            else
-                assert(true);
+            assertEquals("/pages/maintainuser/viewempdetails.jsp?errorMessage=Error", returnValue);
         } catch (NotFoundException | SQLException ex) {
             fail("Unexpected error: " + ex.getMessage());
         }
@@ -110,10 +101,7 @@ public class ViewEmploymentDetailsTest {
             presenter = userDao.getObject(presenterId);
             when(session.getAttribute("user")).thenReturn(presenter);
             String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-            if (!"/pages/maintainuser/viewempdetails.jsp".equals(returnValue))
-                fail("Unexpected error: ViewEmploymentDetailsCmd should not fail for Presenter role");
-            else
-                assert(true);
+            assertEquals("/pages/maintainuser/viewempdetails.jsp", returnValue);
         } catch (NotFoundException | SQLException ex) {
             fail("Unexpected error: " + ex.getMessage());
         }
@@ -126,10 +114,7 @@ public class ViewEmploymentDetailsTest {
             producer = userDao.getObject(producerId);
             when(session.getAttribute("user")).thenReturn(producer);
             String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-            if (!"/pages/maintainuser/viewempdetails.jsp".equals(returnValue))
-                fail("Unexpected error: ViewEmploymentDetailsCmd should not fail for Producer role");
-            else
-                assert(true);
+            assertEquals("/pages/maintainuser/viewempdetails.jsp", returnValue);
         } catch (NotFoundException | SQLException ex) {
             fail("Unexpected error: " + ex.getMessage());
         }

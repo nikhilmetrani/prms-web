@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import sg.edu.nus.iss.phoenix.authenticate.dao.UserDao;
@@ -65,7 +63,7 @@ public class UpdateProfileTest {
     public void returnLoginPageWhenUserNotLoggedInTest() {
         when(request.getSession()).thenReturn(session);
         when(session.getAttribute("user")).thenReturn(null);
-        String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
+        String returnValue = new UpdateProfileCmd().perform(null, request, response);
         if (!"/pages/login.jsp".equals(returnValue))
             fail("Expected re-direct to login page");
         else
@@ -79,11 +77,8 @@ public class UpdateProfileTest {
         try {
             manager = userDao.getObject(managerId);
             when(session.getAttribute("user")).thenReturn(manager);
-            String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-            if (!"/pages/maintainuser/viewempdetails.jsp?errorMessage=Error".equals(returnValue))
-                fail("ViewEmploymentDetailsCmd should have failed user without Producer/Presenter role");
-            else
-                assert(true);
+            String returnValue = new UpdateProfileCmd().perform(null, request, response);
+            assertEquals("/nocturne/viewempdetails?error=failed", returnValue);
         } catch (NotFoundException | SQLException ex) {
             fail("Unexpected error: " + ex.getMessage());
         }
@@ -95,9 +90,9 @@ public class UpdateProfileTest {
         try {
             manager = userDao.getObject(managerId);
             when(session.getAttribute("user")).thenReturn(manager);
-            String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-            if (!"/pages/maintainuser/viewempdetails.jsp?errorMessage=Error".equals(returnValue))
-                fail("ViewEmploymentDetailsCmd should have failed user without Producer/Presenter role");
+            String returnValue = new UpdateProfileCmd().perform(null, request, response);
+            if (!"/nocturne/viewempdetails?error=failed".equals(returnValue))
+                fail("UpdateProfileCmd should have failed user without Producer/Presenter role");
             else
                 assert(true);
         } catch (NotFoundException | SQLException ex) {
@@ -106,32 +101,54 @@ public class UpdateProfileTest {
     }
     
     @Test
-    public void viewPresenterProfileTest() {
+    public void updatePresenterProfileTest() {
         when(request.getSession()).thenReturn(session);
         try {
             presenter = userDao.getObject(presenterId);
             when(session.getAttribute("user")).thenReturn(presenter);
-            String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-            if (!"/pages/maintainuser/viewempdetails.jsp".equals(returnValue))
-                fail("Unexpected error: ViewEmploymentDetailsCmd should not fail for Presenter role");
-            else
-                assert(true);
+
+            when(request.getParameter("name")).thenReturn("dilbert, the presenter");
+            when(request.getParameter("email")).thenReturn("dilbert@prms.com");
+            when(request.getParameter("phoneNo")).thenReturn("+659735467");
+            when(request.getParameter("siteLink")).thenReturn("http://dilbert.prms.com");
+            
+            String returnValue = new UpdateProfileCmd().perform(null, request, response);
+            assertEquals("/nocturne/viewempdetails", returnValue);
+            
+            User updatedUser = userDao.getObject(presenterId);
+            
+            assertEquals("dilbert, the presenter", updatedUser.getName());
+            assertEquals("dilbert@prms.com", updatedUser.getEmail());
+            assertEquals("+659735467", updatedUser.getPhoneNumber());
+            assertEquals("http://dilbert.prms.com", updatedUser.getProfile().getSiteLink());
+            
         } catch (NotFoundException | SQLException ex) {
             fail("Unexpected error: " + ex.getMessage());
         }
     }
     
     @Test
-    public void viewProduerProfileTest() {
+    public void updateProduerProfileTest() {
         when(request.getSession()).thenReturn(session);
         try {
             producer = userDao.getObject(producerId);
             when(session.getAttribute("user")).thenReturn(producer);
-            String returnValue = new ViewEmploymentDetailsCmd().perform(null, request, response);
-            if (!"/pages/maintainuser/viewempdetails.jsp".equals(returnValue))
-                fail("Unexpected error: ViewEmploymentDetailsCmd should not fail for Producer role");
-            else
-                assert(true);
+            
+            when(request.getParameter("name")).thenReturn("dogbert, the producer");
+            when(request.getParameter("email")).thenReturn("dogbert.producer@prms.com");
+            when(request.getParameter("phoneNo")).thenReturn("+659766467");
+            when(request.getParameter("siteLink")).thenReturn("http://dogbert-producer.prms.com");
+            
+            String returnValue = new UpdateProfileCmd().perform(null, request, response);
+            assertEquals("/nocturne/viewempdetails", returnValue);
+            
+            User updatedUser = userDao.getObject(producerId);
+            
+            assertEquals("dogbert, the producer", updatedUser.getName());
+            assertEquals("dogbert.producer@prms.com", updatedUser.getEmail());
+            assertEquals("+659766467", updatedUser.getPhoneNumber());
+            assertEquals("http://dogbert-producer.prms.com", updatedUser.getProfile().getSiteLink());
+            
         } catch (NotFoundException | SQLException ex) {
             fail("Unexpected error: " + ex.getMessage());
         }

@@ -22,7 +22,7 @@
               <fmt:message key="caption.user"/>:
               <c:out value="${sessionScope.user.name}"/> &nbsp; &nbsp;
               <fmt:message key="caption.role"/>:
-              <c:out value="${sessionScope.user.roles[0].role}"/>
+              <c:out value="${sessionScope.user.getRoleString()}"/>
             </c:if>
           </td>
         </tr>

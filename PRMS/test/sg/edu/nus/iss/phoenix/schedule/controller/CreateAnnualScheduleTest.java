@@ -60,10 +60,7 @@ public class CreateAnnualScheduleTest {
         when(request.getParameter("assignedBy")).thenReturn(userName);
         when(request.getParameter("year")).thenReturn((String.valueOf(scheduleYearPast)));
         String returnValue = new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
-        if (!"/nocturne/createas".equals(returnValue))
-            fail("EnterAnnualScheduleDetalisCmd should have failed for past year!");
-        else
-            assert(true);
+        assertEquals("/nocturne/createas", returnValue);
     }
     
     @Test
@@ -72,11 +69,7 @@ public class CreateAnnualScheduleTest {
         when(request.getParameter("assignedBy")).thenReturn(userName);
         when(request.getParameter("year")).thenReturn((String.valueOf(scheduleYearCurrent)));
         String returnValue = new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
-        if (!"/nocturne/viewSchedule".equals(returnValue))
-            fail("EnterAnnualScheduleDetalisCmd should not have failed for current year!");
-        else
-            assert(true);
-            
+        assertEquals("/nocturne/viewSchedule", returnValue);
     }
     
     @Test
@@ -85,10 +78,7 @@ public class CreateAnnualScheduleTest {
         when(request.getParameter("assignedBy")).thenReturn(userName);
         when(request.getParameter("year")).thenReturn((String.valueOf(scheduleYearFuture)));
         String returnValue = new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
-        if (!"/nocturne/viewSchedule".equals(returnValue))
-            fail("EnterAnnualScheduleDetalisCmd should not have failed for future year!");
-        else
-            assert(true);
+        assertEquals("/nocturne/viewSchedule", returnValue);
     }
     
     @Test
@@ -97,9 +87,6 @@ public class CreateAnnualScheduleTest {
         when(request.getParameter("assignedBy")).thenReturn(userName);
         when(request.getParameter("year")).thenReturn((String.valueOf(scheduleYearFuture)));
         String returnValue = new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
-        if (!"/nocturne/createas".equals(returnValue))
-            fail("EnterAnnualScheduleDetalisCmd should have failed for existing year!");
-        else
-            assert(true);
+        assertEquals("/nocturne/createas", returnValue);
     }
 }
