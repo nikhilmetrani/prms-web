@@ -63,7 +63,7 @@ public class ModifyProgramSlotCmd implements Perform {
                     req.getSession().setAttribute("availableDates", availableDates);
 
                 } catch (ParseException ex) {
-                    Logger.getLogger(CreateProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ModifyProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

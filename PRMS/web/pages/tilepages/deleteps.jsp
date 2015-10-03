@@ -37,7 +37,7 @@
         <h2>
 		<fmt:message key="title.deleteps" />
 	</h2>
-	<form action="${pageContext.request.contextPath}/nocturne/enterps" method=post>
+	<form action="${pageContext.request.contextPath}/nocturne/deleteps" method=post>
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
 				<tr>

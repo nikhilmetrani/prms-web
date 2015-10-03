@@ -167,6 +167,8 @@ alert('${successMsg}');
 					<td class="nowrap">${ps.duration}</td>
                                         <td class="nowrap">${ps.producer}</td>
                                         <td class="nowrap">${ps.presenter}</td>
+                                        <td class="nowrap">Modify</td>
+                                        <td class="nowrap">Delete</td>
 				</tr>
 			</c:forEach>
 		</table>

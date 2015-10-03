@@ -58,7 +58,7 @@ public class DeleteProgramSlotCmd implements Perform {
                     }
                     req.getSession().setAttribute("availableDates", availableDates);
                 } catch (ParseException ex) {
-                    Logger.getLogger(CreateProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DeleteProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

@@ -38,7 +38,7 @@
         <h2>
 		<fmt:message key="title.modifyps" />
 	</h2>
-	<form action="${pageContext.request.contextPath}/nocturne/enterps" method=post>
+	<form action="${pageContext.request.contextPath}/nocturne/modifyps" method=post>
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
 				<tr>
