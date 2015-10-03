@@ -25,6 +25,7 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 
 /**
  *
+ * Command object that initiates creation of new Program Slot. 
  * @author Rushabh Shah
  */
 @Action("createPgmSlot")

@@ -19,7 +19,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 
 /**
- *
+ * Command object that enter ProgramSlotDetails.
  * @author Rushabh Shah
  */
 @Action("enterps")

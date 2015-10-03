@@ -32,7 +32,7 @@ public class ScheduleDelegate {
      * Delegates the call to ScheduleService
      *
      * @param anualSchedule The annual schedule that is to be saved to the database
-     * @throws java.sql.SQLException
+     * @throws SQLException if anualSchedule is null
      * @see ScheduleService
      */
     public void processCreate(AnnualSchedule anualSchedule) throws SQLException {
@@ -44,7 +44,7 @@ public class ScheduleDelegate {
      * Delegates the call to ScheduleService
      *
      * @param weeklySchedules List of weekly schedules to be saved to the database.
-     * @throws java.sql.SQLException
+     * @throws SQLException if weekly schedule is null
      * @see ScheduleService
      */
     public void processCreate(List<WeeklySchedule> weeklySchedules) throws SQLException {
@@ -54,7 +54,7 @@ public class ScheduleDelegate {
 
     /**
      * Delegates the call to ScheduleService
-     *
+     * @return AnnualScheduleList
      * @see ScheduleService
      */
     public AnnualScheduleList reviewSelectAnnualSchedule() {
@@ -64,7 +64,8 @@ public class ScheduleDelegate {
 
     /**
      * Delegates the call to ScheduleService
-     *
+     * @param srcWsch WeeklySchedule
+     * @param tgtWsch WeeklySchedule
      * @see ScheduleService
      */
     public void copyWeeklySchedule(WeeklySchedule srcWsch, WeeklySchedule tgtWsch) {
@@ -75,17 +76,30 @@ public class ScheduleDelegate {
     /**
      * Delegates the call to ProgramSlotService
      *
-     * @param programSlot
+     * @param programSlot ProgramSlot
      * @see ProgramSlotService
      */
     public void processCreate(ProgramSlot programSlot) {
         programSlotservice.processCreate(programSlot);
     }
     
+    /**
+     * Delegates the call to ProgramSlotService
+     *
+     * @param origPs ProgramSlot
+     * @param newPs ProgramSlot
+     * @see ProgramSlotService
+     */
     public void processModify(ProgramSlot origPs, ProgramSlot newPs) {
         programSlotservice.processModify(origPs, newPs);
     }
     
+    /**
+     * Delegates the call to ProgramSlotService
+     *
+     * @param programSlot ProgramSlot
+     * @see ProgramSlotService
+     */
     public void processDelete(ProgramSlot programSlot) {
         programSlotservice.processDelete(programSlot);
     }
@@ -93,8 +107,8 @@ public class ScheduleDelegate {
     /**
      * Delegates the call to ProgramSlotService
      *
-     * @param programSlot
-     * @throws sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException
+     * @param programSlot ProgramSlot
+     * @throws ProgramSlotException if ProgramSlot is not available
      * @see ProgramSlotService
      */
     public void validateProgramSlot(ProgramSlot programSlot) throws ProgramSlotException {
@@ -103,8 +117,8 @@ public class ScheduleDelegate {
     
      /**
      * Delegates the call to ProgramSlotService
-     * @param programDate
-     * @param startTime
+     * @param programDate String
+     * @param startTime String
      * @return ProgramSlot
      * @see ProgramSlotService
      */

@@ -37,6 +37,10 @@ public class ProgramSlotService {
         psdao = factory.getProgramSlotDAO();
     }
 
+    /**
+     * Program Slot Service to processCreate
+     * @param slot ProgramSlot    
+     */
     public void processCreate(ProgramSlot slot) {
         try {
             psdao.create(slot);
@@ -45,6 +49,11 @@ public class ProgramSlotService {
         }
     }
     
+    /**
+     * Program Slot Service to processModify
+     * @param origPs ProgramSlot
+     * @param newPs ProgramSlot
+     */
     public void processModify(ProgramSlot origPs, ProgramSlot newPs) {
         try {
             psdao.modify(origPs, newPs);
@@ -53,6 +62,10 @@ public class ProgramSlotService {
         }
     }
     
+    /**
+     * Program Slot Service to processDelete
+     * @param slot ProgramSlot     
+     */
     public void processDelete(ProgramSlot slot) {
         try {
             psdao.delete(slot);
@@ -61,6 +74,11 @@ public class ProgramSlotService {
         }
     }
 
+     /**
+     * Program Slot Service to validateProgramSlot
+     * @param slot ProgramSlot
+     * @throws ProgramSlotException if ProgramSlot is null.
+     */
     public void validateProgramSlot(ProgramSlot slot) throws ProgramSlotException {
         validateDuration(slot);
         validateTimeSpan(slot);
@@ -68,6 +86,11 @@ public class ProgramSlotService {
 
     }
 
+     /**
+     * Program Slot Service to validateDuration
+     * @param slot ProgramSlot
+     * @throws ProgramSlotException
+     */
     private void validateDuration(ProgramSlot slot) throws ProgramSlotException {
         try {
             Date duration, minTime, refTime;
@@ -104,6 +127,10 @@ public class ProgramSlotService {
         }
     }
 
+    /**
+     * Program Slot Service to validateTimeSpan
+     * @param slot ProgramSlot     
+     */
     private void validateTimeSpan(ProgramSlot slot) throws ProgramSlotException {
         try {
             Date startDate, duration;
@@ -126,6 +153,12 @@ public class ProgramSlotService {
 
     }
 
+    /**
+     * Program Slot Service to addDuration
+     * @param duration date object
+     * @param cEnd Calender object
+     * @param startDate Date object
+     */
     private Date addDuration(Date duration, Calendar cEnd, Date startDate) {
         Date endDate;
         Calendar cDur = Calendar.getInstance();
@@ -138,6 +171,10 @@ public class ProgramSlotService {
         return endDate;
     }
 
+    /**
+     * Program Slot Service to checkProgramSlotOverlap
+     * @param slot Program Slot     
+     */
     private void checkProgramSlotOverlap(ProgramSlot slot) throws ProgramSlotException {
         Date duration, startTime, endTime, inputStartTime;
         SimpleDateFormat sdf_date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -159,10 +196,20 @@ public class ProgramSlotService {
         }
     }
 
+    /**
+     * Program Slot Service to getDatek
+     * @param slot Program Slot
+     * @return static
+     */
     private static String getDate(ProgramSlot slot) {
         return slot.getDateOfProgram() + " " + slot.getStartTime();
     }
 
+    /**
+     * Program Slot Service to get ProgramSlotsForWeek
+     * @param startDate Start Date
+     * @return ProgramSlot
+     */
     public List<ProgramSlot> getProgramSlotsForWeek(String startDate) {
         try {
             return psdao.getProgramSlotsForWeek(startDate);
@@ -172,6 +219,10 @@ public class ProgramSlotService {
         return new ArrayList<ProgramSlot>();
     }
 
+    /**
+     * Program Slot Service to deleteByWeek
+     * @param startDateOfWeek Start Date Of Week
+     */
     public void deleteByWeek(String startDateOfWeek) {
         try {
             psdao.deleteByWeek(startDateOfWeek);
@@ -180,10 +231,10 @@ public class ProgramSlotService {
         }
     }
     
-      /**
+     /**
      * Delegates the call to ProgramSlotService
-     * @param programDate
-     * @param startTime
+     * @param programDate Program Date
+     * @param startTime Start Time
      * @return ProgramSlot
      * @see ProgramSlotService
      */
