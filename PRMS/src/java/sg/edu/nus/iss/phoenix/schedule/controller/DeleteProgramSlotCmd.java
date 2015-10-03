@@ -33,7 +33,7 @@ public class DeleteProgramSlotCmd implements Perform {
         ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
         scheduleDelegate.processDelete(programSlot);
                 
-        return "/pages/tile/setupSchedule.jsp";
+        return "/pages/maintainSchedule/setupSchedule.jsp";
         
     } 
 }
