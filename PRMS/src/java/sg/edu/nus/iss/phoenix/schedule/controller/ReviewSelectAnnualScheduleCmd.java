@@ -29,6 +29,10 @@ public class ReviewSelectAnnualScheduleCmd implements Perform{
         if(year!=null && !"".equals(year)){
             req.getSession().setAttribute("annualSchedule", aschList.findAnnualSchedule(Integer.parseInt(year)));
         }
+        if("createPgmSlot".equals(req.getAttribute("actionType"))){
+             return "/nocturne/createPgmSlot";
+        }else{
         return "/pages/maintainSchedule/setupSchedule.jsp";
+        }
     }
 }

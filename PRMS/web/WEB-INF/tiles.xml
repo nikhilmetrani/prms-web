@@ -52,20 +52,12 @@
     <definition name="modifyuserPage" extends="homePage">
         <put-attribute name="body" value="/pages/maintainuser/modifyuser.jsp" />
     </definition>
-        
-    <definition name="modifyuseremptyPage" extends="homePage">
-        <put-attribute name="body" value="/pages/maintainuser/modifyuser_empty.jsp" />
-    </definition>
-        
+    
     <definition name="modifyuserdetails" extends="homePage">
         <put-attribute name="body" value="/pages/maintainuser/modifyuser_details.jsp" />
     </definition>  
     <definition name="deleteuserPage" extends="homePage">
         <put-attribute name="body" value="/pages/maintainuser/deleteuser.jsp" />
-    </definition>
-        
-    <definition name="deleteuseremptyPage" extends="homePage">
-        <put-attribute name="body" value="/pages/maintainuser/deleteuser_empty.jsp" />
     </definition>
         
     <definition name="deleteuserdetails" extends="homePage">
@@ -75,10 +67,6 @@
         
     <definition name="resetpasswordPage" extends="homePage">
         <put-attribute name="body" value="/pages/maintainuser/resetpassword.jsp" />
-    </definition>
-        
-    <definition name="resetpasswordemptyPage" extends="homePage">
-        <put-attribute name="body" value="/pages/maintainuser/resetpassword_empty.jsp" />
     </definition>
         
     <definition name="resetpassworddetails" extends="homePage">

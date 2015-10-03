@@ -26,7 +26,7 @@
                 </td>
 	</tr>
         </c:if>
-	<c:if test="${sessionScope.user.hasRole('manager')}">
+	<c:if test="${sessionScope.user.hasRole('manager') || sessionScope.user.hasRole('admin')}">
 	<tr>
 		<td>
 				<a href="<c:url value="/nocturne/searchrp"/>"> <fmt:message
@@ -62,19 +62,12 @@
 	</tr>       
         <tr>
             <td>
-				<a href="<c:url value="/nocturne/modifyps"/>"> <fmt:message
-						key="caption.menu.modifyps" />
+				<a href="<c:url value="/nocturne/createPgmSlot"/>"> <fmt:message
+						key="caption.menu.createps" />
 				</a>
             </td>
         </tr>
         
-        <tr>
-	    <td>
-				<a href="<c:url value="/nocturne/deleteps"/>"> <fmt:message
-						key="caption.menu.deleteps" />
-				</a>
-            </td>
-        </tr>
         </c:if>
         <c:if test="${sessionScope.user != null}">
 	<tr>

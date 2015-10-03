@@ -30,8 +30,8 @@ public class ViewEmploymentDetailsCmd implements Perform{
      * @throws ServletException 
      */
     @Override
-    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-        req.getSession().setAttribute("errorMessage", "");
+    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) {
+        req.removeAttribute("errorMessage");
         User currentUser = (User)req.getSession().getAttribute("user");
         if (null != currentUser) {
             if (currentUser.hasRole("producer") ||
@@ -40,14 +40,16 @@ public class ViewEmploymentDetailsCmd implements Perform{
                 req.getSession().setAttribute("email", currentUser.getEmail());
                 req.getSession().setAttribute("phoneNo", currentUser.getPhoneNumber());
                 req.getSession().setAttribute("siteLink", currentUser.getProfile().getSiteLink());
-                req.getSession().setAttribute("profileImage", currentUser.getProfile().getImage());
+                req.getSession().setAttribute("profilePicture", currentUser.getProfile().getImage());
             }
             else {
-                req.getSession().setAttribute("errorMessage", "You do not have the appropriate access to view this page. Please contact your administrator.");
+                req.setAttribute("errorMessage", "You do not have the appropriate access to view this page. Please contact your administrator.");
+                return "/pages/maintainuser/viewempdetails.jsp?errorMessage=Error";
             }
         }
         else {
             //Let's go back to login page since we cannot validate the user.
+            req.setAttribute("errorMessage", "You need to login to view this page.");
             return "/pages/login.jsp";
         }
         return "/pages/maintainuser/viewempdetails.jsp";

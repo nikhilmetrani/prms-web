@@ -18,37 +18,99 @@
 
 <title><fmt:message key="title.modifyps" /></title>
 <script>
+    
     function selectRadioProgram(){
-    if(document.forms[0].radioProgram.value!=""){
-        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
+        if(document.forms[0].radioProgram.value!=""){
+            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
+        }
+        document.forms[0].submit();
     }
-    document.forms[0].submit();
-}
 
     function selectProgramDate(){
-    if(document.forms[0].programDate.value!=""){
-        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
+        if(document.forms[0].programDate.value!=""){
+            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
+        }
+        document.forms[0].submit();
     }
-    document.forms[0].submit();
     
+    function selectAnnualSchedule(){
+        if(document.forms[0].annualSch.value!=""){        
+            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectAnnualSchedule";
+        }
+        document.forms[0].submit();
     }
+
+    function selectWeeklySchedule(){
+        if(document.forms[0].weeklySch.value!=""){
+            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectWeeklySchedule";
+            document.forms[0].submit();
+        }else{
+            selectAnnualSchedule();
+        }
+    }
+
+    function modifyProgramSlot(){
+        document.forms[0].actionType.value = "modifyPgmSlot";
+        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
+        document.forms[0].submit();
+    }
+
 </script>
 </head>
 <body>
         <h2>
 		<fmt:message key="title.modifyps" />
 	</h2>
-	<form action="${pageContext.request.contextPath}/nocturne/enterps" method=post>
+	<form action="${pageContext.request.contextPath}/nocturne/modifyps" method=post>
+            <input type="hidden" name="actionType" value="${actionType}" />
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
 				<tr>
 					<th width="30%"><fmt:message key="label.modifyps.value" /></th>
 					<th width="45%"><fmt:message key="label.modifyps.data" /></th>
 				</tr>
-				<tr>
+                                
+                                <tr>
+					<th width="25%"><fmt:message key="label.setupsch.annualSchedule" /></th>
+					<th width="25%">
+                                            <select required name="annualSch" onchange="selectAnnualSchedule()">
+                                                <option value="">--Select--</option>
+                                                <c:forEach var="asch" items="${annualScheduleList.getAllAnnualSchedules()}">
+                                                    <c:choose>
+                                                    <c:when test="${annualSchedule != null && annualSchedule.year eq asch.year}">
+                                                        <option value="${asch.year}" selected>${asch.year}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${asch.year}">${asch.year}</option>
+                                                    </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                </tr>
+                                <tr>
+					<th width="25%"><fmt:message key="label.setupsch.weeklySchedule" /></th>
+					<th width="25%">
+                                            <select required name="weeklySch" onchange="selectWeeklySchedule()">
+                                                <option value="">--Select--</option>
+                                                <c:forEach var="wsch" items="${annualSchedule.getWeeklySchedules()}">
+                                                    <c:choose>
+                                                    <c:when test="${weeklySchedule != null && weeklySchedule.startDate eq wsch.startDate}">
+                                                        <option value="${wsch.startDate}" selected>${wsch.startDate}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="${wsch.startDate}">${wsch.startDate}</option>
+                                                    </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </select>
+                                        </th>                                     
+                                </tr>
+                                
+                                <tr>
 					<th width="25%"><fmt:message key="label.modifyps.programDate" /></th>
                                         <th width="25%">
-                                            <select name="programDate" onchange="selectProgramDate()" >
+                                            <select required name="programDate" onchange="selectProgramDate()">
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="pgmDate" items="${availableDates}">
                                                     <c:choose>

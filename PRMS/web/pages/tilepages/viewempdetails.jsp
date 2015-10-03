@@ -13,12 +13,12 @@
 <title><fmt:message key="title.viewempdetails" /></title>
 </head>
 <body>
-    <form action="${pageContext.request.contextPath}/nocturne/updateprofile" method=post>
+    <form action="${pageContext.request.contextPath}/nocturne/updateprofile" method="post" >
         <center>
-            <c:if test="${errorMessage!=''}">
+            <c:if test="${errorMessage!=null}">
                 <p><font color="red">${errorMessage}</font></p>
             </c:if>
-            <c:if test="${errorMessage==''}">
+            <c:if test="${errorMessage==null}">
             <table cellpadding=4 cellspacing=2 border=0>
                 <tr>
                     <th width="30%"><fmt:message key="label.createas.value" /></th>
@@ -46,16 +46,6 @@
                     <td><fmt:message key="label.viewempdetails.sitelink" /></td>
                     <td><input type="url" name="siteLink" value="${siteLink}" 
                                title="Please enter a valid website address." size=45 >
-                    </td>
-                </tr>
-                <tr>
-                    <td><fmt:message key="label.viewempdetails.profileimage" /></td>
-                    <td><img src="${profileImage}" height="192" width="192">
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="file" accept="image/*" name="profileImage" id="newProfileImage" size=45 >
                     </td>
                 </tr>
             </table>

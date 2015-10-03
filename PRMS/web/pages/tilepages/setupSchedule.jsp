@@ -1,7 +1,7 @@
 <%-- 
     Document   : setupSchedule.jsp
     Created on : Sep 5, 2015, 11:51:40 AM
-    Author     : Ganapathy Rajan Jaya Vignesh
+    Author     : Ganapathy Rajan Jaya Vignesh, Niu Yiming
 --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -31,10 +31,15 @@ function selectWeeklySchedule(){
     }
 }
 
-
 function createProgramSlot(){
     document.forms[0].actionType.value = "createPgmSlot";
     document.forms[0].action = "${pageContext.request.contextPath}/nocturne/createPgmSlot";
+    document.forms[0].submit();
+}
+
+function modifyProgramSlot(){
+    document.forms[0].actionType.value = "modifyPgmSlot";
+    document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
     document.forms[0].submit();
 }
 
@@ -84,7 +89,7 @@ alert('${successMsg}');
                                         </c:if>
                                         <c:if test="${weeklySchedule != null && (actionType == null || actionType eq '')}">
                                         | <a href="#" onclick="copyWeeklySchedule()">Copy Weekly Schedule</a> 
-                                        | <a href="#" onclick="createProgramSlot()">Create Program Slot</a> 
+                                        | <a href="#" onclick="createProgramSlot()">Create Program Slot</a>
                                         </c:if>                                       
                                         <c:if test="${actionType eq 'copy' && weeklySchedule != null && srcWeeklySchedule != null}">
                                         <a href="#" onclick="confirmCopy()">Confirm</a> | 
@@ -127,7 +132,7 @@ alert('${successMsg}');
                                                 </c:forEach>
                                             </select>
                                         </th>                                     
-                                </tr>                               
+                                </tr>
 				<tr>
 					<td colspan="4" align="center" ><!--<input type="submit" value="Submit" onclick="selectWeeklySchedule()"> --><input
 						type="reset" value="Reset"></td>
@@ -154,6 +159,14 @@ alert('${successMsg}');
 					<td class="nowrap">${ps.duration}</td>
                                         <td class="nowrap">${ps.producer}</td>
                                         <td class="nowrap">${ps.presenter}</td>
+                                        <td class="nowrap"><a href="#" onclick="modifyProgramSlot()">Modify</a></td>
+                                        <td class="nowrap">
+                                            <c:url var="delurl" scope="page" value="/nocturne/deletePgmSlot">
+                                                <c:param name="programDate" value="${ps.dateOfProgram}"/>
+                                                <c:param name="startTime" value="${ps.startTime}"/>
+                                            </c:url>
+                                            <a href="${delurl}">Delete</a>
+                                        </td>
 				</tr>
 			</c:forEach>
 		</table>

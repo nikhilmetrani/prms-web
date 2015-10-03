@@ -19,29 +19,43 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 
 /**
  *
  * @author Niu Yiming
  */
-@Action("modifyps")
+@Action("modifyPgmSlot")
 public class ModifyProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        //req.removeAttribute("actionType");
+        
+        ScheduleDelegate delegate = new ScheduleDelegate();
+        req.getSession().setAttribute("annualScheduleList", delegate.reviewSelectAnnualSchedule());
+        ReviewSelectProgramDelegate del = new ReviewSelectProgramDelegate();
+        List<RadioProgram> radioPrograms = del.reviewSelectRadioProgram();     
+        req.getSession().setAttribute("radioPgms", radioPrograms);
+        req.setAttribute("actionType", "modifyPgmSlot");
         
         String name = req.getParameter("radioProgram");
         String programDate = req.getParameter("programDate");
+        String startTime = req.getParameter("startTime");
+        String duration = req.getParameter("duration");
+        String presenter = req.getParameter("presenter");
+        String producer = req.getParameter("producer");
+        
         if (name != null) {
             req.getSession().setAttribute("radioPgmName", name);
         }
         if (programDate != null && !programDate.isEmpty()) {
             req.getSession().setAttribute("selectPgmDate", programDate);
         } else {
-
+            
             List<String> availableDates;
 
-            String startDate = req.getParameter("weeklySch");
+            String startDate = req.getParameter("weeklySch");   //get start date of the weekly schedule
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             if (startDate != null) {
                 try {
@@ -62,14 +76,16 @@ public class ModifyProgramSlotCmd implements Perform {
                     }
 
                     req.getSession().setAttribute("availableDates", availableDates);
+                    req.getSession().setAttribute("startTime", startTime);
+                    req.getSession().setAttribute("duration", duration);
+                    req.getSession().setAttribute("presenter", presenter);
+                    req.getSession().setAttribute("producer", producer);
 
                 } catch (ParseException ex) {
-                    Logger.getLogger(CreateProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ModifyProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
-
         return "/pages/maintainSchedule/modifyps.jsp";
-    }
-           
+    }           
 }

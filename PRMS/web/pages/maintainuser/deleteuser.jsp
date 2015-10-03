@@ -8,6 +8,16 @@
 <html>
     <head>
         <fmt:setBundle basename="ApplicationResources" />
+        <style type="text/css">
+            errorMessage{
+                color: crimson;
+                margin-bottom: 10px;
+            }
+            successMessage{
+                color: green;
+                margin-bottom: 10px;
+            }
+        </style>
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title><fmt:message key="label.deleteuser.title" /></title>
     </head>
@@ -27,8 +37,8 @@
 
         <form action="${pageContext.request.contextPath}/nocturne/deleteuser"
               method="post">
-            ${successMessage}
-            <center>
+<errorMessage>${errorMessage}</errorMessage>
+           <successMessage>${successMessage}</successMessage>            <center>
                 <table class="framed">
                     <tr>
                         <th width="45%"><fmt:message key="caption.search.user" /></th>

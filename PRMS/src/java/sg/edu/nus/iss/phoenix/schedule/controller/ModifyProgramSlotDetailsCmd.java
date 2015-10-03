@@ -19,11 +19,11 @@ import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 
 /**
- * Command object that enter ProgramSlotDetails.
+ * Command object that modify ProgramSlotDetails.
  * @author Rushabh Shah
  */
-@Action("enterps")
-public class EnterProgramSlotDetailsCmd implements Perform{
+@Action("modifyps")
+public class ModifyProgramSlotDetailsCmd implements Perform{
 
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -31,15 +31,11 @@ public class EnterProgramSlotDetailsCmd implements Perform{
        String programDate = req.getParameter("programDate"); 
        String startTime = req.getParameter("startTime");
        String duration = req.getParameter("pgmSlotDuration");
-       String presenterId=req.getParameter("presenterName");
-       String producerId=req.getParameter("producerName");
        ProgramSlot programSlot = new ProgramSlot();
        programSlot.setProgramName(name);
        programSlot.setStartTime(startTime);
        programSlot.setDateOfProgram(programDate);
        programSlot.setDuration(duration);  
-       programSlot.setPresenter(presenterId);
-       programSlot.setProducer(producerId);
        
         ScheduleDelegate scheduleDelegate = new ScheduleDelegate();        
         
@@ -47,9 +43,9 @@ public class EnterProgramSlotDetailsCmd implements Perform{
             scheduleDelegate.validateProgramSlot(programSlot);
             scheduleDelegate.processCreate(programSlot);
         } catch (ProgramSlotException ex) {
-            Logger.getLogger(EnterProgramSlotDetailsCmd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModifyProgramSlotDetailsCmd.class.getName()).log(Level.SEVERE, null, ex);
             req.setAttribute("errPgmSlot", ex.getMessage());
-            return "/pages/maintainSchedule/createps.jsp";
+            return "/pages/maintainSchedule/modifyps.jsp";
         }
         final HttpSession session = req.getSession();
         
@@ -65,13 +61,8 @@ public class EnterProgramSlotDetailsCmd implements Perform{
         req.removeAttribute("startTime");
         req.removeAttribute("pgmSlotDuration");
         
-        req.setAttribute("successMsg", "Program Slot has been created Successfully !"); 
+        req.setAttribute("successMsg", "Program Slot has been modified Successfully !"); 
         
-//        return "/pages/home.jsp";
-//        return "/nocturne/createPgmSlot";
-        return "/pages/maintainSchedule/createps.jsp";
+        return "/pages/maintainSchedule/modifyps.jsp";
     }
-    
-   
-    
 }

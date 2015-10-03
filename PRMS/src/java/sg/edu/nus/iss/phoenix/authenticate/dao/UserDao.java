@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.phoenix.authenticate.dao;
 
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
 

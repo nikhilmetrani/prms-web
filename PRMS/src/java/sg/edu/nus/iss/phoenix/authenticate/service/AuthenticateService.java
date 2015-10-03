@@ -63,6 +63,8 @@ public class AuthenticateService {
 		}
 		if (null == found)
 			return (null);
+                if (!found.isActiveUserFlag())
+                        return (null);
 
 		//Populate the roles
 		try {

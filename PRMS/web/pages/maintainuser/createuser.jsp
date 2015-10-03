@@ -10,51 +10,63 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
         <fmt:setBundle basename="ApplicationResources" />
+        <style type="text/css">
+            errorMessage{
+                color: crimson;
+                margin-bottom: 10px;
+            }
+            successMessage{
+                color: green;
+                margin-bottom: 10px;
+            }
+        </style>
         <script type="text/javascript">
 
             function validateForm()
             {
-                var x = document.forms["usrForm"]["id"].value;
-                var alertMsg;
-                if (x == null || x == "")
-                {
-                    //alertMsg = alertMsg+"Please enter Id";
-                    alert("Please enter Id");
+            var x = document.forms["usrForm"]["id"].value;
+                    var alertMsg;
+                    if (x == null || x == "")
+            {
+            //alertMsg = alertMsg+"Please enter Id";
+            alert("Please enter Id");
                     return false;
-                }
-                x = document.forms["usrForm"]["name"].value;
-                if (x == null || x == "")
-                {   
-                    alertMsg=alertMsg\u000A+"Please enter User Name";
+            }
+            x = document.forms["usrForm"]["name"].value;
+                    if (x == null || x == "")
+            {
+            alertMsg = alertMsg\u000A + "Please enter User Name";
                     //alert("Please enter User Name");
                     //return false;
-                }
-                x = document.forms["usrForm"]["password"].value;
-                if (x == null || x == "")
-                {
-                    alertMsg=alertMsg\u000A+"Please enter password";
+            }
+            x = document.forms["usrForm"]["password"].value;
+                    if (x == null || x == "")
+            {
+            alertMsg = alertMsg\u000A + "Please enter password";
                     //alert("Please enter password");
                     //return false;
-                }
-                //if(alertMsg === undefined){
-                //    alert(alertMsg);
-               //     return false;
-              //  }
+            }
+            //if(alertMsg === undefined){
+            //    alert(alertMsg);
+            //     return false;
+            //  }
             }
             function setDispatchAction(value)
             {
-                document.forms["usrForm"]["action"].value = value;
-                //alert(document.forms["usrForm"]["action"].value);
+            document.forms["usrForm"]["action"].value = value;
+                    //alert(document.forms["usrForm"]["action"].value);
             }
         </script>        
         <title><fmt:message key="title.manageuser" /></title>
     </head>
 
     <body>
-        <c:set var="usr" value="${adel.findUser(param['id'])}"/>
         <form name="usrForm" action="${pageContext.request.contextPath}/nocturne/adduser" method="post" >
-            ${errorMessage}
-            ${successMessage}
+           <errorMessage>${errorMessage}</errorMessage>
+           <successMessage>${successMessage}</successMessage>
+            <c:forEach items="${errorMessageList}" var="errorMessage">
+                <errorMessage>${errorMessage}</errorMessage><br>
+            </c:forEach>
             <p id="demo"></p>
             <center>
                 <input type="hidden" name="currId" value="${param['id']}" >

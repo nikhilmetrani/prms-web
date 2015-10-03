@@ -28,6 +28,14 @@ public class ReviewSelectWeeklyScheduleCmd implements Perform{
         if(startDate!=null && !"".equals(startDate)){
             req.getSession().setAttribute("weeklySchedule", asch.findWeeklySchedule(startDate));
         }
-        return "/pages/maintainSchedule/setupSchedule.jsp";
+        if("createPgmSlot".equals(req.getAttribute("actionType"))){
+             req.getSession().setAttribute("availableDates", null);
+             return "/nocturne/createPgmSlot";
+        } else if ("modifyPgmSlot".equals(req.getAttribute("actionType"))) {
+             req.getSession().setAttribute("availableDates", null);
+             return "/nocturne/modifyPgmSlot";
+        } else{
+             return "/pages/maintainSchedule/setupSchedule.jsp";
+        }
     }
 }

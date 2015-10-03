@@ -36,7 +36,7 @@ public class UpdateProfileCmd implements Perform {
      */
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws ServletException {
-        req.getSession().setAttribute("errorMessage", "");
+        req.removeAttribute("errorMessage");
         User currentUser = (User)req.getSession().getAttribute("user");
         if (null != currentUser) {
             if (currentUser.hasRole("producer") ||
@@ -46,21 +46,21 @@ public class UpdateProfileCmd implements Perform {
                 currentUser.setPhoneNumber(req.getParameter("phoneNo"));
                 Profile profile = new Profile();
                 profile.setSiteLink(req.getParameter("siteLink"));
-                profile.setImage(req.getParameter("profileImage"));
                 currentUser.setProfile(profile);
-                UpdateProfileDelegate updatedeligate = new UpdateProfileDelegate();
+                UpdateProfileDelegate updateDeligate = new UpdateProfileDelegate();
                 try {
-                    updatedeligate.processUpdate(currentUser);
+                    updateDeligate.processUpdate(currentUser);
                     req.getSession().setAttribute("user", currentUser);
                 } catch (NotFoundException | SQLException ex) {
-                    req.getSession().setAttribute("errorMessage", "Failed to update profile.");
+                    req.setAttribute("errorMessage", "Failed to update profile.");
+                    return "/nocturne/viewempdetails?error=failed";
                 }
             }
             else {
-                req.getSession().setAttribute("errorMessage", "You do not have access to perform this operation. Please contact your administrator.");
+                req.setAttribute("errorMessage", "You do not have access to perform this operation. Please contact your administrator.");
+                return "/nocturne/viewempdetails?error=noAccess";
             }
-        }
-        else {
+        } else {
             //Let's go back to login page since we cannot validate the user.
             return "/pages/login.jsp";
         }

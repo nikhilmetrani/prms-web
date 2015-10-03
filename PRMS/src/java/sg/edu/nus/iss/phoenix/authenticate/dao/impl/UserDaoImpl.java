@@ -1,5 +1,6 @@
 package sg.edu.nus.iss.phoenix.authenticate.dao.impl;
 
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -171,7 +172,7 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement stmt = null;
         try {
             sql = "INSERT INTO user ( id, password, name, "
-                    + "role,activeuser, email, phoneNo, siteLink, profileImage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ";
+                    + "role,activeuser, email, phoneNo, siteLink) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
             stmt = this.connection.prepareStatement(sql);
 
             stmt.setString(1, valueObject.getId());
@@ -182,7 +183,6 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(6, valueObject.getEmail());
             stmt.setString(7, valueObject.getPhoneNumber());
             stmt.setString(8, valueObject.getProfile().getSiteLink());
-            stmt.setString(9, valueObject.getProfile().getImage());
             int rowcount = databaseUpdate(stmt);
             if (rowcount != 1) {
                 // System.out.println("PrimaryKey Error when updating DB!");
@@ -207,7 +207,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public void save(User valueObject) throws NotFoundException, SQLException {
 
-        String sql = "UPDATE user SET password = ?, name = ?, role = ?, activeuser=?, email=?, phoneNo=?, siteLink=?, profileImage=? WHERE (id = ? ) ";
+        String sql = "UPDATE user SET password = ?, name = ?, role = ?, activeuser=?, email=?, phoneNo=?, siteLink=? WHERE (id = ? ) ";
         PreparedStatement stmt = null;
 
         try {
@@ -219,9 +219,8 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(5, valueObject.getEmail());
             stmt.setString(6, valueObject.getPhoneNumber());
             stmt.setString(7, valueObject.getProfile().getSiteLink());
-            stmt.setString(8, valueObject.getProfile().getImage());
             
-            stmt.setString(9, valueObject.getId());
+            stmt.setString(8, valueObject.getId());
 
             int rowcount = databaseUpdate(stmt);
             if (rowcount == 0) {
@@ -240,7 +239,7 @@ public class UserDaoImpl implements UserDao {
             }
         }
     }
-
+    
     /*
      * (non-Javadoc)
      * 
@@ -450,7 +449,6 @@ public class UserDaoImpl implements UserDao {
                 valueObject.setPhoneNumber(result.getString("phoneNo"));
                 Profile profile = new Profile();
                 profile.setSiteLink(result.getString("siteLink"));
-                profile.setImage(result.getString("profileImage"));
                 valueObject.setProfile(profile);
 				//Role e = new Role(result.getString("role"));
                 //ArrayList<Role> roles = new ArrayList<Role>();
@@ -498,7 +496,6 @@ public class UserDaoImpl implements UserDao {
                 temp.setPhoneNumber(result.getString("phoneNo"));
                 Profile profile = new Profile();
                 profile.setSiteLink(result.getString("siteLink"));
-                profile.setImage(result.getString("profileImage"));
                 temp.setProfile(profile);
 				//Role e = new Role(result.getString("role"));
                 //ArrayList<Role> roles = new ArrayList<Role>();
@@ -528,7 +525,7 @@ public class UserDaoImpl implements UserDao {
         }
         return (roleList);
     }
-
+    
     private Connection openConnection() {
         Connection conn = null;
         try {

@@ -93,8 +93,8 @@ public class ProgramSlotDAOImpl extends GeneralDAO implements ProgramSlotDAO{
             PreparedStatement stmt = null;
             openConnection();
             try {
-                    sql = "DELETE FROM `program-slot`" 
-                            +   " WHERE date = str_to_date(?, '%d-%m-%Y') and startTime = str_to_date(?, '%H:%i:%s')";
+                    sql = "DELETE FROM `program-slot` " 
+                            +   "WHERE dateOfProgram = str_to_date(?, '%d-%m-%Y') and startTime = str_to_date(?, '%H:%i:%s')";
                     stmt = this.connection.prepareStatement(sql);
                     stmt.setString(1, programSlot.getDateOfProgram());
                     stmt.setString(2, programSlot.getStartTime());
