@@ -10,10 +10,7 @@ import at.nocturne.api.Perform;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -37,29 +34,19 @@ public class DeleteProgramSlotCmd implements Perform {
         if (programDate != null && !programDate.isEmpty()) {
             req.getSession().setAttribute("selectPgmDate", programDate);
         } else {
-            List<String> availableDates;
+            
             String startDate = req.getParameter("weeklySch");
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            
             if (startDate != null) {
                 try {
                     Date date = sdf.parse(startDate);
-                    Calendar c = Calendar.getInstance();
-                    String strDate;
-                    availableDates = new ArrayList<>();
-                    for (int i = 0; i < 7; i++) {
-                        strDate = sdf.format(date);
-                        availableDates.add(strDate);
-                        c.setTime(date);
-                        if (strDate.startsWith("31-12")) {
-                            c.roll(Calendar.YEAR, 1);
-                        }
-                        c.roll(Calendar.DAY_OF_YEAR, 1);
-                        date = c.getTime();
-                    }
-                    req.getSession().setAttribute("availableDates", availableDates);
+                    String strDate  = sdf.format(date);
+                    req.getSession().setAttribute("", strDate);
+                    //req.getSession().setAttribute("availableDates", availableDates);
                 } catch (ParseException ex) {
-                    Logger.getLogger(DeleteProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    Logger.getLogger(CreateProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
+                }                
             }
         }
         return "/pages/maintainSchedule/deleteps.jsp";

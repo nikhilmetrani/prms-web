@@ -1,7 +1,7 @@
 <%-- 
     Document   : setupSchedule.jsp
     Created on : Sep 5, 2015, 11:51:40 AM
-    Author     : Ganapathy Rajan Jaya Vignesh
+    Author     : Ganapathy Rajan Jaya Vignesh, Niu Yiming
 --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -95,9 +95,7 @@ alert('${successMsg}');
                                         </c:if>
                                         <c:if test="${weeklySchedule != null && (actionType == null || actionType eq '')}">
                                         | <a href="#" onclick="copyWeeklySchedule()">Copy Weekly Schedule</a> 
-                                        | <a href="#" onclick="createProgramSlot()">Create Program Slot</a> 
-                                        | <a href="#" onclick="modifyProgramSlot()">Modify Program Slot</a> 
-                                        | <a href="#" onclick="deleteProgramSlot()">Delete Program Slot</a> 
+                                        | <a href="#" onclick="createProgramSlot()">Create Program Slot</a>
                                         </c:if>                                       
                                         <c:if test="${actionType eq 'copy' && weeklySchedule != null && srcWeeklySchedule != null}">
                                         <a href="#" onclick="confirmCopy()">Confirm</a> | 
@@ -167,8 +165,8 @@ alert('${successMsg}');
 					<td class="nowrap">${ps.duration}</td>
                                         <td class="nowrap">${ps.producer}</td>
                                         <td class="nowrap">${ps.presenter}</td>
-                                        <td class="nowrap">Modify</td>
-                                        <td class="nowrap">Delete</td>
+                                        <td class="nowrap"><a href="#" onclick="modifyProgramSlot()">Modify</a></td>
+                                        <td class="nowrap"><a href="#" onclick="deleteProgramSlot()">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>

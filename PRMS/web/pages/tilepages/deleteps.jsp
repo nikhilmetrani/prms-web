@@ -17,21 +17,7 @@
 <fmt:setBundle basename="ApplicationResources" />
 
 <title><fmt:message key="title.deleteps" /></title>
-<script>
-    function selectProgramDate(){
-        if(document.forms[0].programDate.value!=""){
-            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
-        }
-        document.forms[0].submit();
-    }
-    
-    function selectStartDate(){
-        if(document.forms[0].startDate.value!=""){
-            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
-        }
-        document.forms[0].submit();
-    }
-</script>
+
 </head>
 <body>
         <h2>
@@ -41,48 +27,24 @@
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
 				<tr>
-					<th width="30%"><fmt:message key="label.deleteps.value" /></th>
-					<th width="45%"><fmt:message key="label.deleteps.data" /></th>
+                                    <th width="30%"><fmt:message key="label.deleteps.value" /></th>
+                                    <th width="45%"><fmt:message key="label.deleteps.data" /></th>
 				</tr>
 				<tr>
-					<th width="25%"><fmt:message key="label.deleteps.programDate" /></th>
+                                    <th width="25%"><fmt:message key="label.deleteps.programDate" /></th>
                                         <th width="25%">
-                                            <select name="programDate" onchange="selectProgramDate()" >
-                                                <option value="">--Select--</option>
-                                                <c:forEach var="pgmDate" items="${availableDates}">
-                                                    <c:choose>
-                                                    <c:when test="${selectPgmDate != null && selectPgmDate eq pgmDate}"> 
-                                                     <option value="${pgmDate}" selected>${pgmDate}</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <option value="${pgmDate}">${pgmDate}</option>
-                                                    </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
-                                            </select>
+                                            
                                         </th>
 				</tr>
                                 
                                 <tr>
                                 <th width="25%"><fmt:message key="label.deleteps.startTime" /></th>
                                     <th width="25%">
-                                        <select name="startTime" onchange="selectStartDate()" >
-                                            <option value="">--Select--</option>
-                                                <c:forEach var="startDate" items="${startDates}">
-                                                    <c:choose>
-                                                    <c:when test="${pgmSlotName != null && pgmSlotName eq pgmSlot.name}"> 
-                                                    <option value="${pgmSlot.name}" selected>${pgmSlot.name}</option>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="${pgmSlot.name}">${pgmSlot.name}</option>
-                                                    </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
-                                            </select>
-                                        </th>
+                                        
+                                    </th>
                                 </tr>
 			</table>                        
-                        <input  type="submit" value="Submit"> <input  type="reset" value="Reset">
+                        <input  type="submit" value="Delete"> <input  type="reset" value="Reset">
 		</center>                     
 	</form>    
 </body>
