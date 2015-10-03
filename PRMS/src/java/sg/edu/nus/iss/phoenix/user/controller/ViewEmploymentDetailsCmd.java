@@ -30,7 +30,7 @@ public class ViewEmploymentDetailsCmd implements Perform{
      * @throws ServletException 
      */
     @Override
-    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws ServletException {
+    public String perform(String path, HttpServletRequest req, HttpServletResponse resp) {
         req.removeAttribute("errorMessage");
         User currentUser = (User)req.getSession().getAttribute("user");
         if (null != currentUser) {
@@ -44,10 +44,12 @@ public class ViewEmploymentDetailsCmd implements Perform{
             }
             else {
                 req.setAttribute("errorMessage", "You do not have the appropriate access to view this page. Please contact your administrator.");
+                return "/pages/maintainuser/viewempdetails.jsp?errorMessage=Error";
             }
         }
         else {
             //Let's go back to login page since we cannot validate the user.
+            req.setAttribute("errorMessage", "You need to login to view this page.");
             return "/pages/login.jsp";
         }
         return "/pages/maintainuser/viewempdetails.jsp";

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.FileInputStream;
+import javax.servlet.http.HttpServlet;
 import sg.edu.nus.iss.phoenix.authenticate.entity.User;
 import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.user.delegate.UpdateProfilePictureDelegate;
@@ -27,7 +28,7 @@ import sg.edu.nus.iss.phoenix.user.delegate.UpdateProfilePictureDelegate;
 @Action("updatepicture")
 @MultipartConfig(location="/tmp", fileSizeThreshold=1024*1024, 
     maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
-public class UpdateProfilePictureCmd implements Perform {
+public class UpdateProfilePictureCmd extends HttpServlet implements Perform {
 
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -36,11 +37,11 @@ public class UpdateProfilePictureCmd implements Perform {
         if (null != currentUser) {
             if (currentUser.hasRole("producer") ||
                     currentUser.hasRole("presenter")) {
-                InputStream inStream=null;
+                InputStream inStream = null;
                 String filePath = req.getParameter("profilePicture");
                 try {
-                //Part filePart=req.getPart("profilePicture");
-                //if(filePart!=null){
+                Part filePart=req.getPart("profilePicture");
+                if(filePart!=null){
                     inStream= new FileInputStream(filePath); //filePart.getInputStream();
                     UpdateProfilePictureDelegate updateDelegate = new UpdateProfilePictureDelegate();
                     try {
@@ -48,7 +49,7 @@ public class UpdateProfilePictureCmd implements Perform {
                     } catch (NotFoundException | SQLException ex) {
                         req.setAttribute("errorMessage", "Failed to update profile picture");
                     }
-                //}
+                }
                 }catch (IOException e) {
                     req.setAttribute("errorMessage", "Failed to update profile picture");
                 }

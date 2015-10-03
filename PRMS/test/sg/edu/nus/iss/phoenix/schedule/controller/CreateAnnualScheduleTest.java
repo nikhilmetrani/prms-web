@@ -39,9 +39,9 @@ public class CreateAnnualScheduleTest {
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         scheduleYearPast = 2013;
-        scheduleYearCurrent = Calendar.YEAR;
+        scheduleYearCurrent = Calendar.getInstance().get(Calendar.YEAR);
         scheduleYearFuture = 2019;
-        userName = "Mockito";
+        userName = "pointyhead";
     }
     
     @After
@@ -59,16 +59,11 @@ public class CreateAnnualScheduleTest {
         when(request.getSession()).thenReturn(session);
         when(request.getParameter("assignedBy")).thenReturn(userName);
         when(request.getParameter("year")).thenReturn((String.valueOf(scheduleYearPast)));
-        new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
-        String errorMessage = (String)request.getAttribute("errorMessage");
-        if (null == errorMessage) {
+        String returnValue = new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
+        if (!"/nocturne/createas".equals(returnValue))
+            fail("EnterAnnualScheduleDetalisCmd should have failed for past year!");
+        else
             assert(true);
-        } else {
-            if ("".equals(errorMessage))
-                fail("EnterAnnualScheduleDetalisCmd should have failed for past year");
-            else
-                assert(true);
-        }
     }
     
     @Test
@@ -76,16 +71,11 @@ public class CreateAnnualScheduleTest {
         when(request.getSession()).thenReturn(session);
         when(request.getParameter("assignedBy")).thenReturn(userName);
         when(request.getParameter("year")).thenReturn((String.valueOf(scheduleYearCurrent)));
-        new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
-        String errorMessage = (String)request.getAttribute("errorMessage");
-        if (null == errorMessage) {
+        String returnValue = new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
+        if (!"/nocturne/viewSchedule".equals(returnValue))
+            fail("EnterAnnualScheduleDetalisCmd should not have failed for current year!");
+        else
             assert(true);
-        } else {
-            if (!"".equals(errorMessage))
-                fail("Unexpected error: " + errorMessage);
-            else
-                assert(true);
-        }
             
     }
     
@@ -94,17 +84,11 @@ public class CreateAnnualScheduleTest {
         when(request.getSession()).thenReturn(session);
         when(request.getParameter("assignedBy")).thenReturn(userName);
         when(request.getParameter("year")).thenReturn((String.valueOf(scheduleYearFuture)));
-        new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
-        assert(true);
-        String errorMessage = (String)request.getAttribute("errorMessage");
-        if (null == errorMessage) {
+        String returnValue = new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
+        if (!"/nocturne/viewSchedule".equals(returnValue))
+            fail("EnterAnnualScheduleDetalisCmd should not have failed for future year!");
+        else
             assert(true);
-        } else {
-            if (!"".equals(errorMessage))
-                fail("Unexpected error: " + errorMessage);
-            else
-                assert(true);
-        }
     }
     
     @Test
@@ -112,15 +96,10 @@ public class CreateAnnualScheduleTest {
         when(request.getSession()).thenReturn(session);
         when(request.getParameter("assignedBy")).thenReturn(userName);
         when(request.getParameter("year")).thenReturn((String.valueOf(scheduleYearFuture)));
-        new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
-        String errorMessage = (String)request.getAttribute("errorMessage");
-        if (null == errorMessage) {
+        String returnValue = new EnterAnnualScheduleDetalisCmd().perform(null, request, response);
+        if (!"/nocturne/createas".equals(returnValue))
+            fail("EnterAnnualScheduleDetalisCmd should have failed for existing year!");
+        else
             assert(true);
-        } else {
-            if ("".equals(errorMessage))
-                fail("EnterAnnualScheduleDetalisCmd should have failed for existing year");
-            else
-                assert(true);
-        }
     }
 }

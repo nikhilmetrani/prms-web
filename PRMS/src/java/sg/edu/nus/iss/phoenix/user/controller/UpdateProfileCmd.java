@@ -55,7 +55,7 @@ public class UpdateProfileCmd implements Perform {
                 try {
                     updateDeligate.processUpdate(currentUser);
                     req.getSession().setAttribute("user", currentUser);
-                    return "/nocturne/updatepicture";
+                    //return "/nocturne/updatepicture";
 //                    try {
 //                        new UpdateProfilePictureCmd().perform(path, req, resp);
 //                    } catch (IOException e) {
