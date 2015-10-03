@@ -13,9 +13,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
 <fmt:setBundle basename="ApplicationResources" />
-
 <title><fmt:message key="title.deleteps" /></title>
 
 </head>
@@ -33,14 +31,14 @@
 				<tr>
                                     <th width="25%"><fmt:message key="label.deleteps.programDate" /></th>
                                         <th width="25%">
-                                            
+                                            <param type="time" name="programDate" value="${programDate}">
                                         </th>
 				</tr>
                                 
                                 <tr>
                                 <th width="25%"><fmt:message key="label.deleteps.startTime" /></th>
                                     <th width="25%">
-                                        
+                                        <input type="time" name="startTime" value="${'startTime'}">
                                     </th>
                                 </tr>
 			</table>                        
