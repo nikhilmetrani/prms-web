@@ -182,11 +182,4 @@ public interface UserDao {
 
 	public abstract User searchMatching(String uid)
 			throws SQLException;
-        
-        public abstract void updateProfilePicture(String userId, InputStream profilePicture)
-			throws NotFoundException, SQLException;
-        
-        public byte[] getProfilePicture(String userId)
-                    throws NotFoundException, SQLException;
-        
 }

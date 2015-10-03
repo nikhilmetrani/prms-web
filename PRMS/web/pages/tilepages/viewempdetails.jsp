@@ -48,16 +48,6 @@
                                title="Please enter a valid website address." size=45 >
                     </td>
                 </tr>
-                <tr>
-                    <td><fmt:message key="label.viewempdetails.profilepicture" /></td>
-                    <td><img src="${pageContext.request.contextPath}/nocturne/viewProfileImage" height="192" width="192">
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="file" accept="image/*" name="profilePicture" id="profilePicture">
-                    </td>
-                </tr>
             </table>
             <input type="submit" value="Update Profile"> <input type="reset"
                     value="Reset">
