@@ -22,8 +22,9 @@ import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.user.delegate.ResetPasswordDelegate;
 
 /**
+ * Command Object that handles the Reset Password Command
  *
- * @author User
+ * @author debasish
  */
 @Action("resetpassword")
 public class ResetPasswordCmd implements Perform {
@@ -32,7 +33,6 @@ public class ResetPasswordCmd implements Perform {
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String name = (String) req.getParameter("name");
         String id = (String) req.getParameter("id");
-        //String action = req.getParameter("delete");
         if (name != null && id != null) {
             ResetPasswordDelegate del = new ResetPasswordDelegate();
             UserDaoImpl userDao = new UserDaoImpl();
@@ -90,12 +90,22 @@ public class ResetPasswordCmd implements Perform {
         }
     }
 
+    
+    /**
+     * This API will validate the old and new password and set all the error messages
+     * and return to the caller.
+     *
+     * @param Old password,New Password
+     * @return ArrayList<ErrorMessage>
+     *
+     * @debasish
+     */
     private ArrayList<String> validateResetPassword(String oldPassword, String newPassword) {
         String errorMessage = null;
         String blankValue = "";
         ArrayList<String> errorMessages = new ArrayList<String>();
         if (newPassword.equals(blankValue)) {
-            errorMessages.add("Please enter password");
+            errorMessages.add("Please enter new password");
         } else {
             if (oldPassword != null && newPassword != null) {
                 if (oldPassword.equals(newPassword)) {

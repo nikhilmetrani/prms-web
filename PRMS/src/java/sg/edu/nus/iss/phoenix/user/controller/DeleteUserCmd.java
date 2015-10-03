@@ -20,8 +20,9 @@ import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.user.delegate.DeleteUserDelegate;
 
 /**
+ * Command Object that handles the Delete User Command
  *
- * @author User
+ * @author debasish
  */
 @Action("deleteuser")
 public class DeleteUserCmd implements Perform {
@@ -30,7 +31,6 @@ public class DeleteUserCmd implements Perform {
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String name = (String) req.getParameter("name");
             String id = (String) req.getParameter("id");
-        //String action = req.getParameter("delete");
         if (name != null && id != null) {
             DeleteUserDelegate del = new DeleteUserDelegate();
             UserDaoImpl userDao = new UserDaoImpl();
@@ -40,7 +40,6 @@ public class DeleteUserCmd implements Perform {
                 deletedUser.setName(name);
                 del.processDelete(deletedUser);
                 req.setAttribute("deleted", "yes");
-                //}
             } catch (NotFoundException ex) {
                 Logger.getLogger(DeleteUserCmd.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {

@@ -230,48 +230,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
     
-    @Override
-    public void updateProfilePicture(String userId, InputStream profilePicture)
-			throws NotFoundException, SQLException {
-        String sql = "UPDATE user SET profilePicture = ? WHERE (id = ? ) ";
-        PreparedStatement statement = null;
-        try {
-            statement = this.connection.prepareStatement(sql);
-            statement.setBlob(1,profilePicture);   
-            statement.setString(2,userId);
-
-            int rowcount = databaseUpdate(statement);
-            if (rowcount == 0) {
-                throw new NotFoundException(
-                        "Unable to update profile picture.");
-            }
-        } finally {
-            if(null != statement)
-                statement.close();
-        }
-    }
-    
-    @Override
-    public byte[] getProfilePicture(String userId)
-                    throws NotFoundException, SQLException {
-        
-        String sql = "SELECT profilePicture FROM user WHERE id=?";
-        PreparedStatement statement = null;
-        try {
-            statement = this.connection.prepareStatement(sql);
-        
-            statement.setString(1, userId);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                return rs.getBytes("profilePicture");
-            }
-        } finally {
-            if(null != statement)
-                statement.close();
-        }
-        return null;
-    }
-    
     /*
      * (non-Javadoc)
      * 

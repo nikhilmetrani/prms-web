@@ -22,8 +22,9 @@ import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.user.delegate.CreateUserDelegate;
 
 /**
+ * Command Object that handles the Create User Command
  *
- * @author deba
+ * @author debasish
  */
 @Action("adduser")
 public class CreateUserCmd implements Perform {
@@ -55,7 +56,9 @@ public class CreateUserCmd implements Perform {
             if (errorMessageList.isEmpty()) {
                 newUser = del.processCreate(user);
             } else {
+                //validates the user entries and show all the error messages in one go to the user.
                 req.setAttribute("errorMessageList", errorMessageList);
+                req.setAttribute("usr", user);
                 return "/pages/createuser.jsp";
             }
             //req.setAttribute("user", newUser);
@@ -63,17 +66,22 @@ public class CreateUserCmd implements Perform {
             Logger.getLogger(CreateUserCmd.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (null != newUser) {
-            //req.getSession().setAttribute("user", user);
             req.setAttribute("successMessage", "User created successfully");
-            //    return "/pages/createuser.jsp";
         } else {
             req.setAttribute("errorMessage", "Error!!!User Alredy Exists");
-            //      return "/pages/error.jsp";
         }
-
         return "/pages/createuser.jsp";
     }
 
+    /**
+     * This API will validate the user entries and set all the error messages
+     * and return to the caller.
+     *
+     * @param User entity
+     * @return ArrayList<ErrorMessage>
+     *
+     * @debasish
+     */
     private ArrayList<String> validateNewUser(User user) {
         String userId = user.getId();
         String userName = user.getName();
@@ -89,7 +97,7 @@ public class CreateUserCmd implements Perform {
             errorMessages.add("Please enter Id");
         }
         if (userName.equals(blankValue)) {
-            errorMessages.add("Please enter User name");
+            errorMessages.add("Please enter user name");
         }
         if (password.equals(blankValue)) {
             errorMessages.add("Please enter password");

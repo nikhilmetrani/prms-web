@@ -7,10 +7,8 @@ package sg.edu.nus.iss.phoenix.user.controller;
 
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
-import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Profile;
@@ -24,8 +22,6 @@ import sg.edu.nus.iss.phoenix.user.service.UpdateProfileService;
  * @author Nikhil Metrani
  */
 @Action("updateprofile")
-@MultipartConfig(location="/tmp", fileSizeThreshold=1024*1024, 
-    maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class UpdateProfileCmd implements Perform {
 
     /**
@@ -55,18 +51,14 @@ public class UpdateProfileCmd implements Perform {
                 try {
                     updateDeligate.processUpdate(currentUser);
                     req.getSession().setAttribute("user", currentUser);
-                    //return "/nocturne/updatepicture";
-//                    try {
-//                        new UpdateProfilePictureCmd().perform(path, req, resp);
-//                    } catch (IOException e) {
-//                        req.setAttribute("errorMessage", "Failed to update profile Picture.");
-//                    }
                 } catch (NotFoundException | SQLException ex) {
                     req.setAttribute("errorMessage", "Failed to update profile.");
+                    return "/nocturne/viewempdetails?error=failed";
                 }
             }
             else {
                 req.setAttribute("errorMessage", "You do not have access to perform this operation. Please contact your administrator.");
+                return "/nocturne/viewempdetails?error=noAccess";
             }
         } else {
             //Let's go back to login page since we cannot validate the user.
