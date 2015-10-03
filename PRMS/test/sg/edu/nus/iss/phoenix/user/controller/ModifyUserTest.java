@@ -30,7 +30,7 @@ public class ModifyUserTest {
         
         
         String newName = "test_three_modified";
-        String password = "password1234";
+        String password = "Password@1234";
         String[] newRoles = new String[]{"manager", "producer", "presenter"};
 
         when(req.getSession()).thenReturn(session);
