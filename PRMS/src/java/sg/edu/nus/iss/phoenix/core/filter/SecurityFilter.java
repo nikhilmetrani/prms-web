@@ -40,6 +40,7 @@ public class SecurityFilter implements Filter{
         if( session != null && (path != null 
                 && (!path.endsWith("/home.jsp") 
                 && !path.endsWith("/login.jsp") 
+                && !path.endsWith("/error.jsp") 
                 && !path.equals("") 
                 && !path.endsWith("/index.jsp"))) )
         {
