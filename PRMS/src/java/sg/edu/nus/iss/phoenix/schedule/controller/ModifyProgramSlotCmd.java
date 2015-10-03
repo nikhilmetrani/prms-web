@@ -41,6 +41,10 @@ public class ModifyProgramSlotCmd implements Perform {
         
         String name = req.getParameter("radioProgram");
         String programDate = req.getParameter("programDate");
+        String startTime = req.getParameter("startTime");
+        String duration = req.getParameter("duration");
+        String presenter = req.getParameter("presenter");
+        String producer = req.getParameter("producer");
         
         if (name != null) {
             req.getSession().setAttribute("radioPgmName", name);
@@ -48,7 +52,7 @@ public class ModifyProgramSlotCmd implements Perform {
         if (programDate != null && !programDate.isEmpty()) {
             req.getSession().setAttribute("selectPgmDate", programDate);
         } else {
-
+            
             List<String> availableDates;
 
             String startDate = req.getParameter("weeklySch");   //get start date of the weekly schedule
@@ -72,6 +76,10 @@ public class ModifyProgramSlotCmd implements Perform {
                     }
 
                     req.getSession().setAttribute("availableDates", availableDates);
+                    req.getSession().setAttribute("startTime", startTime);
+                    req.getSession().setAttribute("duration", duration);
+                    req.getSession().setAttribute("presenter", presenter);
+                    req.getSession().setAttribute("producer", producer);
 
                 } catch (ParseException ex) {
                     Logger.getLogger(ModifyProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);

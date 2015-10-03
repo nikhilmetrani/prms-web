@@ -108,7 +108,7 @@
                                 </tr>
                                 
                                 <tr>
-					<th width="25%"><fmt:message key="label.createps.programDate" /></th>
+					<th width="25%"><fmt:message key="label.modifyps.programDate" /></th>
                                         <th width="25%">
                                             <select required name="programDate" onchange="selectProgramDate()">
                                                 <option value="">--Select--</option>

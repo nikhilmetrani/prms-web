@@ -43,12 +43,6 @@ function modifyProgramSlot(){
     document.forms[0].submit();
 }
 
-function deleteProgramSlot(){
-    document.forms[0].actionType.value = "deletePgmSlot";
-    document.forms[0].action = "${pageContext.request.contextPath}/nocturne/deletePgmSlot";
-    document.forms[0].submit();
-}
-
 function copyWeeklySchedule(){
     document.forms[0].actionType.value = "copy";
     document.forms[0].action = "${pageContext.request.contextPath}/nocturne/copyWeeklySchedule";
@@ -138,7 +132,7 @@ alert('${successMsg}');
                                                 </c:forEach>
                                             </select>
                                         </th>                                     
-                                </tr>                               
+                                </tr>
 				<tr>
 					<td colspan="4" align="center" ><!--<input type="submit" value="Submit" onclick="selectWeeklySchedule()"> --><input
 						type="reset" value="Reset"></td>
@@ -166,7 +160,13 @@ alert('${successMsg}');
                                         <td class="nowrap">${ps.producer}</td>
                                         <td class="nowrap">${ps.presenter}</td>
                                         <td class="nowrap"><a href="#" onclick="modifyProgramSlot()">Modify</a></td>
-                                        <td class="nowrap"><a href="#" onclick="deleteProgramSlot()">Delete</a></td>
+                                        <td class="nowrap">
+                                            <c:url var="delurl" scope="page" value="/nocturne/deletePgmSlot">
+                                                <c:param name="programDate" value="${ps.dateOfProgram}"/>
+                                                <c:param name="startTime" value="${ps.startTime}"/>
+                                            </c:url>
+                                            <a href="${delurl}">Delete</a>
+                                        </td>
 				</tr>
 			</c:forEach>
 		</table>
