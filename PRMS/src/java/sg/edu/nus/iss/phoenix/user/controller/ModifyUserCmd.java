@@ -24,8 +24,9 @@ import sg.edu.nus.iss.phoenix.core.exceptions.NotFoundException;
 import sg.edu.nus.iss.phoenix.user.delegate.ModifyUserDelegate;
 
 /**
+ * Command Object that handles the Modify user Command
  *
- * @author User
+ * @author debasish
  */
 @Action("modifyuser")
 public class ModifyUserCmd implements Perform {
@@ -102,6 +103,15 @@ public class ModifyUserCmd implements Perform {
         }
     }
 
+    /**
+     * This API will validate User entries and set all the error messages and
+     * return to the caller.
+     *
+     * @param modified User entity
+     * @return ArrayList<ErrorMessage>
+     *
+     * @debasish
+     */
     private ArrayList<String> validateModifyUser(User user) {
         String userName = user.getName();
         String password = user.getPassword();
@@ -109,11 +119,6 @@ public class ModifyUserCmd implements Perform {
         String blankValue = "";
         ArrayList<String> errorMessages = new ArrayList<String>();
 
-//        if (roles == null || roles.isEmpty()) {
-//            //req.setAttribute("errorMessage", "Please enter role details");
-//            //errorMessage += "Please enter role details"+newLine;
-//            errorMessages.add("Please enter role details");
-//        }
         if (userName.equals(blankValue)) {
             errorMessages.add("Please enter User name");
         }
