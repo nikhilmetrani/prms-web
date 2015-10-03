@@ -10,8 +10,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Before;
 import static org.mockito.Mockito.*;
 import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
@@ -22,20 +24,54 @@ import sg.edu.nus.iss.phoenix.schedule.service.ProgramSlotService;
 /**
  *
  * @author Rushabh Shah
- * 
+ *
  */
 public class CreateProgramSlotTest {
 
+    private HttpServletRequest req;
+    private HttpServletResponse res;
+    private HttpSession session;
+    private AnnualScheduleList aschList;
+    private String year;
+    private String weekStDate;
+    private String name;
+    private String programDate;
+    private String startTime;
+    private String duration;
+    private ProgramSlotService programSlotService;
+    private List<String> availableDates;
+    private ProgramSlot programSlot;
+
+    @Before
+    public void setUp() {
+        req = mock(HttpServletRequest.class);
+        res = mock(HttpServletResponse.class);
+        session = mock(HttpSession.class);
+        aschList = new ScheduleDelegate().reviewSelectAnnualSchedule();
+        year = "2015";
+        weekStDate = "05-01-2015";
+        name = "news";
+        programDate = "10-01-2015";
+        startTime = "02:30:00";
+        duration = "00:30:00";
+        programSlotService = new ProgramSlotService();
+        availableDates = new ArrayList<>();
+
+        availableDates.add("05-01-2015");
+        availableDates.add("06-01-2015");
+        availableDates.add("07-01-2015");
+        availableDates.add("08-01-2015");
+        availableDates.add("09-01-2015");
+        availableDates.add("10-01-2015");
+        availableDates.add("11-01-2015");
+    }
+
+    @After
+    public void tearDown() {
+    }
+
     @Test
     public void createProgramSlotCmdTest() {
-        HttpServletRequest req = mock(HttpServletRequest.class);
-        HttpServletResponse res = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
-        AnnualScheduleList aschList = new ScheduleDelegate().reviewSelectAnnualSchedule();
-        String year = "2015";
-        String weekStDate = "05-01-2015";
-        String name = "news";
-        String programDate = "10-01-2015";
 
         when(req.getSession()).thenReturn(session);
         try {
@@ -65,15 +101,6 @@ public class CreateProgramSlotTest {
             //Select program date
             when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
 
-            List<String> availableDates = new ArrayList<>();
-            availableDates.add("05-01-2015");
-            availableDates.add("06-01-2015");
-            availableDates.add("07-01-2015");
-            availableDates.add("08-01-2015");
-            availableDates.add("09-01-2015");
-            availableDates.add("10-01-2015");
-            availableDates.add("11-01-2015");
-
             //Select program date
             when(session.getAttribute("availableDates")).thenReturn(availableDates);
             new CreateProgramSlotCmd().perform(null, req, res);
@@ -86,21 +113,12 @@ public class CreateProgramSlotTest {
 
     @Test
     public void enterProgramSlotDetailsCmdTest() {
-        HttpServletRequest req = mock(HttpServletRequest.class);
-        HttpServletResponse res = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
 
-        String name = "news";
-        String programDate = "10-01-2015";
-        String startTime = "02:30:00";
-        String duration = "00:30:00";
-        
-        ProgramSlotService programSlotService = new ProgramSlotService();
-        ProgramSlot programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
-        if(programSlot!=null){
+        programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+        if (programSlot != null) {
             programSlotService.processDelete(programSlot);
         }
-        
+
         programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
         Assert.assertNull(programSlot);
 
@@ -120,33 +138,22 @@ public class CreateProgramSlotTest {
             //Select program date
             when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
 
-            List<String> availableDates = new ArrayList<>();            
-            availableDates.add("05-01-2015");
-            availableDates.add("06-01-2015");
-            availableDates.add("07-01-2015");
-            availableDates.add("08-01-2015");
-            availableDates.add("09-01-2015");
-            availableDates.add("10-01-2015");
-            availableDates.add("11-01-2015");
-
             //Select program date
             when(session.getAttribute("availableDates")).thenReturn(availableDates);
             new EnterProgramSlotDetailsCmd().perform(null, req, res);
-           
+
             programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
 
             Assert.assertNotNull(programSlot);
             Assert.assertEquals(name, programSlot.getProgramName());
             Assert.assertEquals(duration, programSlot.getDuration());
-            
-            
+
             programSlotService.processDelete(programSlot);
             programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
             Assert.assertNull(programSlot);
-            
 
         } catch (Exception e) {
-            assert (false);           
+            assert (false);
 
         }
     }

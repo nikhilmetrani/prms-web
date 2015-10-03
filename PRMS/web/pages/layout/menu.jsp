@@ -41,10 +41,7 @@
 						key="caption.menu.managerp" />
 				</a>
 			</td>
-	</tr>
-        
-        
-        
+	</tr>        
         <tr>
 		<td>
 				<a href="<c:url value="/nocturne/manageuser"/>"> <fmt:message
@@ -59,15 +56,7 @@
 						key="caption.menu.setupSchedule" />
 				</a>
 			</td>
-	</tr>       
-        <tr>
-            <td>
-				<a href="<c:url value="/nocturne/createPgmSlot"/>"> <fmt:message
-						key="caption.menu.createps" />
-				</a>
-            </td>
-        </tr>
-        
+	</tr>          
         </c:if>
         <c:if test="${sessionScope.user != null}">
 	<tr>

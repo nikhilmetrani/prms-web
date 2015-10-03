@@ -67,9 +67,8 @@ public class EnterProgramSlotDetailsCmd implements Perform{
         
         req.setAttribute("successMsg", "Program Slot has been created Successfully !"); 
         
-//        return "/pages/home.jsp";
-//        return "/nocturne/createPgmSlot";
-        return "/pages/maintainSchedule/createps.jsp";
+
+        return "/nocturne/viewSchedule";
     }
     
    
