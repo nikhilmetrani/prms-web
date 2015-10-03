@@ -19,6 +19,9 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
+import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
+import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 
 /**
  *
@@ -29,8 +32,16 @@ public class ModifyProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         
+        ScheduleDelegate delegate = new ScheduleDelegate();
+        req.getSession().setAttribute("annualScheduleList", delegate.reviewSelectAnnualSchedule());
+        ReviewSelectProgramDelegate del = new ReviewSelectProgramDelegate();
+        List<RadioProgram> radioPrograms = del.reviewSelectRadioProgram();     
+        req.getSession().setAttribute("radioPgms", radioPrograms);
+        req.setAttribute("actionType", "modifyPgmSlot");
+        
         String name = req.getParameter("radioProgram");
         String programDate = req.getParameter("programDate");
+        
         if (name != null) {
             req.getSession().setAttribute("radioPgmName", name);
         }

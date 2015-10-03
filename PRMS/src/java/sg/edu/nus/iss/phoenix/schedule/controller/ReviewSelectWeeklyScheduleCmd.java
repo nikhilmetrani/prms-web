@@ -31,7 +31,10 @@ public class ReviewSelectWeeklyScheduleCmd implements Perform{
         if("createPgmSlot".equals(req.getAttribute("actionType"))){
              req.getSession().setAttribute("availableDates", null);
              return "/nocturne/createPgmSlot";
-        }else{
+        } else if ("modifyPgmSlot".equals(req.getAttribute("actionType"))) {
+             req.getSession().setAttribute("availableDates", null);
+             return "/nocturne/modifyPgmSlot";
+        } else{
              return "/pages/maintainSchedule/setupSchedule.jsp";
         }
     }
