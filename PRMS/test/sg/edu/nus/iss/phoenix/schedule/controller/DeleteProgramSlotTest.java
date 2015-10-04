@@ -5,83 +5,106 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Before;
 import static org.mockito.Mockito.*;
-import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
-import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
+import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 import sg.edu.nus.iss.phoenix.schedule.service.ProgramSlotService;
 
 /**
  *
  * @author Niu Yiming
- * 
+ * @author Rushabh Shah
+ *
+ *
  */
 public class DeleteProgramSlotTest {
 
+    private HttpServletRequest req;
+    private HttpServletResponse res;
+    private HttpSession session;
+    private String programName;
+    private String programDate;
+    private String startTime;
+    private String duration;
+    private String producer;
+    private String presenter;
+    private String year;
+    private ProgramSlotService programSlotService;   
+    private ProgramSlot programSlot;    
+    private WeeklySchedule weeklySchedule;
+    private AnnualSchedule annualSchedule;
+    
+
+    @Before
+    public void setUp() {
+        req = mock(HttpServletRequest.class);
+        res = mock(HttpServletResponse.class);
+        session = mock(HttpSession.class);
+        year = "2015";
+        programName = "news";
+        programDate = "10-01-2015";
+        startTime = "02:30:00";
+        duration = "00:30:00";
+        weeklySchedule = new WeeklySchedule("05-01-2015","pointyhead");
+        producer = "dilbert";
+        presenter = "wally";
+        programSlotService = new ProgramSlotService();        
+        annualSchedule = new AnnualSchedule(new Integer(year), "pointyhead");       
+
+        programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+        if (programSlot == null) {
+            ProgramSlot slot = new ProgramSlot();
+            slot.setDateOfProgram(programDate);
+            slot.setDuration(duration);
+            slot.setPresenter(presenter);
+            slot.setProducer(producer);
+            slot.setProgramName(programName);
+            slot.setStartTime(startTime);
+            programSlotService.processCreate(slot);
+        }
+        programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+        Assert.assertNotNull(programSlot);
+    }
+
+    @After
+    public void tearDown() {
+    }
+
     @Test
-    public void deleteProgramSlotCmdTest() {
-        HttpServletRequest req = mock(HttpServletRequest.class);
-        HttpServletResponse res = mock(HttpServletResponse.class);
-        HttpSession session = mock(HttpSession.class);
-        AnnualScheduleList aschList = new ScheduleDelegate().reviewSelectAnnualSchedule();
-        String year = "2015";
-        String weekStDate = "05-01-2015";
-        String name = "news";
-        String programDate = "10-01-2015";
+    public void deleteProgramSlotTest() {
 
         when(req.getSession()).thenReturn(session);
+
+        //Select Annual Schedule
+        when(session.getAttribute("annualSchedule")).thenReturn(annualSchedule);
+        //Select Weekly Schedule
+        when(session.getAttribute("weeklySchedule")).thenReturn(weeklySchedule);
+        //Select program date
+        when(req.getParameter("programDate")).thenReturn(programDate);
+        //Select startTime
+        when(req.getParameter("startTime")).thenReturn(startTime);
+
         try {
-            //View Schedule
-            when(req.getParameter("actionType")).thenReturn("");
-            new ViewScheduleCmd().perform(null, req, res);
-            assert (true);
-
-            //Select Annual Schedule
-            when(session.getAttribute("annualScheduleList")).thenReturn(aschList);
-            when(req.getParameter("annualSch")).thenReturn(year);
-            new ReviewSelectAnnualScheduleCmd().perform(null, req, res);
-
-            //Select Weekly Schedule
-            when(session.getAttribute("annualSchedule")).thenReturn(aschList.findAnnualSchedule(2015));
-            when(req.getParameter("weeklySch")).thenReturn(weekStDate);
-            new ReviewSelectWeeklyScheduleCmd().perform(null, req, res);
-
-            //Select program name
-            when(session.getAttribute("radioPgms")).thenReturn(new ReviewSelectProgramDelegate().reviewSelectRadioProgram());
-            //Select radioProgram
-            when(req.getAttribute("radioProgram")).thenReturn(name);
-            //Select program name
-            when(session.getAttribute("radioPgmName")).thenReturn(name);
-            //Select program date
-            when(session.getAttribute("programDate")).thenReturn(programDate);
-            //Select program date
-            when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
-
-            List<String> availableDates = new ArrayList<>();
-            availableDates.add("05-01-2015");
-            availableDates.add("06-01-2015");
-            availableDates.add("07-01-2015");
-            availableDates.add("08-01-2015");
-            availableDates.add("09-01-2015");
-            availableDates.add("10-01-2015");
-            availableDates.add("11-01-2015");
-
-            //Select program date
-            when(session.getAttribute("availableDates")).thenReturn(availableDates);
             new DeleteProgramSlotCmd().perform(null, req, res);
-
-        } catch (Exception e) {
+        } catch (IOException | ServletException ex) {
+            Logger.getLogger(DeleteProgramSlotTest.class.getName()).log(Level.SEVERE, null, ex);
             assert (false);
-            e.printStackTrace();
         }
+        programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+        Assert.assertNull(programSlot);
+
     }
 
 }
