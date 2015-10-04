@@ -5,8 +5,10 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,10 +17,10 @@ import org.junit.Test;
 import org.junit.Assert;
 import org.junit.Before;
 import static org.mockito.Mockito.*;
-import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 import sg.edu.nus.iss.phoenix.schedule.service.ProgramSlotService;
 
 /**
@@ -64,56 +66,7 @@ public class CreateProgramSlotTest {
         availableDates.add("09-01-2015");
         availableDates.add("10-01-2015");
         availableDates.add("11-01-2015");
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    @Test
-    public void createProgramSlotCmdTest() {
-
-        when(req.getSession()).thenReturn(session);
-        try {
-            //View Schedule
-            when(req.getParameter("actionType")).thenReturn("");
-            new ViewScheduleCmd().perform(null, req, res);
-            assert (true);
-
-            //Select Annual Schedule
-            when(session.getAttribute("annualScheduleList")).thenReturn(aschList);
-            when(req.getParameter("annualSch")).thenReturn(year);
-            new ReviewSelectAnnualScheduleCmd().perform(null, req, res);
-
-            //Select Weekly Schedule
-            when(session.getAttribute("annualSchedule")).thenReturn(aschList.findAnnualSchedule(2015));
-            when(req.getParameter("weeklySch")).thenReturn(weekStDate);
-            new ReviewSelectWeeklyScheduleCmd().perform(null, req, res);
-
-            //Select program name
-            when(session.getAttribute("radioPgms")).thenReturn(new ReviewSelectProgramDelegate().reviewSelectRadioProgram());
-            //Select radioProgram
-            when(req.getAttribute("radioProgram")).thenReturn(name);
-            //Select program name
-            when(session.getAttribute("radioPgmName")).thenReturn(name);
-            //Select program date
-            when(session.getAttribute("programDate")).thenReturn(programDate);
-            //Select program date
-            when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
-
-            //Select program date
-            when(session.getAttribute("availableDates")).thenReturn(availableDates);
-            new CreateProgramSlotCmd().perform(null, req, res);
-
-        } catch (Exception e) {
-            assert (false);
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void enterProgramSlotDetailsCmdTest() {
-
+        
         programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
         if (programSlot != null) {
             programSlotService.processDelete(programSlot);
@@ -121,9 +74,56 @@ public class CreateProgramSlotTest {
 
         programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
         Assert.assertNull(programSlot);
+    }
+
+    @After
+    public void tearDown() {
+        programSlotService.processDelete(programSlot);
+        programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+        Assert.assertNull(programSlot);   
+    }
+
+    @Test
+    public void createProgramSlotDetailsCmdTest() {       
 
         when(req.getSession()).thenReturn(session);
         try {
+            //Select radioProgram
+            when(req.getParameter("radioProgram")).thenReturn(name);
+            //Select program date
+            when(req.getParameter("programDate")).thenReturn(programDate);
+            //Select startTime
+            when(req.getParameter("startTime")).thenReturn(startTime);
+            //Select pgmSlotDuration
+            when(req.getParameter("pgmSlotDuration")).thenReturn(duration);
+
+            //Select program name
+            when(session.getAttribute("radioPgmName")).thenReturn(name);
+            //Select program date
+            when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
+
+            //Select program date
+            when(session.getAttribute("availableDates")).thenReturn(availableDates);
+            new CreateProgramSlotCmd().perform(null, req, res);
+            new EnterProgramSlotDetailsCmd().perform(null, req, res);
+
+            programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+
+            Assert.assertNotNull(programSlot);
+            Assert.assertEquals(name, programSlot.getProgramName());
+            Assert.assertEquals(duration, programSlot.getDuration());           
+
+        } catch (Exception e) {
+            assert (false);
+        }
+    }
+    
+    
+     @Test
+    public void validationCheckForProgramSlotOverlappingTest() throws IOException, ServletException {       
+
+        when(req.getSession()).thenReturn(session);
+        
             //Select radioProgram
             when(req.getParameter("radioProgram")).thenReturn(name);
             //Select program date
@@ -147,15 +147,144 @@ public class CreateProgramSlotTest {
             Assert.assertNotNull(programSlot);
             Assert.assertEquals(name, programSlot.getProgramName());
             Assert.assertEquals(duration, programSlot.getDuration());
+            
+            String pgmName = "ppk";           
+            
+            programSlot.setProgramName(pgmName);        
+            
+            try {
+                programSlotService.validateProgramSlot(programSlot);
+            } catch (ProgramSlotException ex) {
+                Assert.assertEquals("Program Slots are overlapping, Please change the start time", ex.getMessage());
+            }                
+    }
+    
+    
+    @Test
+    public void validation_For_ProgramSlot_With_Duration_LessThan_ThirtyMinutes_Test() throws IOException, ServletException {
 
-            programSlotService.processDelete(programSlot);
+        when(req.getSession()).thenReturn(session);
+        
+            //Select radioProgram
+            when(req.getParameter("radioProgram")).thenReturn(name);
+            //Select program date
+            when(req.getParameter("programDate")).thenReturn(programDate);
+            //Select startTime
+            when(req.getParameter("startTime")).thenReturn(startTime);
+            //Select pgmSlotDuration
+            when(req.getParameter("pgmSlotDuration")).thenReturn(duration);
+
+            //Select program name
+            when(session.getAttribute("radioPgmName")).thenReturn(name);
+            //Select program date
+            when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
+
+            //Select program date
+            when(session.getAttribute("availableDates")).thenReturn(availableDates);
+            new EnterProgramSlotDetailsCmd().perform(null, req, res);
+
             programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
-            Assert.assertNull(programSlot);
 
-        } catch (Exception e) {
-            assert (false);
+            Assert.assertNotNull(programSlot);
+            Assert.assertEquals(name, programSlot.getProgramName());
+            Assert.assertEquals(duration, programSlot.getDuration());            
+             
+            String dur = "00:20:00";                 
+            programSlot.setDuration(dur);
+            
+            try {
+                programSlotService.validateProgramSlot(programSlot);
+            } catch (ProgramSlotException ex) {
+                Assert.assertEquals("Minimum Duration of time should be 30 minutes", ex.getMessage());
+            }   
+    }
+    
+    
+    @Test
+    public void validation_For_ProgramSlot_With_Duration_Not_Multiple_Of_ThirtyMinutes_Test() throws IOException, ServletException {
 
-        }
+        when(req.getSession()).thenReturn(session);
+        
+            //Select radioProgram
+            when(req.getParameter("radioProgram")).thenReturn(name);
+            //Select program date
+            when(req.getParameter("programDate")).thenReturn(programDate);
+            //Select startTime
+            when(req.getParameter("startTime")).thenReturn(startTime);
+            //Select pgmSlotDuration
+            when(req.getParameter("pgmSlotDuration")).thenReturn(duration);
+
+            //Select program name
+            when(session.getAttribute("radioPgmName")).thenReturn(name);
+            //Select program date
+            when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
+
+            //Select program date
+            when(session.getAttribute("availableDates")).thenReturn(availableDates);
+            new EnterProgramSlotDetailsCmd().perform(null, req, res);
+
+            programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+
+            Assert.assertNotNull(programSlot);
+            Assert.assertEquals(name, programSlot.getProgramName());
+            Assert.assertEquals(duration, programSlot.getDuration());
+            
+            String dur = "00:35:00";              
+            programSlot.setDuration(dur);
+            
+            try {
+                programSlotService.validateProgramSlot(programSlot);
+            } catch (ProgramSlotException ex) {
+                Assert.assertEquals("Duration must be multiple of 30 minutes", ex.getMessage());
+            }          
+            
+    }
+    
+    @Test
+    public void validation_For_ProgramSlot_With_StartTime_Extending_To_NextWeek_Test() throws IOException, ServletException {
+
+        when(req.getSession()).thenReturn(session);
+        
+            //Select radioProgram
+            when(req.getParameter("radioProgram")).thenReturn(name);
+            //Select program date
+            when(req.getParameter("programDate")).thenReturn(programDate);
+            //Select startTime
+            when(req.getParameter("startTime")).thenReturn(startTime);
+            //Select pgmSlotDuration
+            when(req.getParameter("pgmSlotDuration")).thenReturn(duration);
+
+            //Select program name
+            when(session.getAttribute("radioPgmName")).thenReturn(name);
+            //Select program date
+            when(session.getAttribute("selectPgmDate")).thenReturn(programDate);
+
+            //Select program date
+            when(session.getAttribute("availableDates")).thenReturn(availableDates);
+            new EnterProgramSlotDetailsCmd().perform(null, req, res);
+
+            programSlot = programSlotService.getProgramSlotByDateOfProgramAndStartTime(programDate, startTime);
+
+            Assert.assertNotNull(programSlot);
+            Assert.assertEquals(name, programSlot.getProgramName());
+            Assert.assertEquals(duration, programSlot.getDuration());                   
+            
+            String stDate = "11-01-2015";
+            String stTime = "23:30:00";
+            String dur = "00:30:00";   
+            programSlot.setStartTime(stTime);
+            programSlot.setDateOfProgram(stDate);
+            programSlot.setDuration(dur);         
+            
+            try {
+                programSlotService.validateProgramSlot(programSlot);
+            } catch (ProgramSlotException ex) {
+                Assert.assertEquals("Program slot cannot span to next week", ex.getMessage());
+            }   
+            
+            programSlot.setDateOfProgram(programDate);
+            programSlot.setStartTime(startTime);
+            
     }
 
 }
