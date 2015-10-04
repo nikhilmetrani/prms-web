@@ -81,10 +81,10 @@ alert('${successMsg}');
                                         </c:url>
                                         <c:if test="${actionType == null || actionType eq ''}">
                                         <a href="${url}" onclick="">Create Annual Schedule</a> 
+                                        | <a href="#" onclick="createProgramSlot()">Create Program Slot</a>
                                         </c:if>
                                         <c:if test="${weeklySchedule != null && (actionType == null || actionType eq '')}">
-                                        | <a href="#" onclick="copyWeeklySchedule()">Copy Weekly Schedule</a> 
-                                        | <a href="#" onclick="createProgramSlot()">Create Program Slot</a>
+                                        | <a href="#" onclick="copyWeeklySchedule()">Copy Weekly Schedule</a>                                         
                                         </c:if>                                       
                                         <c:if test="${actionType eq 'copy' && weeklySchedule != null && srcWeeklySchedule != null}">
                                         <a href="#" onclick="confirmCopy()">Confirm</a> | 

@@ -17,8 +17,6 @@ import org.junit.Test;
 import org.junit.Assert;
 import org.junit.Before;
 import static org.mockito.Mockito.*;
-import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
-import sg.edu.nus.iss.phoenix.schedule.entity.AnnualScheduleList;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 import sg.edu.nus.iss.phoenix.schedule.service.ProgramSlotService;
@@ -32,10 +30,7 @@ public class CreateProgramSlotTest {
 
     private HttpServletRequest req;
     private HttpServletResponse res;
-    private HttpSession session;
-    private AnnualScheduleList aschList;
-    private String year;
-    private String weekStDate;
+    private HttpSession session;    
     private String name;
     private String programDate;
     private String startTime;
@@ -48,10 +43,7 @@ public class CreateProgramSlotTest {
     public void setUp() {
         req = mock(HttpServletRequest.class);
         res = mock(HttpServletResponse.class);
-        session = mock(HttpSession.class);
-        aschList = new ScheduleDelegate().reviewSelectAnnualSchedule();
-        year = "2015";
-        weekStDate = "05-01-2015";
+        session = mock(HttpSession.class);        
         name = "news";
         programDate = "10-01-2015";
         startTime = "02:30:00";
@@ -154,6 +146,7 @@ public class CreateProgramSlotTest {
             
             try {
                 programSlotService.validateProgramSlot(programSlot);
+                assert (false);
             } catch (ProgramSlotException ex) {
                 Assert.assertEquals("Program Slots are overlapping, Please change the start time", ex.getMessage());
             }                
@@ -194,6 +187,7 @@ public class CreateProgramSlotTest {
             
             try {
                 programSlotService.validateProgramSlot(programSlot);
+                assert (false);
             } catch (ProgramSlotException ex) {
                 Assert.assertEquals("Minimum Duration of time should be 30 minutes", ex.getMessage());
             }   
@@ -234,6 +228,7 @@ public class CreateProgramSlotTest {
             
             try {
                 programSlotService.validateProgramSlot(programSlot);
+                assert (false);
             } catch (ProgramSlotException ex) {
                 Assert.assertEquals("Duration must be multiple of 30 minutes", ex.getMessage());
             }          
@@ -278,6 +273,7 @@ public class CreateProgramSlotTest {
             
             try {
                 programSlotService.validateProgramSlot(programSlot);
+                assert (false);
             } catch (ProgramSlotException ex) {
                 Assert.assertEquals("Program slot cannot span to next week", ex.getMessage());
             }   
