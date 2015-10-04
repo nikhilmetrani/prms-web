@@ -57,6 +57,12 @@
                 <input type="hidden" name="mpsAction" value="${actionType}" />
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
+                                <tr valign="top">
+                                     <c:if test="${errPgmSlot!=null && !errPgmSlot.isEmpty()}">
+                                        <td width="40%" style="color: red"><b>Error</b></td>
+                                        <td style="color: red">${errPgmSlot}</td>
+                                     </c:if>
+                                </tr>
 				<tr>
 					<th width="30%"><fmt:message key="label.modifyps.value" /></th>
 					<th width="45%"><fmt:message key="label.modifyps.data" /></th>
@@ -119,17 +125,17 @@
 				</tr>
                                 <tr> 
                                      <th width="25%"><fmt:message key="label.modifyps.startTime" /></th>
-                                     <th width="25%"><input type="time" name="startTime" value="${startTime}" />
+                                     <th width="25%"><input required type="time" name="startTime" value="${startTime}" />
                                 </tr>
 				<tr>
                                     <th width="25%"><fmt:message key="label.modifyps.duration" /></th>
-					<th width="25%"><input type="text" name="duration"
+					<th width="25%"><input required type="text" name="duration"
                                                                    value="${duration}" size=15 maxlength=20></th>
 				</tr>
                                 <tr>
                                  <th width="25%"><fmt:message key="label.modifyps.radioProgram" /></th>
                                         <th width="25%">
-                                            <select name="radioPgmName" value="${radioPgmName}" >
+                                            <select required name="radioPgmName" value="${radioPgmName}" >
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="radioPgm" items="${radioPgms}">
                                                     <c:choose>

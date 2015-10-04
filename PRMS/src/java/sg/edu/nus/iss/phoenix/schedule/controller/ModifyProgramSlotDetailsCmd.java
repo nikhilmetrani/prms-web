@@ -15,6 +15,7 @@ import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
+import sg.edu.nus.iss.phoenix.schedule.exception.ProgramSlotException;
 
 /**
  * Command object that modify ProgramSlotDetails.
@@ -66,14 +67,27 @@ public class ModifyProgramSlotDetailsCmd implements Perform{
                 //Delete the current program slot
                 ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
                 scheduleDelegate.processDelete(currentProgramSlot);
-                //Save the program slot with new values
-                scheduleDelegate.processCreate(updatedProgramSlot);
-                
-                if (previousWeeklySchedule.equals(selectedWeeklySchedule))
-                    previousWeeklySchedule.updateProgramSlot(programDate, startTime, updatedProgramSlot);
-                else {
-                    previousWeeklySchedule.deleteProgramSlot(programDate, startTime);
-                    selectedWeeklySchedule.addProgramSlot(updatedProgramSlot);
+                try {
+                    scheduleDelegate.validateProgramSlot(updatedProgramSlot);
+                    //Save the program slot with new values
+                    scheduleDelegate.processCreate(updatedProgramSlot);
+
+                    if (previousWeeklySchedule.equals(selectedWeeklySchedule))
+                        previousWeeklySchedule.updateProgramSlot(programDate, startTime, updatedProgramSlot);
+                    else {
+                        previousWeeklySchedule.deleteProgramSlot(programDate, startTime);
+                        selectedWeeklySchedule.addProgramSlot(updatedProgramSlot);
+                    }
+                } catch (ProgramSlotException ex) {
+                    scheduleDelegate.processCreate(currentProgramSlot);
+                    req.setAttribute("radioPgmName", (String)req.getParameter("radioPgmName"));
+                    req.setAttribute("selectPgmDate", (String)req.getParameter("selectPgmDate"));
+                    req.setAttribute("startTime", (String)req.getParameter("startTime"));
+                    req.setAttribute("duration", (String)req.getParameter("duration"));
+                    req.setAttribute("presenterName", (String)req.getParameter("presenterName"));
+                    req.setAttribute("producerName", (String)req.getParameter("producerName"));
+                    req.setAttribute("errPgmSlot", ex.getMessage());
+                    return "/pages/maintainSchedule/modifyps.jsp";
                 }
                 req.getSession().setAttribute("annualSchedule", previousAnnualSchedule);
                 req.getSession().setAttribute("weeklySchedule", previousWeeklySchedule);

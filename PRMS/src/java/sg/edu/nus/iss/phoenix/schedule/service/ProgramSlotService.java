@@ -123,7 +123,7 @@ public class ProgramSlotService {
                 throw new ProgramSlotException("Duration must be multiple of 30 minutes");
             }
         } catch (ParseException ex) {
-            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ProgramSlotException("Duration must be multiple of 30 minutes");
         }
     }
 
@@ -148,7 +148,7 @@ public class ProgramSlotService {
                 }
             }
         } catch (ParseException ex) {
-            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ProgramSlotException("Program slot cannot span to next week");
         }
 
     }
@@ -192,7 +192,7 @@ public class ProgramSlotService {
                 }
             }
         } catch (ParseException ex) {
-            Logger.getLogger(ProgramSlotService.class.getName()).log(Level.SEVERE, null, ex);
+            throw new ProgramSlotException("Program Slots are overlapping, Please change the start time");
         }
     }
 
