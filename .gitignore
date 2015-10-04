@@ -2,6 +2,7 @@
 /PRMS/build/*
 /PRMS/lib/*
 /PRMS/dist/*
+/nocturne/nbproject/private/*
 /nocturne/build/*
 /nocturne/dist/*
 /nocturne/lib/*
