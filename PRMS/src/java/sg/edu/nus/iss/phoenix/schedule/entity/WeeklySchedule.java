@@ -5,8 +5,15 @@
  */
 package sg.edu.nus.iss.phoenix.schedule.entity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import sg.edu.nus.iss.phoenix.schedule.controller.ModifyProgramSlotCmd;
 
 /**
  *
@@ -116,6 +123,35 @@ public class WeeklySchedule {
             }
         }
         return programSlot;
+    }
+    
+    /**
+     * Method to retrieve a list of all available dates for the week.
+     * @return Returns a list of all available dates for the week object.<br>
+     * On failure returns empty list.
+     */
+    public List<String> getAvailableDates() {
+        List<String> availableDates = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date date = sdf.parse(startDate);
+            Calendar c = Calendar.getInstance();
+            String strDate;
+            availableDates = new ArrayList<>();
+            for (int i = 0; i < 7; i++) {
+                strDate = sdf.format(date);
+                availableDates.add(strDate);
+                c.setTime(date);
+                if (strDate.startsWith("31-12")) {
+                    c.roll(Calendar.YEAR, 1);
+                }
+                c.roll(Calendar.DAY_OF_YEAR, 1);
+                date = c.getTime();
+            } 
+        }catch (ParseException ex) {
+            Logger.getLogger(ModifyProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+        return availableDates;
     }
     
     /**

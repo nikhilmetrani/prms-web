@@ -19,6 +19,20 @@
 <title><fmt:message key="title.modifyps" /></title>
 <script>
     
+    function selectRadioProgram(){
+        if(document.forms[0].radioProgram.value!=""){
+            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyps";
+            document.forms[0].submit();
+        }
+    }
+
+    function selectProgramDate(){
+        if(document.forms[0].programDate.value!=""){
+            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyps";
+            document.forms[0].submit();
+        }
+    }
+    
     function popupPresenterPage(){        
         var url = "/phoenix/nocturne/searchpresenter";        
         window.open(url,"","dialogWidth:950px;dialogHeight:400px"); 
@@ -33,14 +47,15 @@
     function selectAnnualSchedule(){
         if(document.forms[0].annualSch.value!=""){        
             document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectAnnualSchedule";
+            document.forms[0].submit();
         }
-        document.forms[0].submit();
     }
 
     function selectWeeklySchedule(){
         if(document.forms[0].weeklySch.value!=""){
             document.forms[0].action = "${pageContext.request.contextPath}/nocturne/selectWeeklySchedule";
             document.forms[0].submit();
+            selectProgramDate();
         }else{
             selectAnnualSchedule();
         }
@@ -53,7 +68,8 @@
 		<fmt:message key="title.modifyps" />
 	</h2>
                 <form action="${pageContext.request.contextPath}/nocturne/finishmodifyps" method=post>
-            <!--input type="hidden" name="actionType" value="${actionType}" /-->
+                <input type="hidden" name="actionType" value="${actionType}" />
+                <input type="hidden" name="mpsAction" value="${actionType}" />
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
 				<tr>
@@ -101,9 +117,9 @@
                                 <tr>
 					<th width="25%"><fmt:message key="label.modifyps.programDate" /></th>
                                         <th width="25%">
-                                            <select required name="programDate" value="${selectPgmDate}>
+                                            <select required name="selectPgmDate" value="${selectPgmDate}">
                                                 <option value="">--Select--</option>
-                                                <c:forEach var="pgmDate" items="${availableDates}">
+                                                <c:forEach var="pgmDate" items="${weeklySchedule.getAvailableDates()}">
                                                     <c:choose>
                                                     <c:when test="${selectPgmDate != null && selectPgmDate eq pgmDate}"> 
                                                      <option value="${selectPgmDate}" selected>${pgmDate}</option>
@@ -122,13 +138,13 @@
                                 </tr>
 				<tr>
                                     <th width="25%"><fmt:message key="label.modifyps.duration" /></th>
-					<th width="25%"><input type="text" name="pgmSlotDuration"
+					<th width="25%"><input type="text" name="duration"
                                                                    value="${duration}" size=15 maxlength=20></th>
 				</tr>
                                 <tr>
                                  <th width="25%"><fmt:message key="label.modifyps.radioProgram" /></th>
                                         <th width="25%">
-                                            <select name="radioProgram" value="${radioPgmName}" >
+                                            <select name="radioPgmName" value="${radioPgmName}" onchange="selectRadioProgram()">
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="radioPgm" items="${radioPgms}">
                                                     <c:choose>
@@ -145,7 +161,7 @@
                                 </tr>
                                <tr>
                                     <th width="25%"><fmt:message key="label.presenter.id" /></th>
-				    <th width="25%"><input type="text" name="presenterName" value="${presenter}" size=25 maxlength=40 title="Please choose the presenter" required readonly>
+				    <th width="25%"><input type="text" name="presenterName" value="${presenterName}" size=25 maxlength=40 title="Please choose the presenter" required readonly>
                                         <c:url var="url" scope="page" value="/nocturne/searchpresenter"> </c:url>
                                         <a href="#" onclick="popupPresenterPage()">Select</a>    
                                     </th>
@@ -153,7 +169,7 @@
                                 
                                  <tr>
                                     <th width="25%"><fmt:message key="label.producer.id" /></th>
-				    <th width="25%"><input type="text" name="producerName" value="${producer}" size=25 maxlength=40 title="Please choose the producer" required readonly>
+				    <th width="25%"><input type="text" name="producerName" value="${producerName}" size=25 maxlength=40 title="Please choose the producer" required readonly>
                                         <c:url var="url" scope="page" value="/nocturne/searchproducer"> </c:url>
                                         <a href="#" onclick="popupProducerPage()">Select</a>    
                                     </th>
