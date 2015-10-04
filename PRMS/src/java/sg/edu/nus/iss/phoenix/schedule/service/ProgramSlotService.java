@@ -123,7 +123,7 @@ public class ProgramSlotService {
                 throw new ProgramSlotException("Duration must be multiple of 30 minutes");
             }
         } catch (ParseException ex) {
-            throw new ProgramSlotException("Duration must be multiple of 30 minutes");
+            throw new ProgramSlotException("Please enter time in proper format");
         }
     }
 
@@ -148,7 +148,7 @@ public class ProgramSlotService {
                 }
             }
         } catch (ParseException ex) {
-            throw new ProgramSlotException("Program slot cannot span to next week");
+            throw new ProgramSlotException("Please enter time in proper format");
         }
 
     }
@@ -192,7 +192,7 @@ public class ProgramSlotService {
                 }
             }
         } catch (ParseException ex) {
-            throw new ProgramSlotException("Program Slots are overlapping, Please change the start time");
+            throw new ProgramSlotException("Please enter time in proper format");
         }
     }
 
