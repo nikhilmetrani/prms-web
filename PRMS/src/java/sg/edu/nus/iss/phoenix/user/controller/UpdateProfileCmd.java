@@ -8,7 +8,6 @@ package sg.edu.nus.iss.phoenix.user.controller;
 import at.nocturne.api.Action;
 import at.nocturne.api.Perform;
 import java.sql.SQLException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.authenticate.entity.Profile;

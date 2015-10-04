@@ -30,7 +30,6 @@ CREATE  TABLE IF NOT EXISTS `phoenix`.`user` (
   `email` VARCHAR(255) NULL ,
   `phoneNo` VARCHAR(45) NULL ,
   `siteLink` MEDIUMTEXT NULL ,
-  `profilePicture` MEDIUMBLOB NULL ,
 PRIMARY KEY (`id`))
 --  CONSTRAINT `role`
 --    FOREIGN KEY (`role` )
@@ -59,11 +58,11 @@ insert into `phoenix`.`role` values("producer", "program producer");
 -- -----------------------------------------------------
 
 -- id, password, name, role
-insert into `phoenix`.`user` values("dilbert", "dilbert", "dilbert, the hero", "presenter:producer", 1, NULL, NULL, NULL, NULL);
-insert into `phoenix`.`user` values("wally", "wally", "wally, the bludger", "producer", 1, NULL, NULL, NULL, NULL);
-insert into `phoenix`.`user` values("pointyhead", "pointyhead", "pointyhead, the manager", "manager", 1, NULL, NULL, NULL, NULL);
-insert into `phoenix`.`user` values("catbert", "catbert", "catbert, the hr", "admin:manager", 1, NULL, NULL, NULL, NULL);
-insert into `phoenix`.`user` values("dogbert", "dogbert", "dogbert, the CEO", "producer:admin", 1, NULL, NULL, NULL, NULL);
+insert into `phoenix`.`user` values("dilbert", "dilbert", "dilbert, the hero", "presenter:producer", 1, NULL, NULL, NULL);
+insert into `phoenix`.`user` values("wally", "wally", "wally, the bludger", "producer", 1, NULL, NULL, NULL);
+insert into `phoenix`.`user` values("pointyhead", "pointyhead", "pointyhead, the manager", "manager", 1, NULL, NULL, NULL);
+insert into `phoenix`.`user` values("catbert", "catbert", "catbert, the hr", "admin:manager", 1, NULL, NULL, NULL);
+insert into `phoenix`.`user` values("dogbert", "dogbert", "dogbert, the CEO", "producer:admin", 1, NULL, NULL, NULL);
 
 -- -----------------------------------------------------
 -- Table `phoenix`.`radio-program`

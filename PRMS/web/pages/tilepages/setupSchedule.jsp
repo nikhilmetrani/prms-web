@@ -152,21 +152,19 @@ alert('${successMsg}');
                                         <td class="nowrap">${ps.startTime}</td>
                                         <td class="nowrap">${ps.programName}</td>
 					<td class="nowrap">${ps.duration}</td>
-                                        <td class="nowrap">${ps.producer}</td>
                                         <td class="nowrap">${ps.presenter}</td>
+                                        <td class="nowrap">${ps.producer}</td>
                                         <td class="nowrap">
-                                            <c:url var="modurl" scope="page" value="/nocturne/modifyPgmSlot">
+                                            <c:url var="modurl" scope="page" value="/nocturne/modifyps">
                                                 <c:param name="programDate" value="${ps.dateOfProgram}"/>
                                                 <c:param name="startTime" value="${ps.startTime}"/>
-                                                <c:param name="weeklySchedule" value="${weeklySchedule.startDate}"/>
                                             </c:url>
                                             <a href="${modurl}" >Modify program slot</a>
                                         </td>
                                         <td class="nowrap">
-                                            <c:url var="delurl" scope="page" value="/nocturne/deletePgmSlot">
+                                            <c:url var="delurl" scope="page" value="/nocturne/deleteps">
                                                 <c:param name="programDate" value="${ps.dateOfProgram}"/>
                                                 <c:param name="startTime" value="${ps.startTime}"/>
-                                                <c:param name="weeklySchedule" value="${weeklySchedule.startDate}"/>
                                             </c:url>
                                             <a href="${delurl}" >Delete program slot</a>
                                         </td>

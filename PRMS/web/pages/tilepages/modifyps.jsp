@@ -19,26 +19,10 @@
 <title><fmt:message key="title.modifyps" /></title>
 <script>
     
-    function selectRadioProgram(){
-        if(document.forms[0].radioProgram.value!=""){
-            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
-        }
-        document.forms[0].submit();
-    }
-
-    function selectProgramDate(){
-        if(document.forms[0].programDate.value!=""){
-            document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
-        }
-        document.forms[0].submit();
-    }
-    
     function popupPresenterPage(){        
         var url = "/phoenix/nocturne/searchpresenter";        
         window.open(url,"","dialogWidth:950px;dialogHeight:400px"); 
     }
-    
-   
     
     function popupProducerPage(){
         
@@ -62,20 +46,14 @@
         }
     }
 
-    function modifyProgramSlot(){
-        document.forms[0].actionType.value = "modifyPgmSlot";
-        document.forms[0].action = "${pageContext.request.contextPath}/nocturne/modifyPgmSlot";
-        document.forms[0].submit();
-    }
-
 </script>
 </head>
 <body>
         <h2>
 		<fmt:message key="title.modifyps" />
 	</h2>
-	<form action="${pageContext.request.contextPath}/nocturne/modifyps" method=post>
-            <input type="hidden" name="actionType" value="${actionType}" />
+                <form action="${pageContext.request.contextPath}/nocturne/finishmodifyps" method=post>
+            <!--input type="hidden" name="actionType" value="${actionType}" /-->
 		<center>
 			<table cellpadding=5 cellspacing=2 border=0>
 				<tr>
@@ -91,10 +69,10 @@
                                                 <c:forEach var="asch" items="${annualScheduleList.getAllAnnualSchedules()}">
                                                     <c:choose>
                                                     <c:when test="${annualSchedule != null && annualSchedule.year eq asch.year}">
-                                                        <option value="${asch.year}" selected>${asch.year}</option>
+                                                        <option value="${selectedAnnualSchedule}" selected>${asch.year}</option>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <option value="${asch.year}">${asch.year}</option>
+                                                        <option value="${selectedAnnualSchedule}">${asch.year}</option>
                                                     </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -109,10 +87,10 @@
                                                 <c:forEach var="wsch" items="${annualSchedule.getWeeklySchedules()}">
                                                     <c:choose>
                                                     <c:when test="${weeklySchedule != null && weeklySchedule.startDate eq wsch.startDate}">
-                                                        <option value="${wsch.startDate}" selected>${wsch.startDate}</option>
+                                                        <option value="${selectedWeeklySchedule}" selected>${wsch.startDate}</option>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <option value="${wsch.startDate}">${wsch.startDate}</option>
+                                                        <option value="${selectedWeeklySchedule}">${wsch.startDate}</option>
                                                     </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -123,15 +101,15 @@
                                 <tr>
 					<th width="25%"><fmt:message key="label.modifyps.programDate" /></th>
                                         <th width="25%">
-                                            <select required name="programDate" onchange="selectProgramDate()">
+                                            <select required name="programDate" value="${selectPgmDate}>
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="pgmDate" items="${availableDates}">
                                                     <c:choose>
                                                     <c:when test="${selectPgmDate != null && selectPgmDate eq pgmDate}"> 
-                                                     <option value="${pgmDate}" selected>${pgmDate}</option>
+                                                     <option value="${selectPgmDate}" selected>${pgmDate}</option>
                                                     </c:when>
                                                     <c:otherwise>
-                                                    <option value="${pgmDate}">${pgmDate}</option>
+                                                    <option value="${selectPgmDate}">${pgmDate}</option>
                                                     </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -140,7 +118,7 @@
 				</tr>
                                 <tr> 
                                      <th width="25%"><fmt:message key="label.modifyps.startTime" /></th>
-                                     <th width="25%"><input type="time" name="startTime" value="${param['startTime']}" />
+                                     <th width="25%"><input type="time" name="startTime" value="${startTime}" />
                                 </tr>
 				<tr>
                                     <th width="25%"><fmt:message key="label.modifyps.duration" /></th>
@@ -150,15 +128,15 @@
                                 <tr>
                                  <th width="25%"><fmt:message key="label.modifyps.radioProgram" /></th>
                                         <th width="25%">
-                                            <select name="radioProgram" onchange="selectRadioProgram()" >
+                                            <select name="radioProgram" value="${radioPgmName}" >
                                                 <option value="">--Select--</option>
                                                 <c:forEach var="radioPgm" items="${radioPgms}">
                                                     <c:choose>
                                                     <c:when test="${radioPgmName != null && radioPgmName eq radioPgm.name}"> 
-                                                    <option value="${radioPgm.name}" selected>${radioPgm.name}</option>
+                                                    <option value="${radioPgmName}" selected>${radioPgm.name}</option>
                                                     </c:when>
                                                     <c:otherwise>
-                                                    <option value="${radioPgm.name}">${radioPgm.name}</option>
+                                                    <option value="${radioPgmName}">${radioPgm.name}</option>
                                                     </c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -181,7 +159,7 @@
                                     </th>
 				</tr>
 			</table>
-                                         <input  type="submit" value="Submit"> <input  type="reset" value="Reset">
+                                         <input  type="submit" value="Save changes"> <input  type="reset" value="Reset">
                                          
 		</center>                     
 	</form>    

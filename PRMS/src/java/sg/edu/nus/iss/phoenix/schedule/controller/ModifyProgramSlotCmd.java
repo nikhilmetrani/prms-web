@@ -19,9 +19,6 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
-import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
-import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
 import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
 import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
@@ -30,7 +27,7 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
  *
  * @author Niu Yiming
  */
-@Action("modifyPgmSlot")
+@Action("modifyps")
 public class ModifyProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -41,9 +38,8 @@ public class ModifyProgramSlotCmd implements Perform {
         ProgramSlot programSlot = null;
         
         AnnualSchedule asch = (AnnualSchedule)req.getSession().getAttribute("annualSchedule");
-        String startDate = req.getParameter("weeklySchedule");
-        if(startDate!=null && !"".equals(startDate)) {
-            WeeklySchedule weekly = asch.findWeeklySchedule(startDate);
+        WeeklySchedule weekly = (WeeklySchedule)req.getSession().getAttribute("weeklySchedule");
+        if(weekly!=null ) {
             programSlot = weekly.findProgramSlot(programDate, startTime);
             
             if (null != programSlot) {
@@ -52,19 +48,27 @@ public class ModifyProgramSlotCmd implements Perform {
                 String presenter = programSlot.getPresenter();
                 String producer = programSlot.getProducer();
                 
-                List<String> availableDates = getAvaliableDates(startDate);
+                List<String> availableDates = getAvaliableDates(weekly.getStartDate());
                 
-                req.getSession().setAttribute("radioPgmName", name);
-                req.getSession().setAttribute("selectPgmDate", programDate);
-                req.getSession().setAttribute("availableDates", availableDates);
-                req.getSession().setAttribute("startTime", startTime);
-                req.getSession().setAttribute("duration", duration);
-                req.getSession().setAttribute("presenter", presenter);
-                req.getSession().setAttribute("producer", producer);
+                //req.getSession().setAttribute("selectedWeeklyStartDate", weekly.getStartDate());
+                req.setAttribute("radioPgmName", name);
+                req.setAttribute("selectPgmDate", programDate);
+                req.setAttribute("availableDates", availableDates);
+                req.setAttribute("startTime", startTime);
+                req.setAttribute("duration", duration);
+                req.setAttribute("presenter", presenter);
+                req.setAttribute("producer", producer);
+                
+                req.getSession().setAttribute("previousProgramDate", programDate);
+                req.getSession().setAttribute("previousProgramStratTime", startTime);
+                
+                req.getSession().setAttribute("previousAnnualSchedule", asch);
+                req.getSession().setAttribute("previousWeeklySchedule", weekly);
+                
+                return "/pages/maintainSchedule/modifyps.jsp";
             }
-            req.getSession().setAttribute("weeklySchedule", asch.findWeeklySchedule(startDate));
         }
-        return "/pages/maintainSchedule/modifyps.jsp";
+        return "/pages/maintainSchedule/setupSchedule.jsp";
     }
     
     private List<String> getAvaliableDates(String weekStartDate) {

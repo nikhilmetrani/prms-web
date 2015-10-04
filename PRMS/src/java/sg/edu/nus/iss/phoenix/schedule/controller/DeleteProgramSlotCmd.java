@@ -19,8 +19,10 @@ import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 /**
  *
  * @author Niu Yiming
+ * @author Nikhil Metrani
+ * Added functionality to refresh setup schedule page upon program slot delete.
  */
-@Action("deletePgmSlot")
+@Action("deleteps")
 public class DeleteProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -36,13 +38,11 @@ public class DeleteProgramSlotCmd implements Perform {
         scheduleDelegate.processDelete(programSlot);
         
         AnnualSchedule asch = (AnnualSchedule)req.getSession().getAttribute("annualSchedule");
-        String startDate = req.getParameter("weeklySchedule");
-        if(startDate!=null && !"".equals(startDate)) {
-            WeeklySchedule weekly = asch.findWeeklySchedule(startDate);
+        WeeklySchedule weekly = (WeeklySchedule)req.getSession().getAttribute("weeklySchedule");
+        if(null != weekly) {
             weekly.deleteProgramSlot(programDate, startTime);
-            req.getSession().setAttribute("weeklySchedule", asch.findWeeklySchedule(startDate));
+            req.getSession().setAttribute("weeklySchedule", weekly);
         }
-            
         return "/pages/maintainSchedule/setupSchedule.jsp";
         
     } 
