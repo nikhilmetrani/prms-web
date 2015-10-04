@@ -145,7 +145,7 @@
 				<tr>
                                     <th width="25%"><fmt:message key="label.modifyps.duration" /></th>
 					<th width="25%"><input type="text" name="pgmSlotDuration"
-                                                                   value="${param['pgmSlotDuration']}" size=15 maxlength=20></th>
+                                                                   value="${duration}" size=15 maxlength=20></th>
 				</tr>
                                 <tr>
                                  <th width="25%"><fmt:message key="label.modifyps.radioProgram" /></th>
@@ -167,7 +167,7 @@
                                 </tr>
                                <tr>
                                     <th width="25%"><fmt:message key="label.presenter.id" /></th>
-				    <th width="25%"><input type="text" name="presenterName" size=25 maxlength=40 title="Please choose the presenter" required readonly>
+				    <th width="25%"><input type="text" name="presenterName" value="${presenter}" size=25 maxlength=40 title="Please choose the presenter" required readonly>
                                         <c:url var="url" scope="page" value="/nocturne/searchpresenter"> </c:url>
                                         <a href="#" onclick="popupPresenterPage()">Select</a>    
                                     </th>
@@ -175,7 +175,7 @@
                                 
                                  <tr>
                                     <th width="25%"><fmt:message key="label.producer.id" /></th>
-				    <th width="25%"><input type="text" name="producerName" size=25 maxlength=40 title="Please choose the producer" required readonly>
+				    <th width="25%"><input type="text" name="producerName" value="${producer}" size=25 maxlength=40 title="Please choose the producer" required readonly>
                                         <c:url var="url" scope="page" value="/nocturne/searchproducer"> </c:url>
                                         <a href="#" onclick="popupProducerPage()">Select</a>    
                                     </th>

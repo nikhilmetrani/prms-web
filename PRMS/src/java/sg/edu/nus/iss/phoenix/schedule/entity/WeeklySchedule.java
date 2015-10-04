@@ -50,18 +50,79 @@ public class WeeklySchedule {
      * @return      List of ProgramSlot
      */
     public List<ProgramSlot> getProgramSlots(){
-        List<ProgramSlot> data = new ArrayList<ProgramSlot>();
+        List<ProgramSlot> data = new ArrayList<>();
         for(ProgramSlot ps : programSlots){
             data.add(ps);
         }
         return data;
     }
     
+    /* Nikhil Metrani
+    *  Added methods deleteProgramSlot, updateProgramSlot, and findProgramSlot to enable easy
+    *  modification of the entity.
+    */
+    
+    /**
+     * Deletes a single program slot from the list.
+     * @param startDate Start date of the program slot to be deleted.<br>
+     * @param startTime Start time of the program slot to be deleted.<br>
+     * @return Returns the deleted program slot object on successful delete.<br>
+     * On failure returns null.
+     */
+    public ProgramSlot deleteProgramSlot(String startDate, String startTime) {
+        ProgramSlot programSlot = findProgramSlot(startDate, startTime);
+        if (null != programSlot) {
+            if (!programSlots.remove(programSlot))
+                programSlot = null;
+        }
+        return programSlot;
+    }
+    
+    /**
+     * Updates a single program slot from the list if it exists.
+     * @param startDate Start date of the program slot to be updated.<br>
+     * @param startTime Start time of the program slot to be updated.<br>
+     * @param updated Updated program slot object.<br>
+     * @return Returns the updated program slot when successful.<br>
+     * On failure returns null.
+     */
+    public ProgramSlot updateProgramSlot(String startDate, String startTime, ProgramSlot updated) {
+        ProgramSlot programSlot = findProgramSlot(startDate, startTime);
+        if (null != programSlot) {
+            int index = programSlots.indexOf(programSlot);
+            if (0 <= index)
+                programSlot = programSlots.set(index, updated);
+        }
+        return programSlot;
+    }
+    
+    /**
+     * Finds a single program slot from the list.
+     * @param startDate Start date of the program slot to be deleted.<br>
+     * @param startTime Start time of the program slot to be deleted.<br>
+     * @return Returns the first program slot object matching the given startDate and startTime.<br>
+     * On failure returns null.
+     */
+    public ProgramSlot findProgramSlot(String startDate, String startTime) {
+        if ((null == startDate) || (null == startTime))
+            return null;
+        ProgramSlot programSlot = null;
+        for(ProgramSlot ps : programSlots){
+            if (ps.getDateOfProgram().equals(startDate)){
+                if (ps.getStartTime().equals(startTime)) {
+                    programSlot = ps;
+                    break;
+                }
+            }
+        }
+        return programSlot;
+    }
+    
     /**
      * Removes all the ProgramSlot contained by the WeeklySchedule
      */
     public void removeAllProgramSlots(){
-        programSlots = new ArrayList<ProgramSlot>();
+        programSlots.clear();
     }
     
     @Override 

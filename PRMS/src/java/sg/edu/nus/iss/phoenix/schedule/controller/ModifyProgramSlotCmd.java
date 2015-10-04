@@ -22,6 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.radioprogram.delegate.ReviewSelectProgramDelegate;
 import sg.edu.nus.iss.phoenix.radioprogram.entity.RadioProgram;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
+import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
+import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
  *
@@ -32,60 +35,62 @@ public class ModifyProgramSlotCmd implements Perform {
     @Override
     public String perform(String path, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         
-        ScheduleDelegate delegate = new ScheduleDelegate();
-        req.getSession().setAttribute("annualScheduleList", delegate.reviewSelectAnnualSchedule());
-        ReviewSelectProgramDelegate del = new ReviewSelectProgramDelegate();
-        List<RadioProgram> radioPrograms = del.reviewSelectRadioProgram();     
-        req.getSession().setAttribute("radioPgms", radioPrograms);
-        req.setAttribute("actionType", "modifyPgmSlot");
-        
-        String name = req.getParameter("radioProgram");
         String programDate = req.getParameter("programDate");
         String startTime = req.getParameter("startTime");
-        String duration = req.getParameter("duration");
-        String presenter = req.getParameter("presenter");
-        String producer = req.getParameter("producer");
         
-        if (name != null) {
-            req.getSession().setAttribute("radioPgmName", name);
-        }
-        if (programDate != null && !programDate.isEmpty()) {
-            req.getSession().setAttribute("selectPgmDate", programDate);
-        } else {
+        ProgramSlot programSlot = null;
+        
+        AnnualSchedule asch = (AnnualSchedule)req.getSession().getAttribute("annualSchedule");
+        String startDate = req.getParameter("weeklySchedule");
+        if(startDate!=null && !"".equals(startDate)) {
+            WeeklySchedule weekly = asch.findWeeklySchedule(startDate);
+            programSlot = weekly.findProgramSlot(programDate, startTime);
             
-            List<String> availableDates;
-
-            String startDate = req.getParameter("weeklySch");   //get start date of the weekly schedule
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            if (startDate != null) {
-                try {
-
-                    Date date = sdf.parse(startDate);
-                    Calendar c = Calendar.getInstance();
-                    String strDate;
-                    availableDates = new ArrayList<>();
-                    for (int i = 0; i < 7; i++) {
-                        strDate = sdf.format(date);
-                        availableDates.add(strDate);
-                        c.setTime(date);
-                        if (strDate.startsWith("31-12")) {
-                            c.roll(Calendar.YEAR, 1);
-                        }
-                        c.roll(Calendar.DAY_OF_YEAR, 1);
-                        date = c.getTime();
-                    }
-
-                    req.getSession().setAttribute("availableDates", availableDates);
-                    req.getSession().setAttribute("startTime", startTime);
-                    req.getSession().setAttribute("duration", duration);
-                    req.getSession().setAttribute("presenter", presenter);
-                    req.getSession().setAttribute("producer", producer);
-
-                } catch (ParseException ex) {
-                    Logger.getLogger(ModifyProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if (null != programSlot) {
+                String name = programSlot.getProgramName();
+                String duration = programSlot.getDuration();
+                String presenter = programSlot.getPresenter();
+                String producer = programSlot.getProducer();
+                
+                List<String> availableDates = getAvaliableDates(startDate);
+                
+                req.getSession().setAttribute("radioPgmName", name);
+                req.getSession().setAttribute("selectPgmDate", programDate);
+                req.getSession().setAttribute("availableDates", availableDates);
+                req.getSession().setAttribute("startTime", startTime);
+                req.getSession().setAttribute("duration", duration);
+                req.getSession().setAttribute("presenter", presenter);
+                req.getSession().setAttribute("producer", producer);
             }
+            req.getSession().setAttribute("weeklySchedule", asch.findWeeklySchedule(startDate));
         }
         return "/pages/maintainSchedule/modifyps.jsp";
-    }           
+    }
+    
+    private List<String> getAvaliableDates(String weekStartDate) {
+        List<String> availableDates = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        if (weekStartDate != null) {
+            try {
+
+                Date date = sdf.parse(weekStartDate);
+                Calendar c = Calendar.getInstance();
+                String strDate;
+                availableDates = new ArrayList<>();
+                for (int i = 0; i < 7; i++) {
+                    strDate = sdf.format(date);
+                    availableDates.add(strDate);
+                    c.setTime(date);
+                    if (strDate.startsWith("31-12")) {
+                        c.roll(Calendar.YEAR, 1);
+                    }
+                    c.roll(Calendar.DAY_OF_YEAR, 1);
+                    date = c.getTime();
+                } 
+            }catch (ParseException ex) {
+                Logger.getLogger(ModifyProgramSlotCmd.class.getName()).log(Level.SEVERE, null, ex); 
+            }
+        }
+        return availableDates;
+    }
 }

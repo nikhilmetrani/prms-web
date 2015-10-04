@@ -12,7 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import sg.edu.nus.iss.phoenix.schedule.delegate.ScheduleDelegate;
+import sg.edu.nus.iss.phoenix.schedule.entity.AnnualSchedule;
 import sg.edu.nus.iss.phoenix.schedule.entity.ProgramSlot;
+import sg.edu.nus.iss.phoenix.schedule.entity.WeeklySchedule;
 
 /**
  *
@@ -32,7 +34,15 @@ public class DeleteProgramSlotCmd implements Perform {
         
         ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
         scheduleDelegate.processDelete(programSlot);
-                
+        
+        AnnualSchedule asch = (AnnualSchedule)req.getSession().getAttribute("annualSchedule");
+        String startDate = req.getParameter("weeklySchedule");
+        if(startDate!=null && !"".equals(startDate)) {
+            WeeklySchedule weekly = asch.findWeeklySchedule(startDate);
+            weekly.deleteProgramSlot(programDate, startTime);
+            req.getSession().setAttribute("weeklySchedule", asch.findWeeklySchedule(startDate));
+        }
+            
         return "/pages/maintainSchedule/setupSchedule.jsp";
         
     } 
