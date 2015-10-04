@@ -63,9 +63,11 @@ public class ModifyProgramSlotDetailsCmd implements Perform{
                 updatedProgramSlot.setPresenter((String)req.getParameter("presenterName"));
                 updatedProgramSlot.setProducer((String)req.getParameter("producerName"));
                 
+                //Delete the current program slot
                 ScheduleDelegate scheduleDelegate = new ScheduleDelegate();
-                //Update the program slot with new values
-                scheduleDelegate.processModify(currentProgramSlot, updatedProgramSlot);
+                scheduleDelegate.processDelete(currentProgramSlot);
+                //Save the program slot with new values
+                scheduleDelegate.processCreate(updatedProgramSlot);
                 
                 if (previousWeeklySchedule.equals(selectedWeeklySchedule))
                     previousWeeklySchedule.updateProgramSlot(programDate, startTime, updatedProgramSlot);

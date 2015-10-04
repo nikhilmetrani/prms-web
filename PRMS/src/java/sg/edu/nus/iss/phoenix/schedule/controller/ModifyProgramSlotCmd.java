@@ -31,13 +31,13 @@ public class ModifyProgramSlotCmd implements Perform {
         
         
         if (null != actionType) {
-            programSlot = new ProgramSlot();
-            programSlot.setDateOfProgram((String)req.getParameter("selectPgmDate"));
-            programSlot.setStartTime((String)req.getParameter("startTime"));
-            programSlot.setDuration((String)req.getParameter("duration"));
-            programSlot.setProgramName((String)req.getParameter("radioPgmName"));
-            programSlot.setPresenter((String)req.getParameter("presenterName"));
-            programSlot.setProducer((String)req.getParameter("producerName"));
+            
+            req.setAttribute("radioPgmName", (String)req.getParameter("radioPgmName"));
+            req.setAttribute("selectPgmDate", (String)req.getParameter("selectPgmDate"));
+            req.setAttribute("startTime", (String)req.getParameter("startTime"));
+            req.setAttribute("duration", (String)req.getParameter("duration"));
+            req.setAttribute("presenterName", (String)req.getParameter("presenterName"));
+            req.setAttribute("producerName", (String)req.getParameter("producerName"));
             
             return "/pages/maintainSchedule/modifyps.jsp";
         } else {
